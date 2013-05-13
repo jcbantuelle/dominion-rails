@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  turn: 1
+  turn_order: MyString
+
+two:
+  turn: 1
+  turn_order: MyString

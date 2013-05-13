@@ -4,29 +4,30 @@ class Card < ActiveRecord::Base
   scope :card_name, ->(card_name) { where(name: card_name) }
   scope :sets, ->(sets) { where(set: sets) }
 
-  def self.generate_kingdom_cards(game, sets = nil)
+  def self.generate_cards
+    generate_kingdom_cards + generate_victory_cards + generate_treasure_cards + generate_miscellaneous_cards
+  end
+
+  def self.generate_kingdom_cards
     cards = card_type(:kingdom)
     cards = cards.sets(sets) unless sets.nil?
     cards.shuffle.take(10)
   end
 
-  def self.generate_victory_cards(game)
+  def self.generate_victory_cards
     card_type(:victory)
   end
 
-  def self.generate_treasure_cards(game)
+  def self.generate_treasure_cards
     card_type(:treasure)
   end
 
-  def self.generate_starting_deck(game)
-    {
-      victory: [card_by_name('estate')],
-      treasure: [card_by_name('copper')]
-    }
+  def self.generate_miscellaneous_cards
+    [card_by_name('curse')]
   end
 
-  def self.generate_miscellaneous_cards(game)
-    [card_by_name('curse')]
+  def self.generate_starting_deck
+    ([card_by_name('estate')]*3) + ([card_by_name('copper')]*7)
   end
 
   def self.card_by_name(card_name)

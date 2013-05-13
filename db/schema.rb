@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130513063511) do
+ActiveRecord::Schema.define(version: 20130513072519) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -22,6 +22,45 @@ ActiveRecord::Schema.define(version: 20130513063511) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "game_cards", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "card_id"
+    t.integer  "remaining"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "game_cards", ["card_id"], name: "index_game_cards_on_card_id"
+  add_index "game_cards", ["game_id"], name: "index_game_cards_on_game_id"
+
+  create_table "game_players", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "player_id"
+    t.integer  "turn_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "game_players", ["game_id"], name: "index_game_players_on_game_id"
+  add_index "game_players", ["player_id"], name: "index_game_players_on_player_id"
+
+  create_table "games", force: true do |t|
+    t.integer  "turn"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "player_decks", force: true do |t|
+    t.integer  "game_player_id"
+    t.integer  "card_id"
+    t.integer  "card_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "player_decks", ["card_id"], name: "index_player_decks_on_card_id"
+  add_index "player_decks", ["game_player_id"], name: "index_player_decks_on_game_player_id"
 
   create_table "players", force: true do |t|
     t.string   "email",                  default: "", null: false
