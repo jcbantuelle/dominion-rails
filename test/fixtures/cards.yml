@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  set: MyString
+  kingdom: false
+  treasure: false
+  victory: false
+
+two:
+  name: MyString
+  set: MyString
+  kingdom: false
+  treasure: false
+  victory: false
