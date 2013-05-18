@@ -1,11 +1,13 @@
 class Woodcutter
 
-  def starting_count(game)
+  def self.starting_count(game)
     10
   end
 
   def cost
-    [3]
+    {
+      coin: 3
+    }
   end
 
   def type

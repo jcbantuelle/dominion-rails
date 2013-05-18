@@ -1,6 +1,6 @@
 class Curse
 
-  def starting_count(game)
+  def self.starting_count(game)
     case game.player_count
     when 2
       10
@@ -12,7 +12,9 @@ class Curse
   end
 
   def cost
-    0
+    {
+      coin: 0
+    }
   end
 
   def type

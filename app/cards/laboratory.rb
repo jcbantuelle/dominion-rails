@@ -1,11 +1,13 @@
 class Laboratory
 
-  def starting_count(game)
+  def self.starting_count(game)
     10
   end
 
   def cost
-    [5]
+    {
+      coin: 5
+    }
   end
 
   def type

@@ -1,11 +1,13 @@
 class Adventurer
 
-  def starting_count(game)
+  def self.starting_count(game)
     10
   end
 
   def cost
-    [6]
+    {
+      coin: 6
+    }
   end
 
   def type

@@ -1,11 +1,13 @@
 class Spy
 
-  def starting_count(game)
+  def self.starting_count(game)
     10
   end
 
   def cost
-    [4]
+    {
+      coin: 4
+    }
   end
 
   def type

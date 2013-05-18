@@ -1,11 +1,13 @@
 class Copper
 
-  def starting_count(game)
+  def self.starting_count(game)
     60
   end
 
   def cost
-    0
+    {
+      coin: 0
+    }
   end
 
   def type

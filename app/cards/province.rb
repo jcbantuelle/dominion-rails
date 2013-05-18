@@ -1,11 +1,13 @@
 class Province
 
-  def starting_count(game)
+  def self.starting_count(game)
     game.player_count == 2 ? 8 : 12
   end
 
   def cost
-    8
+    {
+      coin: 8
+    }
   end
 
   def type

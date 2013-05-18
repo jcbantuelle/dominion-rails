@@ -1,11 +1,13 @@
 class Chapel
 
-  def starting_count(game)
+  def self.starting_count(game)
     10
   end
 
   def cost
-    [2]
+    {
+      coin: 2
+    }
   end
 
   def type

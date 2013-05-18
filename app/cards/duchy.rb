@@ -1,11 +1,13 @@
 class Duchy
 
-  def starting_count(game)
+  def self.starting_count(game)
     game.player_count < 3 ? 8 : 12
   end
 
   def cost
-    5
+    {
+      coin: 5
+    }
   end
 
   def type
