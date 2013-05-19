@@ -6,4 +6,7 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :game_players
+
+  scope :in_lobby, ->{ where(lobby: true) }
+  scope :online, ->{ where('last_response_at > ?', 10.minutes.ago) }
 end
