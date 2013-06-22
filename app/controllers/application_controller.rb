@@ -23,7 +23,15 @@ protected
 
 private
 
-  def set_lobby(in_lobby = false)
+  def set_lobby
+    update_lobby true
+  end
+
+  def unset_lobby
+    update_lobby false
+  end
+
+  def update_lobby(in_lobby)
     current_player.update_attribute(:lobby, in_lobby) if current_player
   end
 

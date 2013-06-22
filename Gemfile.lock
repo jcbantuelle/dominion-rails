@@ -28,10 +28,10 @@ GEM
     arel (4.0.0)
     atomic (1.1.9)
     bcrypt-ruby (3.0.1)
-    better_errors (0.8.0)
+    better_errors (0.9.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
-    binding_of_caller (0.7.1)
+    binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
     coderay (1.0.9)
@@ -52,6 +52,10 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    handlebars_assets (0.14.1)
+      execjs (>= 1.2.9)
+      sprockets (>= 2.0.3)
+      tilt
     hike (1.2.3)
     i18n (0.6.4)
     jbuilder (1.0.2)
@@ -75,12 +79,14 @@ GEM
     mysql2 (0.3.11)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
-    pry (0.9.12)
+    pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pry-rails (0.2.2)
+    pry-rails (0.3.1)
       pry (>= 0.9.10)
+    puma (2.1.1)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -124,6 +130,9 @@ GEM
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
+    tubesock (0.2.1)
+      rack (>= 1.5.0)
+      websocket (>= 1.1.0)
     turbolinks (1.2.0)
       coffee-rails
     twitter-bootstrap-rails (2.2.6)
@@ -137,6 +146,7 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    websocket (1.1.0)
 
 PLATFORMS
   ruby
@@ -146,14 +156,17 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 4.0.0.beta1)
   devise (~> 3.0.0.rc)
+  handlebars_assets
   jbuilder (~> 1.0.1)
   jquery-rails
   less-rails
   mysql2
   pry-rails
+  puma
   rails (= 4.0.0.rc2)
   sass-rails (~> 4.0.0.beta1)
   therubyracer
+  tubesock
   turbolinks
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
