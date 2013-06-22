@@ -114,6 +114,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thor (0.18.1)
     thread_safe (0.1.0)
       atomic
@@ -123,6 +126,11 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (1.2.0)
       coffee-rails
+    twitter-bootstrap-rails (2.2.6)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.37)
     uglifier (2.1.1)
       execjs (>= 0.3.0)
@@ -145,5 +153,7 @@ DEPENDENCIES
   pry-rails
   rails (= 4.0.0.rc2)
   sass-rails (~> 4.0.0.beta1)
+  therubyracer
   turbolinks
+  twitter-bootstrap-rails
   uglifier (>= 1.0.3)

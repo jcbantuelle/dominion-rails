@@ -27,6 +27,10 @@ gem 'jbuilder', '~> 1.0.1'
 
 gem 'devise', '~> 3.0.0.rc'
 
+# Twitter Bootstrap
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 group :development do
   gem 'pry-rails'
   gem 'better_errors'
