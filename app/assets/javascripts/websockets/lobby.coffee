@@ -22,4 +22,4 @@ $ ->
     add_to_lobby player for player in players
 
   add_to_lobby = (player) ->
-    $('#players').append(HandlebarsTemplates['games/lobby_player'](player))
+    $('#players').append(HandlebarsTemplates['lobby/player'](player))
