@@ -3,9 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_lobby
+  before_filter :unset_lobby
   before_filter :player_activity
+  before_filter :log_out_inactive_players
   before_filter :configure_permitted_parameters, if: :devise_controller?
+
+  @@lobby = {}
 
 protected
 
@@ -36,6 +39,25 @@ private
   end
 
   def player_activity
-    current_player.try :touch, :last_response_at
+    if current_player
+      current_player.touch :last_response_at
+      current_player.online = true
+      current_player.save
+    end
+  end
+
+  def log_out_inactive_players
+    Player.inactive.update_all(online: false)
+    refresh_lobby
+  end
+
+  def refresh_lobby
+    players = Player.online.in_lobby
+    player_ids = players.collect(&:id)
+    @@lobby.select! { |id, socket| player_ids.include? id }
+    @@lobby.each_pair do |player_id, socket|
+      lobby_players = players.reject{ |p| p.id == player_id }
+      socket.send_data({action: 'refresh', players: lobby_players}.to_json) unless lobby_players.blank?
+    end
   end
 end

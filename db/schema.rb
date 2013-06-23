@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130519142039) do
+ActiveRecord::Schema.define(version: 20130623150200) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20130519142039) do
     t.datetime "updated_at"
   end
 
-  add_index "game_cards", ["card_id"], name: "index_game_cards_on_card_id"
-  add_index "game_cards", ["game_id"], name: "index_game_cards_on_game_id"
+  add_index "game_cards", ["card_id"], name: "index_game_cards_on_card_id", using: :btree
+  add_index "game_cards", ["game_id"], name: "index_game_cards_on_game_id", using: :btree
 
   create_table "game_players", force: true do |t|
     t.integer  "game_id"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 20130519142039) do
     t.datetime "updated_at"
   end
 
-  add_index "game_players", ["game_id"], name: "index_game_players_on_game_id"
-  add_index "game_players", ["player_id"], name: "index_game_players_on_player_id"
+  add_index "game_players", ["game_id"], name: "index_game_players_on_game_id", using: :btree
+  add_index "game_players", ["player_id"], name: "index_game_players_on_player_id", using: :btree
 
   create_table "games", force: true do |t|
     t.integer  "turn"
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 20130519142039) do
     t.string   "state"
   end
 
-  add_index "player_decks", ["card_id"], name: "index_player_decks_on_card_id"
-  add_index "player_decks", ["game_player_id"], name: "index_player_decks_on_game_player_id"
+  add_index "player_decks", ["card_id"], name: "index_player_decks_on_card_id", using: :btree
+  add_index "player_decks", ["game_player_id"], name: "index_player_decks_on_game_player_id", using: :btree
 
   create_table "players", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -79,9 +79,10 @@ ActiveRecord::Schema.define(version: 20130519142039) do
     t.string   "username"
     t.boolean  "lobby"
     t.datetime "last_response_at"
+    t.boolean  "online",                 default: false
   end
 
-  add_index "players", ["email"], name: "index_players_on_email", unique: true
-  add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
+  add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
+  add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true, using: :btree
 
 end
