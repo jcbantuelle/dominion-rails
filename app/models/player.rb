@@ -5,6 +5,10 @@ class Player < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  Warden::Manager.before_logout do |record, warden, options|
+    record.update_attribute :online, false
+  end
+
   has_many :game_players
 
   scope :in_lobby, ->{ where(lobby: true) }
