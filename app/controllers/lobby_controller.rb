@@ -10,7 +10,24 @@ class LobbyController < ApplicationController
       tubesock.onopen do
         refresh_lobby
       end
+      tubesock.onmessage do |data|
+        unless data == 'tubesock-ping'
+          data = JSON.parse data
+          if data['action'] == 'propose'
+            propose_game(data)
+          end
+        end
+      end
     end
+  end
+
+  private
+
+  def propose_game(data)
+    data['player_ids'] << current_player.id
+    game = Game.create
+    game.add_players data['player_ids']
+    game.generate_board
   end
 
 end

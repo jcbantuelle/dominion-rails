@@ -4,7 +4,8 @@ class Game < ActiveRecord::Base
 
   attr_accessor :players
 
-  def add_players(players)
+  def add_players(player_ids)
+    players = Player.where(id: player_ids)
     players.shuffle.each_with_index do |player, index|
       GamePlayer.create(game_id: self.id, player_id: player.id, turn_order: index+1)
     end
