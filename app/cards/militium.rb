@@ -1,4 +1,4 @@
-module Militia
+module Militium
 
   def starting_count(game)
     10
