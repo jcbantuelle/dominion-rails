@@ -2,7 +2,6 @@ class Card < ActiveRecord::Base
 
   scope :card_type, ->(card_type) { where({card_type => true}) }
   scope :card_name, ->(card_name) { where(name: card_name) }
-  scope :sets, ->(sets) { where(set: sets) }
 
   def self.generate_cards
     generate_kingdom_cards + generate_victory_cards + generate_treasure_cards + generate_miscellaneous_cards
@@ -10,7 +9,6 @@ class Card < ActiveRecord::Base
 
   def self.generate_kingdom_cards
     cards = card_type(:kingdom)
-    cards = cards.sets(sets) unless sets.nil?
     cards.shuffle.take(10)
   end
 
