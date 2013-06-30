@@ -1,6 +1,6 @@
-class Feast
+module Feast
 
-  def self.starting_count(game)
+  def starting_count(game)
     10
   end
 

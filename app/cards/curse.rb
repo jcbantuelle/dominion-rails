@@ -1,6 +1,6 @@
-class Curse
+module Curse
 
-  def self.starting_count(game)
+  def starting_count(game)
     case game.player_count
     when 2
       10

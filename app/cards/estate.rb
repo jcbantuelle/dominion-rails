@@ -1,6 +1,6 @@
-class Estate
+module Estate
 
-  def self.starting_count(game)
+  def starting_count(game)
     game.player_count < 3 ? 8 : 12
   end
 

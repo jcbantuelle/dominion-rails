@@ -1,6 +1,6 @@
-class Copper
+module Copper
 
-  def self.starting_count(game)
+  def starting_count(game)
     60
   end
 

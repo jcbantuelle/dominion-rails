@@ -1,6 +1,6 @@
-class ThroneRoom
+module ThroneRoom
 
-  def self.starting_count(game)
+  def starting_count(game)
     10
   end
 

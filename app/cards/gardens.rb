@@ -1,6 +1,6 @@
-class Gardens
+module Gardens
 
-  def self.starting_count(game)
+  def starting_count(game)
     game.player_count == 2 ? 8 : 12
   end
 

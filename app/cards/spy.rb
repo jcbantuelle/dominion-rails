@@ -1,6 +1,6 @@
-class Spy
+module Spy
 
-  def self.starting_count(game)
+  def starting_count(game)
     10
   end
 

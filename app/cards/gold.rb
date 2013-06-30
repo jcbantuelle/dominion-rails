@@ -1,6 +1,6 @@
-class Gold
+module Gold
 
-  def self.starting_count(game)
+  def starting_count(game)
     30
   end
 

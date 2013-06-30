@@ -1,6 +1,6 @@
-class Witch
+module Witch
 
-  def self.starting_count(game)
+  def starting_count(game)
     10
   end
 
