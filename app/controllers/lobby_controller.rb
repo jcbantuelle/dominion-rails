@@ -4,7 +4,7 @@ class LobbyController < ApplicationController
   before_filter :authenticate_player!
 
   def update
-    set_lobby
+    set_lobby_status
     hijack do |tubesock|
       @@lobby[current_player.id] = tubesock
       tubesock.onopen do
