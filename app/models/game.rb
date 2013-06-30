@@ -24,7 +24,7 @@ class Game < ActiveRecord::Base
   def generate_cards
     Card.generate_cards.each do |card|
       card_object = card.name.classify.constantize
-      card_count = card_object.self.starting_count(self)
+      card_count = card_object.starting_count(self)
       GameCard.create(game_id: self.id, card_id: card.id, remaining: card_count)
     end
   end
