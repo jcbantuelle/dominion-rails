@@ -16,13 +16,10 @@ $ ->
 
   refresh = (response) ->
     $('#players').empty()
-    add_to_lobby player for player in response.players
+    $('#players').append(HandlebarsTemplates['lobby/players'](response))
 
   propose = (response) ->
-    $form.prepend(HandlebarsTemplates['lobby/game_proposal'](response.game))
-
-  add_to_lobby = (player) ->
-    $('#players').append(HandlebarsTemplates['lobby/player'](player))
+    $('#proposal').html(HandlebarsTemplates['lobby/game_proposal'](response))
 
   checkbox_value = (checkbox) ->
     $(checkbox).val()
