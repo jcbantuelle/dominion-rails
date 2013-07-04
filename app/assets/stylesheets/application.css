@@ -14,3 +14,27 @@
 body {
     padding-top: 65px;
 }
+
+.lobby-card {
+  padding: 3px;
+}
+
+.action {
+  background-color: lightgrey;
+}
+
+.victory {
+  background-color: lightgreen;
+}
+
+.reaction {
+  background-color: lightblue;
+}
+
+.action.victory {
+  background-image: linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+  background-image: -o-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+  background-image: -moz-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+  background-image: -webkit-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+  background-image: -ms-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+}

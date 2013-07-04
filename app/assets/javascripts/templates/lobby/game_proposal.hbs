@@ -1,0 +1,22 @@
+<div>
+{{#if is_proposer}}
+  You have
+{{else}}
+  <strong>{{proposer.username}}</strong> has
+{{/if}}
+proposed a game.
+</div>
+<br />
+<div>
+  <strong>Players:</strong>
+  {{#each players}}
+    {{username}}
+  {{/each}}
+</div>
+
+<div>
+  <strong>Cards:</strong>
+  {{#each cards}}
+    <span class="lobby-card {{type}}">{{name}}</span>
+  {{/each}}
+</div>
