@@ -20,6 +20,14 @@ class Game < ActiveRecord::Base
     @player_count ||= game_players.count
   end
 
+  def kingdom_cards
+    game_cards.collect(&:card).select{ |card| card.kingdom? }
+  end
+
+  def players
+    game_players.collect(&:player)
+  end
+
   private
 
   def generate_cards
@@ -36,4 +44,5 @@ class Game < ActiveRecord::Base
       end
     end
   end
+
 end
