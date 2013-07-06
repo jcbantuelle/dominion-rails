@@ -28,6 +28,13 @@ class Game < ActiveRecord::Base
     game_players.collect(&:player)
   end
 
+  def self.generate(players)
+    game = Game.create
+    game.add_players players
+    game.generate_board
+    game
+  end
+
   private
 
   def generate_cards

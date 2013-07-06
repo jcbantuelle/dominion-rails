@@ -25,10 +25,8 @@ class LobbyController < ApplicationController
 
   def propose_game(data)
     data['player_ids'] << current_player.id
-    game = Game.create
-    game.add_players data['player_ids']
-    game.generate_board
     send_game_proposal(game)
+      game = Game.generate(data['player_ids'])
   end
 
   def send_game_proposal(game)
