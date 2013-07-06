@@ -11,6 +11,19 @@
  *= require_self
  *= require_tree .
  */
+
+$action: lightgrey;
+$victory: lightgreen;
+$reaction: lightblue;
+
+@mixin gradient($from, $to) {
+  background-image: linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -o-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -moz-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -webkit-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -ms-linear-gradient(bottom, $to 50%, $from 50%);
+}
+
 body {
     padding-top: 65px;
 }
@@ -20,21 +33,17 @@ body {
 }
 
 .action {
-  background-color: lightgrey;
+  background-color: $action;
 }
 
 .victory {
-  background-color: lightgreen;
+  background-color: $victory;
 }
 
 .reaction {
-  background-color: lightblue;
+  background-color: #7380C9;
 }
 
 .action.victory {
-  background-image: linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
-  background-image: -o-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
-  background-image: -moz-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
-  background-image: -webkit-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
-  background-image: -ms-linear-gradient(bottom, lightgreen 50%, lightgrey 50%);
+  @include gradient($action, $victory);
 }
