@@ -25,8 +25,12 @@ class LobbyController < ApplicationController
 
   def propose_game(data)
     data['player_ids'] << current_player.id
-    send_game_proposal(game)
+    if data['player_ids'].length > 4
+      send_player_count_error
+    else
       game = Game.generate(data['player_ids'])
+      send_game_proposal(game)
+    end
   end
 
   def send_game_proposal(game)
@@ -49,4 +53,9 @@ class LobbyController < ApplicationController
     end
   end
 
+  def send_player_count_error
+    @@lobby[current_player.id].send_data({
+      action: 'player_count_error'
+    }.to_json)
+  end
 end
