@@ -39,8 +39,7 @@ $ ->
 
   # Refresh Lobby
   refresh = (response) ->
-    $('#players').empty()
-    $('#players').append(HandlebarsTemplates['lobby/players'](response))
+    $('#players').html(HandlebarsTemplates['lobby/players'](response))
 
   # Render Game Proposal
   propose = (response) ->
