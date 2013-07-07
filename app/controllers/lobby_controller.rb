@@ -59,7 +59,7 @@ class LobbyController < ApplicationController
         proposer: current_player,
         is_proposer: current_player.id == player.id,
         game_id: game.id
-      }.to_json)
+      }.to_json) if @@lobby[player.id]
     end
   end
 
@@ -71,7 +71,7 @@ class LobbyController < ApplicationController
       @@lobby[player.id].send_data({
         action: 'accept',
         player: current_player
-      }.to_json)
+      }.to_json) if @@lobby[player.id]
     end
   end
 
@@ -86,7 +86,7 @@ class LobbyController < ApplicationController
         action: 'decline',
         decliner: current_player,
         is_decliner: current_player.id == player.id
-      }.to_json)
+      }.to_json) if @@lobby[player.id]
     end
     refresh_lobby
   end
