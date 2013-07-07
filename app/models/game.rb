@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
-  has_many :game_players
-  has_many :game_cards
+  has_many :game_players, dependent: :destroy
+  has_many :game_cards, dependent: :destroy
 
   def add_players(player_ids)
     players = Player.where(id: player_ids)
