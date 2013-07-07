@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130707021504) do
+ActiveRecord::Schema.define(version: 20130707050502) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20130707021504) do
     t.integer  "turn_order"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "accepted",   default: false
   end
 
   add_index "game_players", ["game_id"], name: "index_game_players_on_game_id", using: :btree
@@ -80,7 +81,6 @@ ActiveRecord::Schema.define(version: 20130707021504) do
     t.boolean  "lobby"
     t.datetime "last_response_at"
     t.boolean  "online",                 default: false
-    t.boolean  "busy",                   default: false
     t.integer  "current_game"
   end
 

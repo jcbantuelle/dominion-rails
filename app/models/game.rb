@@ -27,6 +27,14 @@ class Game < ActiveRecord::Base
     game_players.collect(&:player)
   end
 
+  def accepted?
+    game_players.collect(&:accepted).all?{|accepted| accepted == true }
+  end
+
+  def timed_out_players
+    game_players.timed_out.collect(&:player)
+  end
+
   def self.generate(players)
     game = Game.create
     game.add_players players

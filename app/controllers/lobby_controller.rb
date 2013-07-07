@@ -61,6 +61,11 @@ class LobbyController < ApplicationController
         game_id: game.id
       }.to_json) if @@lobby[player.id]
     end
+
+    Thread.new {
+      sleep(30)
+      send_timeout(game) if Game.exists?(game.id) && !game.accepted?
+    }
   end
 
   def accept_game(data)
@@ -76,16 +81,33 @@ class LobbyController < ApplicationController
   end
 
   def decline_game(data)
-    game = Game.find data['game_id']
+    if Game.exists? data['game_id']
+      game = Game.find data['game_id']
+      game_players = game.players
+      game.destroy
+
+      game_players.each do |player|
+        player.update_attribute(:current_game, nil)
+        @@lobby[player.id].send_data({
+          action: 'decline',
+          decliner: current_player,
+          is_decliner: current_player.id == player.id
+        }.to_json) if @@lobby[player.id]
+      end
+      refresh_lobby
+    end
+  end
+
+  def send_timeout(game)
     game_players = game.players
+    timeout_players = game.timed_out_players
     game.destroy
 
     game_players.each do |player|
       player.update_attribute(:current_game, nil)
       @@lobby[player.id].send_data({
-        action: 'decline',
-        decliner: current_player,
-        is_decliner: current_player.id == player.id
+        action: 'timeout',
+        players: timeout_players
       }.to_json) if @@lobby[player.id]
     end
     refresh_lobby

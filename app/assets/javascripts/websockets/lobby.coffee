@@ -38,6 +38,8 @@ $ ->
       alert "#{response.player.username} has accepted the game."
     else if response.action == 'decline'
       decline(response)
+    else if response.action == 'timeout'
+      timeout(response)
 
   # Refresh Lobby
   refresh = (response) ->
@@ -52,6 +54,11 @@ $ ->
   decline = (response) ->
     $('#propose-game').show()
     $('#proposal').html(HandlebarsTemplates['lobby/declined_game'](response))
+
+  # Render Proposal Timeout
+  timeout = (response) ->
+    $('#propose-game').show()
+    $('#proposal').html(HandlebarsTemplates['lobby/proposal_timeout'](response))
 
   # Render Player In Game Error
   player_in_game_error = (response) ->
