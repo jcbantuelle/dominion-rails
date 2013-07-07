@@ -2,8 +2,6 @@ class Game < ActiveRecord::Base
   has_many :game_players
   has_many :game_cards
 
-  attr_accessor :players
-
   def add_players(player_ids)
     players = Player.where(id: player_ids)
     players.shuffle.each_with_index do |player, index|
