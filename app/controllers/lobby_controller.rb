@@ -15,6 +15,10 @@ class LobbyController < ApplicationController
           data = JSON.parse data
           if data['action'] == 'propose'
             propose_game(data)
+          elsif data['action'] == 'accept'
+            accept_game(data)
+          elsif data['action'] == 'decline'
+            decline_game(data)
           end
         end
       end
@@ -52,6 +56,28 @@ class LobbyController < ApplicationController
       }.to_json)
     end
   end
+
+  def accept_game(data)
+    game = Game.find data['game_id']
+    game_players = game.players
+
+    game_players.each do |player|
+      @@lobby[player.id].send_data({
+        action: 'accept',
+        player: current_player
+      }.to_json)
+    end
+  end
+
+  def decline_game(data)
+    game = Game.find data['game_id']
+    game_players = game.players
+
+    game_players.each do |player|
+      @@lobby[player.id].send_data({
+        action: 'decline',
+        player: current_player
+      }.to_json)
     end
   end
 

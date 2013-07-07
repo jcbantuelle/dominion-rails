@@ -2,6 +2,7 @@ $ ->
   socket = new WebSocket("ws://#{window.location.host}/lobby/update")
   player_count_error = 'Game can not have more than 4 players.'
 
+  # Propose Game
   $form = $("form#lobby")
   $form.on "submit", (event) ->
     event.preventDefault()
@@ -11,6 +12,18 @@ $ ->
     else
       socket.send(JSON.stringify(action: 'propose', player_ids: player_ids))
 
+  $proposal = $("#proposal")
+  # Accept Game Proposal
+  $proposal.on "click", "#accept", (event) ->
+    event.preventDefault()
+    game_id = get_game_id()
+    socket.send(JSON.stringify(action: 'accept', game_id: game_id))
+  # Reject Game Proposal
+  $proposal.on "click", "#decline", (event) ->
+    event.preventDefault()
+    game_id = get_game_id()
+    socket.send(JSON.stringify(action: 'decline', game_id: game_id))
+
   socket.onmessage = (event) ->
     response = JSON.parse event.data
     if response.action == 'refresh'
@@ -19,13 +32,22 @@ $ ->
       propose(response)
     else if response.action == 'player_count_error'
       alert player_count_error
+    else if response.action == 'accept'
+      alert "#{response.player.username} has accepted the game."
+    else if response.action == 'decline'
+      alert "#{response.player.username} has declined the game."
 
+  # Refresh Lobby
   refresh = (response) ->
     $('#players').empty()
     $('#players').append(HandlebarsTemplates['lobby/players'](response))
 
+  # Render Game Proposal
   propose = (response) ->
     $('#proposal').html(HandlebarsTemplates['lobby/game_proposal'](response))
 
   checkbox_value = (checkbox) ->
     $(checkbox).val()
+
+  get_game_id = =>
+    $('#game-id').val()
