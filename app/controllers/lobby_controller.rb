@@ -1,6 +1,7 @@
 class LobbyController < ApplicationController
   include Tubesock::Hijack
 
+  skip_before_filter :unset_lobby_status
   before_filter :authenticate_player!
 
   def update
