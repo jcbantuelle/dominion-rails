@@ -35,21 +35,23 @@ class LobbyController < ApplicationController
 
   def send_game_proposal(game)
     game_players = game.players
-    game_player_ids = game_players.collect(&:id)
 
     proposed_cards = []
     game.kingdom_cards.each do |card|
       proposed_cards << {name: card.name.titleize, type: card.type.map(&:to_s).join(' ')}
     end
 
-    @@lobby.each_pair do |player_id, socket|
-      socket.send_data({
+    game_players.each do |player|
+      @@lobby[player.id].send_data({
         action: 'propose',
         players: game_players,
         cards: proposed_cards,
         proposer: current_player,
-        is_proposer: current_player.id == player_id
-      }.to_json) if game_player_ids.include?(player_id)
+        is_proposer: current_player.id == player.id,
+        game_id: game.id
+      }.to_json)
+    end
+  end
     end
   end
 
