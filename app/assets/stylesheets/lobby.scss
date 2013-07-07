@@ -1,6 +1,8 @@
 $action: lightgrey;
 $victory: lightgreen;
 $reaction: lightblue;
+$busy: grey;
+$player_margin: 25px;
 
 @mixin gradient($from, $to) {
   background-image: linear-gradient(bottom, $to 50%, $from 50%);
@@ -8,6 +10,17 @@ $reaction: lightblue;
   background-image: -moz-linear-gradient(bottom, $to 50%, $from 50%);
   background-image: -webkit-linear-gradient(bottom, $to 50%, $from 50%);
   background-image: -ms-linear-gradient(bottom, $to 50%, $from 50%);
+}
+
+#players label {
+  display: inline;
+  float: left;
+  margin-right: $player_margin;
+}
+
+.busy {
+  color: $busy;
+  margin-right: $player_margin;
 }
 
 .lobby-card {

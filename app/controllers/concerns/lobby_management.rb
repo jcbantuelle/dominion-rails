@@ -30,6 +30,7 @@ module LobbyManagement
   end
 
   def online_lobby_players
+    Player.connection.clear_query_cache
     Player.online.in_lobby
   end
 

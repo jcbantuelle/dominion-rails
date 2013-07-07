@@ -12,6 +12,7 @@ class Player < ActiveRecord::Base
   has_many :game_players
 
   scope :in_lobby, ->{ where(lobby: true) }
+  scope :in_game, ->{ where.not(current_game: nil) }
   scope :online, ->{ where(online: true) }
   scope :inactive, ->{ where('last_response_at < ?', 10.minutes.ago) }
 end
