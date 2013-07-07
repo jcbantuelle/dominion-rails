@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
 
   def add_players(player_ids)
     players = Player.where(id: player_ids)
+    players.update_all(current_game: self.id)
     players.shuffle.each_with_index do |player, index|
       GamePlayer.create(game_id: self.id, player_id: player.id, turn_order: index+1)
     end

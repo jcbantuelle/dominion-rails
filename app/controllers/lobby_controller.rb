@@ -73,11 +73,14 @@ class LobbyController < ApplicationController
   def decline_game(data)
     game = Game.find data['game_id']
     game_players = game.players
+    game.destroy
 
     game_players.each do |player|
+      player.update_attribute(:current_game, nil)
       @@lobby[player.id].send_data({
         action: 'decline',
-        player: current_player
+        decliner: current_player,
+        is_decliner: current_player.id == player.id
       }.to_json)
     end
   end

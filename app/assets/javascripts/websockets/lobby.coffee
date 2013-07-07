@@ -35,7 +35,7 @@ $ ->
     else if response.action == 'accept'
       alert "#{response.player.username} has accepted the game."
     else if response.action == 'decline'
-      alert "#{response.player.username} has declined the game."
+      decline(response)
 
   # Refresh Lobby
   refresh = (response) ->
@@ -44,6 +44,10 @@ $ ->
   # Render Game Proposal
   propose = (response) ->
     $('#proposal').html(HandlebarsTemplates['lobby/game_proposal'](response))
+
+  # Render Declined Game
+  decline = (response) ->
+    $('#proposal').html(HandlebarsTemplates['lobby/declined_game'](response))
 
   checkbox_value = (checkbox) ->
     $(checkbox).val()
