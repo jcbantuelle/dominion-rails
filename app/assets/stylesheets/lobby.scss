@@ -1,0 +1,31 @@
+$action: lightgrey;
+$victory: lightgreen;
+$reaction: lightblue;
+
+@mixin gradient($from, $to) {
+  background-image: linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -o-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -moz-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -webkit-linear-gradient(bottom, $to 50%, $from 50%);
+  background-image: -ms-linear-gradient(bottom, $to 50%, $from 50%);
+}
+
+.lobby-card {
+  padding: 3px;
+}
+
+.action {
+  background-color: $action;
+}
+
+.victory {
+  background-color: $victory;
+}
+
+.reaction {
+  background-color: $reaction;
+}
+
+.action.victory {
+  @include gradient($action, $victory);
+}
