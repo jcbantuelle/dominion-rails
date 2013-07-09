@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130707050502) do
+ActiveRecord::Schema.define(version: 20130708235416) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20130707050502) do
     t.datetime "updated_at"
   end
 
-  create_table "player_decks", force: true do |t|
+  create_table "player_cards", force: true do |t|
     t.integer  "game_player_id"
     t.integer  "card_id"
     t.integer  "card_order"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 20130707050502) do
     t.string   "state"
   end
 
-  add_index "player_decks", ["card_id"], name: "index_player_decks_on_card_id", using: :btree
-  add_index "player_decks", ["game_player_id"], name: "index_player_decks_on_game_player_id", using: :btree
+  add_index "player_cards", ["card_id"], name: "index_player_cards_on_card_id", using: :btree
+  add_index "player_cards", ["game_player_id"], name: "index_player_cards_on_game_player_id", using: :btree
 
   create_table "players", force: true do |t|
     t.string   "email",                  default: "",    null: false

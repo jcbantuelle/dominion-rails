@@ -54,7 +54,7 @@ class Game < ActiveRecord::Base
     cards = Card.generate_starting_deck
     game_players.each do |player|
       cards.shuffle.each_with_index do |card, index|
-        PlayerDeck.create(game_player_id: player.id, card_id: card.id, card_order: index+1, state: 'deck')
+        PlayerCard.create(game_player_id: player.id, card_id: card.id, card_order: index+1, state: 'deck')
       end
     end
   end
