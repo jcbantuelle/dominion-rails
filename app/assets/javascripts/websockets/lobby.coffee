@@ -40,6 +40,10 @@ $ ->
       decline(response)
     else if response.action == 'timeout'
       timeout(response)
+    else if response.action == 'accept_received'
+      $('#proposal-form-container').html "Waiting for the other players..."
+    else if response.action == 'accepted_game'
+      window.location.replace "http://#{window.location.host}/game/#{response.game_id}"
     else if response.action == 'server_error'
       alert "Server Error Reported: #{response.error_message}"
 

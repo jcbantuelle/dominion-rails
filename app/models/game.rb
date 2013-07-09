@@ -23,6 +23,10 @@ class Game < ActiveRecord::Base
     game_cards.collect(&:card).select{ |card| card.kingdom? }
   end
 
+  def accept_player(player_id)
+    game_players.where(player_id: player_id).first.update_attribute(:accepted, true)
+  end
+
   def players
     game_players.collect(&:player)
   end
