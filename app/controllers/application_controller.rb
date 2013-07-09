@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   before_filter :log_out_inactive_players
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  cattr_accessor :lobby, instance_accessor: false do
+    {}
+  end
+
   include LobbyManagement, LoginManagement
 
 protected
