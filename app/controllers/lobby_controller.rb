@@ -5,9 +5,9 @@ class LobbyController < ApplicationController
   before_filter :authenticate_player!
 
   def update
-    begin
-      set_lobby_status
-      hijack do |tubesock|
+    set_lobby_status
+    hijack do |tubesock|
+      begin
         @@lobby[current_player.id] = tubesock
         tubesock.onopen do
           refresh_lobby
@@ -24,9 +24,9 @@ class LobbyController < ApplicationController
             end
           end
         end
+      rescue => error
+        send_server_error(@@lobby[current_player.id], error.to_s)
       end
-    rescue => error
-      send_server_error(@@lobby[current_player.id], error)
     end
   end
 
