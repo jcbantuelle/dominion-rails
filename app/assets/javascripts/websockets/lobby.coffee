@@ -40,6 +40,8 @@ $ ->
       decline(response)
     else if response.action == 'timeout'
       timeout(response)
+    else if response.action == 'server_error'
+      alert "Server Error Reported: #{response.error_message}"
 
   # Refresh Lobby
   refresh = (response) ->

@@ -5,24 +5,28 @@ class LobbyController < ApplicationController
   before_filter :authenticate_player!
 
   def update
-    set_lobby_status
-    hijack do |tubesock|
-      @@lobby[current_player.id] = tubesock
-      tubesock.onopen do
-        refresh_lobby
-      end
-      tubesock.onmessage do |data|
-        unless data == 'tubesock-ping'
-          data = JSON.parse data
-          if data['action'] == 'propose'
-            propose_game(data)
-          elsif data['action'] == 'accept'
-            accept_game(data)
-          elsif data['action'] == 'decline'
-            decline_game(data)
+    begin
+      set_lobby_status
+      hijack do |tubesock|
+        @@lobby[current_player.id] = tubesock
+        tubesock.onopen do
+          refresh_lobby
+        end
+        tubesock.onmessage do |data|
+          unless data == 'tubesock-ping'
+            data = JSON.parse data
+            if data['action'] == 'propose'
+              propose_game(data)
+            elsif data['action'] == 'accept'
+              accept_game(data)
+            elsif data['action'] == 'decline'
+              decline_game(data)
+            end
           end
         end
       end
+    rescue => error
+      send_server_error(@@lobby[current_player.id], error)
     end
   end
 
@@ -125,4 +129,5 @@ class LobbyController < ApplicationController
       players: in_game_players
     }.to_json)
   end
+
 end

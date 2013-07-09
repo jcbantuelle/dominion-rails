@@ -24,4 +24,11 @@ protected
     end
   end
 
+  def send_server_error(socket, error)
+    socket.send_data({
+      action: 'server_error',
+      error_message: error
+    }.to_json)
+  end
+
 end
