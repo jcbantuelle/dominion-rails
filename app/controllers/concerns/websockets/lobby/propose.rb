@@ -37,6 +37,7 @@ module Websockets::Lobby::Propose
     Thread.new {
       sleep(30)
       send_timeout(game) if Game.exists?(game.id) && !game.accepted?
+      ActiveRecord::Base.clear_active_connections!
     }
   end
 
