@@ -1,9 +1,12 @@
 class Player < ActiveRecord::Base
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  belongs_to :game, foreign_key: 'current_game'
 
   Warden::Manager.before_logout do |record, warden, options|
     record.update_attribute :online, false

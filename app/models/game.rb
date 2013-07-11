@@ -1,6 +1,9 @@
 class Game < ActiveRecord::Base
   has_many :game_players, dependent: :destroy
   has_many :game_cards, dependent: :destroy
+  has_many :players, foreign_key: 'current_game'
+
+  before_destroy { |record| record.players.update_all(current_game: nil) }
 
   def add_players(player_ids)
     players = Player.where(id: player_ids)
@@ -25,10 +28,6 @@ class Game < ActiveRecord::Base
 
   def accept_player(player_id)
     game_players.where(player_id: player_id).first.update_attribute(:accepted, true)
-  end
-
-  def players
-    game_players.collect(&:player)
   end
 
   def accepted?
