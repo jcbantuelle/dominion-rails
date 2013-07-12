@@ -51,6 +51,11 @@ class Game < ActiveRecord::Base
       { name: card.name.titleize, type: card.type.map(&:to_s).join(' ') }
     }
   end
+
+  def game_player(player_id)
+    game_players.where(player_id: player_id).first
+  end
+
   private
 
   def generate_cards
