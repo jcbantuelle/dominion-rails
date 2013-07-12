@@ -6,3 +6,22 @@
 </form>
 
 <%= javascript_include_tag "websockets/lobby", "data-turbolinks-track" => true %>
+
+<% if @active_game.present? %>
+  <script type="text/javascript">
+    $(function(){
+      lobby.propose(<%= {
+          players: @active_game.players,
+          cards: @active_game.proposed_cards,
+          proposer: @active_game.proposer,
+          is_proposer: current_player.id == @active_game.proposer.id,
+          game_id: @active_game.id
+        }.to_json.html_safe %>
+      )
+
+      <% if @active_game.game_player(current_player.id).accepted? %>
+        lobby.accept_received({})
+      <% end %>
+    })
+  </script>
+<% end %>

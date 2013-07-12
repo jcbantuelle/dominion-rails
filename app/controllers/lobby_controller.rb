@@ -4,6 +4,11 @@ class LobbyController < ApplicationController
   skip_before_filter :unset_lobby_status
   before_filter :authenticate_player!
 
+  def index
+    @active_game = current_player.game
+    redirect_to game_path(@active_game) if @active_game.present? && @active_game.accepted?
+  end
+
   def update
     set_lobby_status
     hijack do |tubesock|
