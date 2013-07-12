@@ -18,16 +18,11 @@ module Websockets::Lobby::Propose
   def send_game_proposal(game)
     game_players = game.players
 
-    proposed_cards = []
-    game.kingdom_cards.each do |card|
-      proposed_cards << {name: card.name.titleize, type: card.type.map(&:to_s).join(' ')}
-    end
-
     game_players.each do |player|
       ApplicationController.lobby[player.id].send_data({
         action: 'propose',
         players: game_players,
-        cards: proposed_cards,
+        cards: game.proposed_cards,
         proposer: current_player,
         is_proposer: current_player.id == player.id,
         game_id: game.id

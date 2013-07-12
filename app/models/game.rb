@@ -46,6 +46,11 @@ class Game < ActiveRecord::Base
     game
   end
 
+  def proposed_cards
+    kingdom_cards.map{ |card|
+      { name: card.name.titleize, type: card.type.map(&:to_s).join(' ') }
+    }
+  end
   private
 
   def generate_cards
