@@ -9,7 +9,7 @@ module Websockets::Lobby::Propose
       refresh_lobby
       send_player_in_game_error(in_game_players)
     else
-      game = Game.generate(data['player_ids'])
+      game = Game.generate(players: data['player_ids'], proposer: current_player.id)
       refresh_lobby
       send_game_proposal(game)
     end

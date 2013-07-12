@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   has_many :game_players, dependent: :destroy
   has_many :game_cards, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
+  belongs_to :proposer, class_name: 'Player', foreign_key: 'proposer_id'
 
   before_destroy { |record| record.players.update_all(current_game: nil) }
 
@@ -38,9 +39,9 @@ class Game < ActiveRecord::Base
     game_players.timed_out.collect(&:player)
   end
 
-  def self.generate(players)
-    game = Game.create
-    game.add_players players
+  def self.generate(attributes)
+    game = Game.create proposer_id: attributes[:proposer]
+    game.add_players attributes[:players]
     game.generate_board
     game
   end

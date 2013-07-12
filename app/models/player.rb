@@ -7,6 +7,7 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :game, foreign_key: 'current_game'
+  has_many :proposed_games, class_name: 'Game', foreign_key: 'proposer_id'
 
   Warden::Manager.before_logout do |record, warden, options|
     record.update_attribute :online, false
