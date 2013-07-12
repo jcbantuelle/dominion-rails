@@ -27,49 +27,49 @@ $ ->
   socket.onmessage = (event) ->
     response = JSON.parse event.data
     if response.action == 'refresh'
-      refresh(response)
+      lobby.refresh(response)
     else if response.action == 'propose'
-      propose(response)
+      lobby.propose(response)
     else if response.action == 'player_count_error'
       alert player_count_error
     else if response.action == 'player_in_game_error'
-      player_in_game_error(response)
+      lobby.player_in_game_error(response)
     else if response.action == 'accept'
       alert "#{response.player.username} has accepted the game."
     else if response.action == 'decline'
-      decline(response)
+      lobby.decline(response)
     else if response.action == 'timeout'
-      timeout(response)
+      lobby.timeout(response)
     else if response.action == 'accept_received'
-      accept_received(response)
+      lobby.accept_received(response)
     else if response.action == 'accepted_game'
       window.location.replace "http://#{window.location.host}/game/#{response.game_id}"
 
   # Refresh Lobby
-  refresh = (response) ->
+  window.lobby.refresh = (response) ->
     $('#players').html(HandlebarsTemplates['lobby/players'](response))
 
   # Render Game Proposal
-  propose = (response) ->
+  window.lobby.propose = (response) ->
     $('#propose-game').hide()
     $('#proposal').html(HandlebarsTemplates['lobby/game_proposal'](response))
 
   # Render Declined Game
-  decline = (response) ->
+  window.lobby.decline = (response) ->
     $('#propose-game').show()
     $('#proposal').html(HandlebarsTemplates['lobby/declined_game'](response))
 
   # Render Proposal Timeout
-  timeout = (response) ->
+  window.lobby.timeout = (response) ->
     $('#propose-game').show()
     $('#proposal').html(HandlebarsTemplates['lobby/proposal_timeout'](response))
 
   # Render Accept Feedback
-  accept_received = (response) ->
+  window.lobby.accept_received = (response) ->
     $('#proposal-form-container').html(HandlebarsTemplates['lobby/accept_received'](response))
 
   # Render Player In Game Error
-  player_in_game_error = (response) ->
+  window.lobby.player_in_game_error = (response) ->
     $('#proposal').html(HandlebarsTemplates['lobby/player_in_game_error'](response))
 
   checkbox_value = (checkbox) ->
