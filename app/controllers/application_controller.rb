@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   cattr_accessor :lobby, instance_accessor: false do
     {}
   end
+  cattr_accessor :games, instance_accessor: false do
+    {}
+  end
 
   include LobbyManagement, LoginManagement
 

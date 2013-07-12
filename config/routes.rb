@@ -1,11 +1,11 @@
 Dominion::Application.routes.draw do
   devise_for :players
 
-  root to: "lobby#index"
-  get "/lobby/update" => "lobby#update"
+  root to: 'lobby#index'
+  get '/lobby/update' => 'lobby#update'
 
-  # root to: 'games#lobby'
-  # get '/lobby' => 'games#lobby', as: 'lobby'
+  get '/game/:id' => 'game#show', as: :game
+  get '/game/update' => 'game#update'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
