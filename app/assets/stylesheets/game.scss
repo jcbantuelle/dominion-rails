@@ -16,10 +16,25 @@ $card_height: 46px;
 .card-name span {
   display: inline-block;
   margin-top: 10px;
+  padding: 1px;
 }
 
 .card-details {
   text-align: center;
   padding-left: 8px;
   padding-right: 5px;
+  line-height: 15px;
+  padding-top: 5px;
+}
+
+.card-tooltip {
+  display: none;
+}
+
+.remaining {
+  color: lightblue;
+}
+
+#common-cards {
+  width: 125px;
 }
