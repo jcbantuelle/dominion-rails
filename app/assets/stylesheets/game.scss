@@ -1,0 +1,25 @@
+$card_height: 46px;
+
+.card-container {
+  height: $card_height;
+  padding-bottom: 5px;
+}
+
+.card-container div {
+  float: right;
+}
+
+.card-name {
+  height: $card_height;
+}
+
+.card-name span {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.card-details {
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 5px;
+}
