@@ -24,7 +24,7 @@ class Game < ActiveRecord::Base
   end
 
   def kingdom_cards
-    game_cards.collect(&:card).select{ |card| card.kingdom? }
+    game_cards.select{ |card| card.kingdom? }
   end
 
   def accept_player(player_id)
@@ -48,7 +48,7 @@ class Game < ActiveRecord::Base
 
   def proposed_cards
     kingdom_cards.map{ |card|
-      { name: card.name.titleize, type: card.type.map(&:to_s).join(' ') }
+      { name: card.name.titleize, type: card.type_class }
     }
   end
 
