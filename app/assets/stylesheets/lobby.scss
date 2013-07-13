@@ -1,6 +1,8 @@
 $action: lightgrey;
 $victory: lightgreen;
 $reaction: lightblue;
+$treasure: gold;
+$curse: violet;
 $busy: grey;
 $player_margin: 25px;
 
@@ -41,6 +43,14 @@ $player_margin: 25px;
 
 .reaction {
   background-color: $reaction;
+}
+
+.treasure {
+  background-color: $treasure;
+}
+
+.curse {
+  background-color: $curse;
 }
 
 .action.victory {

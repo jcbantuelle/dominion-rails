@@ -6,6 +6,14 @@ class GameCard < ActiveRecord::Base
     card.kingdom?
   end
 
+  def victory?
+    card.victory?
+  end
+
+  def treasure?
+    card.treasure?
+  end
+
   def type_class
     card.type.map(&:to_s).join(' ')
   end

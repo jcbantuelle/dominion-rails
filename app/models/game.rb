@@ -27,6 +27,18 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.kingdom? }
   end
 
+  def victory_cards
+    game_cards.select{ |card| card.victory? }
+  end
+
+  def treasure_cards
+    game_cards.select{ |card| card.treasure? }
+  end
+
+  def curse_card
+    game_cards.select{ |card| card.name == 'curse' }.first
+  end
+
   def accept_player(player_id)
     game_players.where(player_id: player_id).first.update_attribute(:accepted, true)
   end

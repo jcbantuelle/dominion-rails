@@ -4,5 +4,13 @@
   <div class="span2" id="kingdom-cards">
     <%= render partial: 'cards', locals: { cards: @game.kingdom_cards } %>
   </div>
+
+  <!-- Common Cards -->
+  <div class="span1" id="common-cards">
+    <%= render partial: 'cards', locals: { cards: @game.victory_cards } %>
+    <%= render partial: 'cards', locals: { cards: @game.treasure_cards } %>
+    <%= render partial: 'cards', locals: { cards: [@game.curse_card] } %>
   </div>
 </div>
+
+<%= javascript_include_tag "websockets/game", "data-turbolinks-track" => true %>
