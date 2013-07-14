@@ -14,8 +14,8 @@
 
   <div class="span6">
     <div id="game-log">
-      Turn Order is: <%= @game.turn_order.collect(&:username).join(', ') %><br /><br />
-      <strong>- <%= @game.current_turn_player.id == current_player.id ? 'Your' : "#{@game.current_turn_player.username}'s" %> turn <%= @game.turn % @game.player_count %> -</strong>
+      Turn Order is: <%= @game.game_players.collect(&:username).join(', ') %><br /><br />
+      <strong>- <%= @game.current_turn.game_player.player_id == current_player.id ? 'Your' : "#{@game.current_turn.game_player.username}'s" %> turn <%= @game.turn % @game.player_count %> -</strong>
     </div>
     <div id="action-area">
     </div>

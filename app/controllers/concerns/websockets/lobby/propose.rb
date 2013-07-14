@@ -9,9 +9,10 @@ module Websockets::Lobby::Propose
       refresh_lobby
       send_player_in_game_error(in_game_players)
     else
-      game = Game.generate(players: data['player_ids'], proposer: current_player.id)
+      game_creator = GameCreator.new(players: data['player_ids'], proposer: current_player.id)
+      game_creator.create
       refresh_lobby
-      send_game_proposal(game)
+      send_game_proposal(game_creator.game)
     end
   end
 
@@ -22,7 +23,7 @@ module Websockets::Lobby::Propose
       ApplicationController.lobby[player.id].send_data({
         action: 'propose',
         players: game_players,
-        cards: game.proposed_cards,
+        cards: proposed_cards(game),
         proposer: current_player,
         is_proposer: current_player.id == player.id,
         game_id: game.id
@@ -56,6 +57,12 @@ module Websockets::Lobby::Propose
       }.to_json) if ApplicationController.lobby[player.id]
     end
     refresh_lobby
+  end
+
+  def proposed_cards(game)
+    game.kingdom_cards.map{ |card|
+      { name: card.name.titleize, type: card.type_class }
+    }
   end
 
 end

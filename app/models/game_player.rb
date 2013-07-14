@@ -5,7 +5,6 @@ class GamePlayer < ActiveRecord::Base
   has_many :turns
 
   scope :timed_out, ->{ where accepted: false }
-  scope :ordered, ->{ order 'turn_order' }
 
   def username
     player.username
