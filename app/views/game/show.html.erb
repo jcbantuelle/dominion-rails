@@ -17,6 +17,11 @@
       Turn Order is: <%= @game.turn_order.collect(&:username).join(', ') %><br /><br />
       <strong>- <%= @game.current_turn_player.id == current_player.id ? 'Your' : "#{@game.current_turn_player.username}'s" %> turn <%= @game.turn % @game.player_count %> -</strong>
     </div>
+    <div id="action-area">
+    </div>
+    <div id="hand">
+    </div>
+  </div>
 </div>
 
 <%= javascript_include_tag "websockets/game", "data-turbolinks-track" => true %>

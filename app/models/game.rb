@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   has_many :game_players, dependent: :destroy
   has_many :game_cards, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
+  has_many :turns
   belongs_to :proposer, class_name: 'Player', foreign_key: 'proposer_id'
 
   before_destroy { |record| record.players.update_all(current_game: nil) }
@@ -52,9 +53,10 @@ class Game < ActiveRecord::Base
   end
 
   def self.generate(attributes)
-    game = Game.create proposer_id: attributes[:proposer], turn: 1
+    game = Game.create proposer_id: attributes[:proposer], turn: 0
     game.add_players attributes[:players]
     game.generate_board
+    game.next_turn
     game
   end
 
@@ -73,7 +75,16 @@ class Game < ActiveRecord::Base
   end
 
   def current_turn_player
-    turn_order[player_turn].player
+    turn_order[player_turn]
+  end
+
+  def next_turn
+    update_attribute :turn, turn+1
+    Turn.next(self)
+  end
+
+  def current_turn
+    turns.where(turn: turn).first
   end
 
   private

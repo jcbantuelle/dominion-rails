@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130712015450) do
+ActiveRecord::Schema.define(version: 20130714144928) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -87,5 +87,17 @@ ActiveRecord::Schema.define(version: 20130712015450) do
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true, using: :btree
+
+  create_table "turns", force: true do |t|
+    t.integer "game_id"
+    t.integer "game_player_id"
+    t.integer "actions"
+    t.integer "buys"
+    t.integer "coins"
+    t.integer "turn"
+  end
+
+  add_index "turns", ["game_id"], name: "index_turns_on_game_id", using: :btree
+  add_index "turns", ["game_player_id"], name: "index_turns_on_game_player_id", using: :btree
 
 end
