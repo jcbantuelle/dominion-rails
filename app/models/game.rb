@@ -52,7 +52,7 @@ class Game < ActiveRecord::Base
   end
 
   def self.generate(attributes)
-    game = Game.create proposer_id: attributes[:proposer]
+    game = Game.create proposer_id: attributes[:proposer], turn: 1
     game.add_players attributes[:players]
     game.generate_board
     game
@@ -66,6 +66,14 @@ class Game < ActiveRecord::Base
 
   def game_player(player_id)
     game_players.where(player_id: player_id).first
+  end
+
+  def turn_order
+    game_players.ordered
+  end
+
+  def current_turn_player
+    turn_order[player_turn].player
   end
 
   private
@@ -83,6 +91,10 @@ class Game < ActiveRecord::Base
         PlayerCard.create(game_player_id: player.id, card_id: card.id, card_order: index+1, state: 'deck')
       end
     end
+  end
+
+  def player_turn
+    (turn % player_count) - 1
   end
 
 end
