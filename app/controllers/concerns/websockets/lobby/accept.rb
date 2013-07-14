@@ -2,7 +2,7 @@ module Websockets::Lobby::Accept
 
   def accept_game(data)
     game = Game.find data['game_id']
-    game.accept_player(current_player.id)
+    PlayerAccepter.accept(game, current_player)
 
     if game.accepted?
       move_players_to_game(game)
