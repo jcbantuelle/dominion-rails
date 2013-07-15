@@ -2,9 +2,9 @@ class GameCreator
 
   attr_accessor :game
 
-  def initialize(attributes)
-    @player_ids = attributes[:players]
-    @proposer = attributes[:proposer]
+  def initialize(player_ids, proposer)
+    @player_ids = player_ids
+    @proposer = proposer
   end
 
   def create

@@ -1,18 +1,19 @@
 module Websockets::Lobby::Propose
 
   def propose_game(data)
-    data['player_ids'] << current_player.id
-    in_game_players = Player.where(id: data['player_ids']).in_game
-    if data['player_ids'].length > 4
+    player_ids = data['player_ids'] << current_player.id
+    in_game_players = Player.where(id: player_ids).in_game
+
+    if too_many_players?(player_ids)
       send_player_count_error
-    elsif in_game_players.length > 0
+    elsif player_already_in_game?(in_game_players)
       refresh_lobby
       send_player_in_game_error(in_game_players)
     else
-      game_creator = GameCreator.new(players: data['player_ids'], proposer: current_player.id)
-      game_creator.create
+      game_creator = GameCreator.new(player_ids, current_player.id)
+      game = game_creator.create
       refresh_lobby
-      send_game_proposal(game_creator.game)
+      send_game_proposal(game)
     end
   end
 
@@ -30,11 +31,7 @@ module Websockets::Lobby::Propose
       }.to_json) if ApplicationController.lobby[player.id]
     end
 
-    Thread.new {
-      sleep(30)
-      send_timeout(game) if Game.exists?(game.id) && !game.reload.accepted?
-      ActiveRecord::Base.clear_active_connections!
-    }
+    set_timeout(game)
   end
 
   def send_player_in_game_error(in_game_players)
@@ -65,4 +62,19 @@ module Websockets::Lobby::Propose
     }
   end
 
+  def too_many_players?(players)
+    players.length > 4
+  end
+
+  def player_already_in_game?(players)
+    players.length > 0
+  end
+
+  def set_timeout(game)
+    Thread.new {
+      sleep(30)
+      send_timeout(game) if Game.exists?(game.id) && !game.reload.accepted?
+      ActiveRecord::Base.clear_active_connections!
+    }
+  end
 end
