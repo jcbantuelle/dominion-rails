@@ -42,8 +42,8 @@ module Websockets::Lobby::Propose
   end
 
   def send_timeout(game)
-    game_players = game.players
-    timeout_players = game.timed_out_players
+    game_players = game.players.to_a
+    timeout_players = game.timed_out_players.to_a
     game.destroy
 
     game_players.each do |player|
