@@ -20,19 +20,26 @@
     <div id="action-area">
     </div>
     <div id="hand">
-      <% last_card = 0 %>
+      <% last_card = nil %>
       <% @game.game_player(current_player.id).hand.each do |player_card|
         card = player_card.card
-        unless card.id == last_card %>
-          <% unless last_card == 0 %>
+        unless card.id == last_card.try(:id) %>
+          <% unless last_card.nil? %>
             </ul>
+            <div class="card-tooltip">
+              <%= image_tag "#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
+            </div>
           <% end %>
           <% card_count = 1 %>
-          <% last_card = card.id %>
+          <% last_card = card %>
           <ul class="hand-card">
         <% end %>
         <li><%= image_tag "#{card.name}.jpg", size: '64x103', class: 'kingdom-card card' %></li>
       <% end %>
+      </ul>
+      <div class="card-tooltip">
+        <%= image_tag "#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
+      </div>
     </div>
   </div>
 </div>
