@@ -46,18 +46,14 @@ $card_height: 46px;
 }
 
 #hand ul {
+  float: left;
   list-style-type: none;
   margin: 0px;
   padding: 0px;
+  padding-left: 10px;
 }
 
-#hand ul ul {
+#hand .hand-card li {
   position: relative;
-  top: -80px;
-  //left: 15px;
-}
-
-.hand-card {
-  float: left;
-  padding-right: 10px;
+  height: 20px;
 }

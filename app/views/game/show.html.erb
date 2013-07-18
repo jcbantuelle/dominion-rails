@@ -21,23 +21,17 @@
     </div>
     <div id="hand">
       <% last_card = 0 %>
-      <% card_count = 0 %>
       <% @game.game_player(current_player.id).hand.each do |player_card|
         card = player_card.card
-        if card.id == last_card
-          card_count += 1
-        else
-          card_count.times do %>
+        unless card.id == last_card %>
+          <% unless last_card == 0 %>
             </ul>
           <% end %>
-          <% unless last_card == 0 %>
-            </div>
-          <% end %>
-          <div class="hand-card">
           <% card_count = 1 %>
           <% last_card = card.id %>
+          <ul class="hand-card">
         <% end %>
-        <ul><li><%= image_tag "#{card.name}.jpg", size: '64x103', class: 'kingdom-card card' %></li>
+        <li><%= image_tag "#{card.name}.jpg", size: '64x103', class: 'kingdom-card card' %></li>
       <% end %>
     </div>
   </div>
