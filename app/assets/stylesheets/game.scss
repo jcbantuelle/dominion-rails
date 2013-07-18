@@ -29,6 +29,7 @@ $card_height: 46px;
 
 .card-tooltip {
   display: none;
+  z-index: 10000;
 }
 
 .remaining {
@@ -42,4 +43,21 @@ $card_height: 46px;
 #game-log {
   height: 250px;
   overflow: scroll;
+}
+
+#hand ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#hand ul ul {
+  position: relative;
+  top: -80px;
+  //left: 15px;
+}
+
+.hand-card {
+  float: left;
+  padding-right: 10px;
 }

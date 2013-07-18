@@ -11,4 +11,12 @@ class GamePlayer < ActiveRecord::Base
     player.username
   end
 
+  def deck
+    player_cards.deck
+  end
+
+  def hand
+    player_cards.hand
+  end
+
 end

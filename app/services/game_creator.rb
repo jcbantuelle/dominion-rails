@@ -12,6 +12,7 @@ class GameCreator
     add_players
     add_game_cards
     add_player_decks
+    draw_hands
     TurnChanger.first_turn @game
     @game.reload
   end
@@ -38,6 +39,12 @@ class GameCreator
       cards.shuffle.each_with_index do |card, index|
         PlayerCard.create(game_player_id: player.id, card_id: card.id, card_order: index+1, state: 'deck')
       end
+    end
+  end
+
+  def draw_hands
+    @game.game_players.each do |player|
+      CardDrawer.draw(player, 5)
     end
   end
 
