@@ -7,7 +7,6 @@ module Websockets::Lobby::Decline
       game.destroy
 
       game_players.each do |player|
-        player.update_attribute(:current_game, nil)
         ApplicationController.lobby[player.id].send_data({
           action: 'decline',
           decliner: current_player,

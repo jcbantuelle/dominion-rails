@@ -47,7 +47,6 @@ module Websockets::Lobby::Propose
     game.destroy
 
     game_players.each do |player|
-      player.update_attribute(:current_game, nil)
       ApplicationController.lobby[player.id].send_data({
         action: 'timeout',
         players: timeout_players
