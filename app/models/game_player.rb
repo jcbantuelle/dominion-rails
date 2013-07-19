@@ -19,4 +19,8 @@ class GamePlayer < ActiveRecord::Base
     player_cards.hand
   end
 
+  def discard
+    player_cards.discard
+  end
+
 end

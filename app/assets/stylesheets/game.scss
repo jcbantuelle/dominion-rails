@@ -45,6 +45,10 @@ $card_height: 46px;
   overflow: scroll;
 }
 
+#hand {
+  padding-top: 5px;
+}
+
 #hand ul {
   float: left;
   list-style-type: none;
@@ -56,4 +60,27 @@ $card_height: 46px;
 #hand .hand-card li {
   position: relative;
   height: 20px;
+}
+
+#game-info {
+  font-size: 10pt;
+}
+
+#draw-pile .card {
+  background-color: grey;
+  color: grey;
+}
+
+#discard-pile .card {
+  background-color: grey;
+  color: grey;
+  padding: 2px;
+}
+
+#action-area div {
+  float: left;
+}
+
+#turn-status {
+  padding-right: 10px;
 }

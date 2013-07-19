@@ -18,7 +18,32 @@
       <strong>- <%= @game.current_turn.game_player.player_id == current_player.id ? 'Your' : "#{@game.current_turn.game_player.username}'s" %> turn <%= @game.turn % @game.player_count %> -</strong>
     </div>
     <div id="action-area">
+      <div id="turn-status">
+        <% if @game.current_turn.game_player.player_id == current_player.id %>
+          Actions: <strong><%= @game.current_turn.actions %></strong>
+          <br />
+          Buys: <strong><%= @game.current_turn.buys %></strong>
+          <br />
+          To Spend: <strong>$<%= @game.current_turn.coins %></strong>
+        <% end %>
+      </div>
+      <div id="game-info">
+        Draw Pile:
+        <span id="draw-pile">
+          <% @game.game_player(current_player.id).deck.count.times do %>
+            <span class="card">|</span>
+          <% end %>
+        </span>
+        <br />
+        Discard Pile:
+        <span id="discard-pile">
+          <% @game.game_player(current_player.id).discard.count.times do %>
+            <span class="card"></span>
+          <% end %>
+        </span>
+      </div>
     </div>
+    <br class="clear" />
     <div id="hand">
       <% last_card = nil %>
       <% @game.game_player(current_player.id).hand.each do |player_card|
