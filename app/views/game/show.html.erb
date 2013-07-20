@@ -2,14 +2,10 @@
 
   <!-- Kingdom Cards -->
   <div class="span2" id="kingdom-cards">
-    <%= render partial: 'cards', locals: { cards: @game.kingdom_cards } %>
   </div>
 
   <!-- Common Cards -->
   <div class="span1" id="common-cards">
-    <%= render partial: 'cards', locals: { cards: @game.victory_cards } %>
-    <%= render partial: 'cards', locals: { cards: @game.treasure_cards } %>
-    <%= render partial: 'cards', locals: { cards: [@game.curse_card] } %>
   </div>
 
   <div class="span6">
@@ -52,18 +48,18 @@
           <% unless last_card.nil? %>
             </ul>
             <div class="card-tooltip">
-              <%= image_tag "#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
+              <%= image_tag "/images/cards/#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
             </div>
           <% end %>
           <% card_count = 1 %>
           <% last_card = card %>
           <ul class="hand-card">
         <% end %>
-        <li><%= image_tag "#{card.name}.jpg", size: '64x103', class: 'kingdom-card card' %></li>
+        <li><%= image_tag "/images/cards/#{card.name}.jpg", size: '64x103', class: 'kingdom-card card' %></li>
       <% end %>
       </ul>
       <div class="card-tooltip">
-        <%= image_tag "#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
+        <%= image_tag "/images/cards/#{last_card.name}.jpg", size: '176x273', class: 'full-size' %>
       </div>
     </div>
   </div>

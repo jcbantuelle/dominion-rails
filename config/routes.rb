@@ -5,7 +5,7 @@ Dominion::Application.routes.draw do
   get '/lobby/update' => 'lobby#update'
 
   get '/game/:id' => 'game#show', as: :game
-  get '/game/update' => 'game#update'
+  get '/game/:id/update' => 'game#update'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
