@@ -22,7 +22,7 @@ module LobbyManagement
   end
 
   def flush_in_game_players
-    game_players = Player.in_game.collect(&:id)
+    game_players = Player.in_game.select{ |player| player.game.accepted? }.collect(&:id)
     ApplicationController.lobby.reject!{ |player_id, socket| game_players.include? player_id }
   end
 
