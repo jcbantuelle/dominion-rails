@@ -24,7 +24,7 @@ module Websockets::Lobby::Propose
       ApplicationController.lobby[player.id].send_data({
         action: 'propose',
         players: game_players,
-        cards: proposed_cards(game),
+        cards: game.kingdom_cards.collect(&:json),
         proposer: current_player,
         is_proposer: current_player.id == player.id,
         game_id: game.id
@@ -53,12 +53,6 @@ module Websockets::Lobby::Propose
       }.to_json) if ApplicationController.lobby[player.id]
     end
     refresh_lobby
-  end
-
-  def proposed_cards(game)
-    game.kingdom_cards.map{ |card|
-      { name: card.name.titleize, type: card.type_class }
-    }
   end
 
   def too_many_players?(players)

@@ -25,4 +25,14 @@ class GameCard < ActiveRecord::Base
   def cost
     card.cost
   end
+
+  def json
+    {
+      name: name,
+      type_class: type_class,
+      cost: cost[:coin],
+      remaining: remaining,
+      title: name.titleize
+    }
+  end
 end

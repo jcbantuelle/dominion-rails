@@ -7,7 +7,7 @@ module Websockets::Game::Refresh
         kingdom_cards: game_cards('kingdom'),
         victory_cards: game_cards('victory'),
         treasure_cards: game_cards('treasure'),
-        miscellaneous_cards: [@game.curse_card]
+        miscellaneous_cards: [@game.curse_card.json]
       }.to_json) if ApplicationController.games[@game.id][player.id]
     end
   end
@@ -15,17 +15,7 @@ module Websockets::Game::Refresh
   private
 
   def game_cards(type)
-    cards = []
-    sort_cards(@game.send("#{type}_cards")).each do |card|
-      cards << {
-        name: card.name,
-        type_class: card.type_class,
-        cost: card.cost[:coin],
-        remaining: card.remaining,
-        title: card.name.titleize
-      }
-    end
-    cards
+    sort_cards(@game.send("#{type}_cards")).collect(&:json)
   end
 
   def sort_cards(cards)
