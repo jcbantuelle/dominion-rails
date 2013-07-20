@@ -1,5 +1,6 @@
 $ ->
   socket = new WebSocket("ws://#{window.location.host}/lobby/update")
+  window.lobby = {}
   player_count_error = 'Game can not have more than 4 players.'
 
   # Propose Game
