@@ -2,6 +2,7 @@ module LobbyManagement
 
   def refresh_lobby
     flush_offline_players
+    flush_in_game_players
     update_lobby
   end
 
@@ -18,6 +19,11 @@ module LobbyManagement
   def flush_offline_players
     online_lobby_player_ids = online_lobby_players.collect(&:id)
     ApplicationController.lobby.select! { |player_id, socket| online_lobby_player_ids.include? player_id }
+  end
+
+  def flush_in_game_players
+    game_players = Player.in_game.collect(&:id)
+    ApplicationController.lobby.reject!{ |player_id, socket| game_players.include? player_id }
   end
 
   def update_lobby
