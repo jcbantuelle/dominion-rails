@@ -21,14 +21,7 @@ module Websockets::Lobby::Propose
     game_players = game.players
 
     game_players.each do |player|
-      ApplicationController.lobby[player.id].send_data({
-        action: 'propose',
-        players: game_players,
-        cards: game.kingdom_cards.collect(&:json),
-        proposer: current_player,
-        is_proposer: current_player.id == player.id,
-        game_id: game.id
-      }.to_json) if ApplicationController.lobby[player.id]
+      ApplicationController.lobby[player.id].send_data(proposal_json(game)) if ApplicationController.lobby[player.id]
     end
 
     set_timeout(game)
@@ -70,4 +63,14 @@ module Websockets::Lobby::Propose
       ActiveRecord::Base.clear_active_connections!
     }
   end
+
+  def proposal_json(game)
+    {
+      action: 'propose',
+      players: game.players,
+      cards: game.kingdom_cards.collect(&:json),
+      proposer: current_player,
+      is_proposer: current_player.id == player.id,
+      game_id: game.id
+    }.to_json
 end
