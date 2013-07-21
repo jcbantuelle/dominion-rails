@@ -22,7 +22,9 @@ module Websockets::JsonFormatter
     {
       action: 'refresh',
       kingdom_cards: game_cards(game, 'kingdom'),
-      common_cards: common_cards(game)
+      common_cards: common_cards(game),
+      current_turn: game.current_turn,
+      my_turn: is_current_player?(game.current_turn.game_player.player)
     }.to_json
   end
 

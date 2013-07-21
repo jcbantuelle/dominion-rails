@@ -11,6 +11,7 @@ $ ->
   window.game.refresh = (response) ->
     game.refresh_kingdom_cards(response)
     game.refresh_common_cards(response)
+    game.refresh_turn_status(response)
     game.refresh_tooltips()
 
   window.game.refresh_kingdom_cards = (response)->
@@ -18,6 +19,9 @@ $ ->
 
   window.game.refresh_common_cards = (response)->
     $('#common-cards').html(HandlebarsTemplates['game/cards'](response.common_cards))
+
+  window.game.refresh_turn_status = (response)->
+    $('#turn-status').html(HandlebarsTemplates['game/turn_status'](response))
 
   # Tooltip Refresh
   window.game.refresh_tooltips = () ->

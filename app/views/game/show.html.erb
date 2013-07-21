@@ -15,13 +15,6 @@
     </div>
     <div id="action-area">
       <div id="turn-status">
-        <% if @game.current_turn.game_player.player_id == current_player.id %>
-          Actions: <strong><%= @game.current_turn.actions %></strong>
-          <br />
-          Buys: <strong><%= @game.current_turn.buys %></strong>
-          <br />
-          To Spend: <strong>$<%= @game.current_turn.coins %></strong>
-        <% end %>
       </div>
       <div id="game-info">
         Draw Pile:
