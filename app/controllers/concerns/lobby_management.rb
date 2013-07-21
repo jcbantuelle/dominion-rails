@@ -29,7 +29,7 @@ module LobbyManagement
   def update_lobby
     ApplicationController.lobby.each_pair do |player_id, socket|
       lobby_players = players_without_self(player_id)
-      socket.send_data({ action: 'refresh', players: lobby_players }.to_json) unless lobby_players.blank?
+      socket.send_data refresh_lobby_json(lobby_players) unless lobby_players.blank?
     end
   end
 

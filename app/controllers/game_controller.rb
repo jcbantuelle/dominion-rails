@@ -1,5 +1,5 @@
 class GameController < ApplicationController
-  include Tubesock::Hijack, Websockets::Game::Refresh
+  include Tubesock::Hijack, Websockets::Game::Refresh, Websockets::JsonFormatter
 
   before_filter :authenticate_player!
 
