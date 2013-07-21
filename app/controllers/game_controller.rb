@@ -16,11 +16,22 @@ class GameController < ApplicationController
         refresh_game
       end
       tubesock.onmessage do |data|
-        unless data == 'tubesock-ping'
-          data = JSON.parse data
-        end
+        process_message data
       end
       ActiveRecord::Base.clear_active_connections!
+    end
+  end
+
+  def process_message(data)
+    unless data == 'tubesock-ping'
+      data = JSON.parse data
+      # if data['action'] == 'propose'
+      #   propose_game(data)
+      # elsif data['action'] == 'accept'
+      #   accept_game(data)
+      # elsif data['action'] == 'decline'
+      #   decline_game(data)
+      # end
     end
   end
 
