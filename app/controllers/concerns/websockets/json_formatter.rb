@@ -19,11 +19,14 @@ module Websockets::JsonFormatter
   end
 
   def refresh_game_json(game)
+    player = game.game_player(current_player.id)
     {
       action: 'refresh',
       kingdom_cards: game_cards(game, 'kingdom'),
       common_cards: common_cards(game),
       current_turn: game.current_turn,
+      deck_count: player.deck.count,
+      discard_count: player.discard.count,
       my_turn: is_current_player?(game.current_turn.game_player.player)
     }.to_json
   end

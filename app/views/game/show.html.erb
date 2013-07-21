@@ -19,16 +19,10 @@
       <div id="game-info">
         Draw Pile:
         <span id="draw-pile">
-          <% @game.game_player(current_player.id).deck.count.times do %>
-            <span class="card">|</span>
-          <% end %>
         </span>
         <br />
         Discard Pile:
         <span id="discard-pile">
-          <% @game.game_player(current_player.id).discard.count.times do %>
-            <span class="card"></span>
-          <% end %>
         </span>
       </div>
     </div>

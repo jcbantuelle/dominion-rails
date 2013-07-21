@@ -12,6 +12,7 @@ $ ->
     game.refresh_kingdom_cards(response)
     game.refresh_common_cards(response)
     game.refresh_turn_status(response)
+    game.refresh_game_info(response)
     game.refresh_tooltips()
 
   window.game.refresh_kingdom_cards = (response)->
@@ -23,8 +24,12 @@ $ ->
   window.game.refresh_turn_status = (response)->
     $('#turn-status').html(HandlebarsTemplates['game/turn_status'](response))
 
+  window.game.refresh_game_info = (response)->
+    $('#draw-pile').html(HandlebarsTemplates['game/draw_pile'](response.deck_count))
+    $('#discard-pile').html(HandlebarsTemplates['game/discard_pile'](response.discard_count))
+
   # Tooltip Refresh
-  window.game.refresh_tooltips = () ->
+  window.game.refresh_tooltips = ->
     $('.card-container .card').tooltip({
       position: 'bottom right',
       offset: [-66,5]

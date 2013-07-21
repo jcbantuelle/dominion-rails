@@ -17,3 +17,10 @@
 #= require turbolinks
 #= require_directory
 #= require_tree ./templates
+
+Handlebars.registerHelper('times', (n, block) ->
+  if n > 0
+    accum = for i in [1..n]
+      block.fn(i)
+    _.reduce(accum, ((memo, elem)-> memo + elem), '')
+)
