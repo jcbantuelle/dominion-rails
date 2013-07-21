@@ -17,9 +17,7 @@ $ ->
     $('#kingdom-cards').html(HandlebarsTemplates['game/cards'](response.kingdom_cards))
 
   window.game.refresh_common_cards = (response)->
-    $('#common-cards').html(HandlebarsTemplates['game/cards'](response.victory_cards))
-    $('#common-cards').append(HandlebarsTemplates['game/cards'](response.treasure_cards))
-    $('#common-cards').append(HandlebarsTemplates['game/cards'](response.miscellaneous_cards))
+    $('#common-cards').html(HandlebarsTemplates['game/cards'](response.common_cards))
 
   # Tooltip Refresh
   window.game.refresh_tooltips = () ->

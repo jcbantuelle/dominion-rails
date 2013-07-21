@@ -22,9 +22,7 @@ module Websockets::JsonFormatter
     {
       action: 'refresh',
       kingdom_cards: game_cards(game, 'kingdom'),
-      victory_cards: game_cards(game, 'victory'),
-      treasure_cards: game_cards(game, 'treasure'),
-      miscellaneous_cards: [game.curse_card.json]
+      common_cards: common_cards(game)
     }.to_json
   end
 
@@ -73,6 +71,10 @@ module Websockets::JsonFormatter
 
   def is_current_player?(player)
     current_player.id == player.id
+  end
+
+  def common_cards(game)
+    game_cards(game, 'victory') + game_cards(game, 'treasure') + [game.curse_card.json]
   end
 
   def game_cards(game, type)
