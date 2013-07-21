@@ -21,14 +21,14 @@ module Websockets::Lobby::Propose
     game_players = game.players
 
     game_players.each do |player|
-      ApplicationController.lobby[player.id].send_data game_proposal_json(game, player) if ApplicationController.lobby[player.id]
+      send_lobby_data player, game_proposal_json(game, player)
     end
 
     set_timeout(game)
   end
 
   def send_player_in_game_error(in_game_players)
-    ApplicationController.lobby[current_player.id].send_data player_in_game_json(in_game_players)
+    send_lobby_data current_player, player_in_game_json(in_game_players)
   end
 
   def send_timeout(game)
@@ -37,7 +37,7 @@ module Websockets::Lobby::Propose
     game.destroy
 
     game_players.each do |player|
-      ApplicationController.lobby[player.id].send_data timeout_json(timeout_players) if ApplicationController.lobby[player.id]
+      send_lobby_data player, timeout_json(timeout_players)
     end
     refresh_lobby
   end

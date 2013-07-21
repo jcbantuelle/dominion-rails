@@ -31,11 +31,16 @@ protected
     end
   end
 
-  def send_server_error(socket, error)
-    socket.send_data({
-      action: 'server_error',
-      error_message: error
-    }.to_json)
+  def send_lobby_data(player, data)
+    send_socket_data(ApplicationController.lobby[player.id], data) if ApplicationController.lobby[player.id]
+  end
+
+  def send_game_data(player, game, data)
+    send_socket_data(ApplicationController.games[game.id][player.id], data) if ApplicationController.games[game.id][player.id]
+  end
+
+  def send_socket_data(socket, data)
+    socket.send_data data
   end
 
 end

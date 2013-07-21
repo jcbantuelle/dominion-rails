@@ -7,7 +7,7 @@ module Websockets::Lobby::Decline
       game.destroy
 
       game_players.each do |player|
-        ApplicationController.lobby[player.id].send_data decline_game_json(player) if ApplicationController.lobby[player.id]
+        send_lobby_data player, decline_game_json(player)
       end
       refresh_lobby
     end
