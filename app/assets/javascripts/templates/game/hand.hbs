@@ -1,0 +1,12 @@
+{{#each this}}
+  <ul class="hand-card">
+    {{#times count}}
+      <li>
+        <img src="/images/cards/{{../name}}.jpg" width="64" height="103" class="kingdom-card card" />
+      </li>
+    {{/times}}
+  </ul>
+  <div class="card-tooltip">
+    <img src="/images/cards/{{name}}.jpg" width="176" height="273" class="full-size" />
+  </div>
+{{/each}}

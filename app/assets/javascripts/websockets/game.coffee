@@ -13,6 +13,7 @@ $ ->
     game.refresh_common_cards(response)
     game.refresh_turn_status(response)
     game.refresh_game_info(response)
+    game.refresh_hand(response)
     game.refresh_tooltips()
 
   window.game.refresh_kingdom_cards = (response)->
@@ -27,6 +28,9 @@ $ ->
   window.game.refresh_game_info = (response)->
     $('#draw-pile').html(HandlebarsTemplates['game/draw_pile'](response.deck_count))
     $('#discard-pile').html(HandlebarsTemplates['game/discard_pile'](response.discard_count))
+
+  window.game.refresh_hand = (response)->
+    $('#hand').html(HandlebarsTemplates['game/hand'](response.hand))
 
   # Tooltip Refresh
   window.game.refresh_tooltips = ->

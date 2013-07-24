@@ -27,6 +27,7 @@ module Websockets::JsonFormatter
       current_turn: game.current_turn,
       deck_count: player.deck.count,
       discard_count: player.discard.count,
+      hand: sorted_hand(player),
       my_turn: is_current_player?(game.current_turn.game_player.player)
     }.to_json
   end
@@ -90,4 +91,7 @@ module Websockets::JsonFormatter
     cards.sort{ |a, b| b.cost[:coin] <=> a.cost[:coin] }
   end
 
+  def sorted_hand(player)
+    player.hand.group_by { |card| card.name }.map{|name,cards| {name: name, count: cards.count} }
+  end
 end

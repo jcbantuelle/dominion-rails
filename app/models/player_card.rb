@@ -7,4 +7,8 @@ class PlayerCard < ActiveRecord::Base
   scope :hand, ->{ where state: 'hand' }
   scope :discard, ->{ where state: 'discard' }
 
+  def name
+    card.name
+  end
+
 end
