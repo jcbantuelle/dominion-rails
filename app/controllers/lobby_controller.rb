@@ -1,5 +1,5 @@
 class LobbyController < ApplicationController
-  include Tubesock::Hijack, Websockets::Lobby::Propose, Websockets::Lobby::Accept, Websockets::Lobby::Decline, Websockets::JsonFormatter
+  include Tubesock::Hijack, Websockets::Lobby::Propose, Websockets::Lobby::Accept, Websockets::Lobby::Decline
 
   skip_before_filter :unset_lobby_status
   before_filter :authenticate_player!

@@ -1,5 +1,7 @@
 module LobbyManagement
 
+  include Json::Lobby
+
   def refresh_lobby
     flush_offline_players
     flush_in_game_players
