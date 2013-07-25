@@ -12,7 +12,7 @@ module Json::Game
       deck_count: game_player.deck.count,
       discard_count: game_player.discard.count,
       hand: sorted_hand(game_player),
-      my_turn: same_player?(game.current_turn.game_player.player, player)
+      my_turn: same_player?(game.current_player.player, player)
     }.to_json
   end
 

@@ -43,4 +43,8 @@ class Game < ActiveRecord::Base
     turns.where(turn: turn).first
   end
 
+  def current_player
+    current_turn.game_player
+  end
+
 end
