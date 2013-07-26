@@ -2,6 +2,7 @@ class TurnChanger
 
   def initialize(game)
     @game = game
+    @game.reload
   end
 
   def first_turn
@@ -30,7 +31,6 @@ class TurnChanger
   def set_game_turn
     turn = @game.turn.nil? ? 1 : @game.turn+1
     @game.update_attribute :turn, turn
-    @game.reload
   end
 
   def create_turn

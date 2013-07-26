@@ -24,6 +24,7 @@ class GameController < ApplicationController
 
   def process_message(data)
     unless data == 'tubesock-ping'
+      @game.reload
       data = JSON.parse data
       if data['action'] == 'end_turn'
         end_turn(data)
