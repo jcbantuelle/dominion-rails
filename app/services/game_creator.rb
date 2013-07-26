@@ -13,7 +13,7 @@ class GameCreator
     add_game_cards
     add_player_decks
     draw_hands
-    TurnChanger.first_turn @game
+    TurnChanger.new(@game).first_turn
     @game.reload
   end
 
@@ -44,7 +44,7 @@ class GameCreator
 
   def draw_hands
     @game.game_players.each do |player|
-      CardDrawer.draw(player, 5)
+      CardDrawer.new(player).draw(5)
     end
   end
 

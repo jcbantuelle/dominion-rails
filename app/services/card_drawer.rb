@@ -1,21 +1,35 @@
 class CardDrawer
 
-  def self.draw(game_player, count = 1)
-    move_to_hand(game_player, count)
-    adjust_deck_order(game_player)
+  def initialize(player)
+    @player = player
+  end
+
+  def draw(count)
+    move_to_hand(count)
+    adjust_deck_order
   end
 
   private
 
-  def self.move_to_hand(game_player, count)
-    game_player.deck.limit(count).update_all(state: 'hand', card_order: nil)
+  def move_to_hand(count)
+    drawn_card_count = @player.deck.limit(count).update_all(state: 'hand', card_order: nil)
+    if drawn_card_count < count && @player.discard.count > 0
+      shuffle_discard_into_deck
+      move_to_hand(count - drawn_card_count)
+    end
   end
 
-  def self.adjust_deck_order(game_player)
-    first_card = game_player.deck.first
+  def adjust_deck_order
+    first_card = @player.deck.first
     if first_card
       offset = first_card.card_order - 1
-      game_player.deck.update_all ['card_order = card_order - ?', offset]
+      @player.deck.update_all ['card_order = card_order - ?', offset]
+    end
+  end
+
+  def shuffle_discard_into_deck
+    @player.discard.shuffle.each_with_index do |card, index|
+      card.update(card_order: index+1, state: 'deck')
     end
   end
 end

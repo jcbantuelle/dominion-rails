@@ -25,13 +25,9 @@ class GameController < ApplicationController
   def process_message(data)
     unless data == 'tubesock-ping'
       data = JSON.parse data
-      # if data['action'] == 'propose'
-      #   propose_game(data)
-      # elsif data['action'] == 'accept'
-      #   accept_game(data)
-      # elsif data['action'] == 'decline'
-      #   decline_game(data)
-      # end
+      if data['action'] == 'end_turn'
+        end_turn(data)
+      end
     end
   end
 
