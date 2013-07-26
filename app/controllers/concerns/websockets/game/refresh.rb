@@ -9,4 +9,5 @@ module Websockets::Game::Refresh
       send_game_data player, @game, refresh_game_json(@game, player)
     end
   end
+
 end

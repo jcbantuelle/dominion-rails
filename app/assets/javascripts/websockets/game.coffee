@@ -11,6 +11,8 @@ $ ->
     response = JSON.parse event.data
     if response.action == 'refresh'
       game.refresh(response)
+    else if response.action == 'end_turn'
+      game.end_turn(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -20,6 +22,15 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
+    game.refresh_tooltips()
+
+  # End Turn
+  window.game.end_turn = (response) ->
+    game.refresh_turn_status(response)
+    game.refresh_game_info(response)
+    game.refresh_turn_actions(response)
+    game.refresh_hand(response)
+    game.update_log(response)
     game.refresh_tooltips()
 
   window.game.refresh_kingdom_cards = (response)->
@@ -40,6 +51,10 @@ $ ->
 
   window.game.refresh_hand = (response)->
     $('#hand').html(HandlebarsTemplates['game/hand'](response.hand))
+
+  window.game.update_log = (response)->
+    $('#game-log').append(HandlebarsTemplates['game/log'](response.log))
+    $('#game-log').scrollTop($('#game-log')[0].scrollHeight)
 
   # Tooltip Refresh
   window.game.refresh_tooltips = ->
