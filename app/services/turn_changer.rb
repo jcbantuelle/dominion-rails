@@ -19,7 +19,7 @@ class TurnChanger
   private
 
   def next_player
-    turn = (@game.turn % @game.player_count) - 1
+    turn = (@game.turn-1) % @game.player_count
     @game.game_players[turn]
   end
 
