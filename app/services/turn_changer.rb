@@ -34,6 +34,6 @@ class TurnChanger
   end
 
   def create_turn
-    Turn.create game_player: next_player, game: @game, turn: @game.turn, actions: 1, buys: 1, coins: 0
+    Turn.create game_player: next_player, game: @game, turn: @game.turn, actions: 1, buys: 1, coins: 0, phase: 'action'
   end
 end
