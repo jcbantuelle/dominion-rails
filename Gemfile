@@ -24,10 +24,10 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.0.1'
+gem 'jbuilder', '~> 1'
 
 # Login System
-gem 'devise', '~> 3.0.0.rc'
+gem 'devise', '~> 3'
 
 # Twitter Bootstrap
 gem 'therubyracer'
