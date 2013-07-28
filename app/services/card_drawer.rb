@@ -1,7 +1,10 @@
 class CardDrawer
 
+  attr_accessor :drawn_cards
+
   def initialize(player)
     @player = player
+    @drawn_cards = []
   end
 
   def draw(count)
@@ -12,10 +15,15 @@ class CardDrawer
   private
 
   def move_to_hand(count)
-    drawn_card_count = @player.deck.limit(count).update_all(state: 'hand', card_order: nil)
-    if drawn_card_count < count && @player.discard.count > 0
+    cards = @player.deck.limit(count)
+    card_count = cards.count
+
+    @drawn_cards += cards
+    cards.update_all(state: 'hand', card_order: nil)
+
+    if card_count < count && @player.discard.count > 0
       shuffle_discard_into_deck
-      move_to_hand(count - drawn_card_count)
+      move_to_hand(count - card_count)
     end
   end
 

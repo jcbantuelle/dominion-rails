@@ -11,4 +11,8 @@ class PlayerCard < ActiveRecord::Base
     card.name
   end
 
+  def type_class
+    card.type_class
+  end
+
 end
