@@ -21,7 +21,14 @@ module Json::Helper
   end
 
   def sorted_hand(player)
-    player.hand.group_by { |card| card.name }.map{|name,cards| {name: name, count: cards.count} }
+    grouped_cards = player.hand.group_by { |card| card.name }
+    grouped_cards.map{ |name,cards|
+      {
+        name: name,
+        count: cards.count,
+        card_id: cards.first.card_id
+      }
+    }
   end
 
 end

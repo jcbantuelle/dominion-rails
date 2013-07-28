@@ -7,12 +7,19 @@ $ ->
     event.preventDefault()
     socket.send(JSON.stringify(action: 'end_turn'))
 
+  $hand = $('#hand')
+  $hand.on "click", ".hand-card", (event) ->
+    event.preventDefault()
+    socket.send(JSON.stringify(action: 'play_card', card_id: $(this).attr('id')))
+
   socket.onmessage = (event) ->
     response = JSON.parse event.data
     if response.action == 'refresh'
       game.refresh(response)
     else if response.action == 'end_turn'
       game.end_turn(response)
+    else if response.action == 'play_card'
+      game.play_card(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -26,6 +33,15 @@ $ ->
 
   # End Turn
   window.game.end_turn = (response) ->
+    game.refresh_turn_status(response)
+    game.refresh_game_info(response)
+    game.refresh_turn_actions(response)
+    game.refresh_hand(response)
+    game.update_log(response)
+    game.refresh_tooltips()
+
+  # Play Card
+  window.game.play_card = (response) ->
     game.refresh_turn_status(response)
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)

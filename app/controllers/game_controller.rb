@@ -28,6 +28,8 @@ class GameController < ApplicationController
       data = JSON.parse data
       if data['action'] == 'end_turn'
         end_turn(data)
+      elsif data['action'] == 'play_card'
+        play_card(data)
       end
     end
   end

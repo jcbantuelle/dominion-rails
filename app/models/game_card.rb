@@ -15,7 +15,7 @@ class GameCard < ActiveRecord::Base
   end
 
   def type_class
-    card.type.map(&:to_s).join(' ')
+    card.type_class
   end
 
   def name

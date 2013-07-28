@@ -13,4 +13,19 @@ class Card < ActiveRecord::Base
     extend name.classify.constantize
   end
 
+  def playable?
+    respond_to? :play
+  end
+
+  def treasure_card?
+    type.include?(:treasure)
+  end
+
+  def action_card?
+    type.include?(:action)
+  end
+
+  def type_class
+    type.map(&:to_s).join(' ')
+  end
 end
