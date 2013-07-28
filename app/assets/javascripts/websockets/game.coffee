@@ -79,7 +79,7 @@ $ ->
       offset: [-66,5]
     })
 
-    $('.hand-card li:last-child').tooltip({
-      position: 'top center',
-      offset: [-5,0]
+    $('.hand-card').tooltip({
+      position: 'bottom center',
+      offset: [80,0]
     })
