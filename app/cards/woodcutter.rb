@@ -20,7 +20,7 @@ module Woodcutter
   end
 
   def log(game, player)
-    message = game.current_player.player_id == player.id ? 'You play' : "#{game.current_player.username} plays"
-    message += " a <span class=\"#{type_class}\">Woodcutter</span> getting +1 buy and +$2."
+    get_text = "+1 buy and +$2"
+    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, get_text: get_text }
   end
 end
