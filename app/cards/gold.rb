@@ -19,7 +19,6 @@ module Gold
   end
 
   def log(game, player)
-    message = game.current_player.player_id == player.id ? 'You play' : "#{game.current_player.username} plays"
-    message += " a <span class=\"#{type_class}\">Gold</span>."
+    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self }
   end
 end
