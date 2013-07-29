@@ -24,6 +24,6 @@ module Market
 
   def log(game, player)
     get_text = '+1 action, +1 buy, and +$1'
-    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, get_text: get_text, card_drawer: @card_drawer }
+    render_play_card game, player, get_text
   end
 end

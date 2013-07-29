@@ -22,6 +22,6 @@ module Festival
 
   def log(game, player)
     get_text = '+2 actions, +1 buy, and +$2'
-    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, get_text: get_text }
+    render_play_card game, player, get_text
   end
 end

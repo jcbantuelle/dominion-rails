@@ -28,4 +28,15 @@ class Card < ActiveRecord::Base
   def type_class
     type.map(&:to_s).join(' ')
   end
+
+  def render_play_card(game, player, get_text=nil, card_drawer=nil)
+    locals = { game: game, player: player, card: self }
+    locals[:get_text] = get_text if get_text
+    locals[:card_drawer] = card_drawer if card_drawer
+    render_log 'play_card', locals
+  end
+
+  def render_log(template, locals)
+    Renderer.new.render "game/log/#{template}", locals
+  end
 end

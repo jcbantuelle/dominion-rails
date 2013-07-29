@@ -20,6 +20,6 @@ module Smithy
   end
 
   def log(game, player)
-    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, card_drawer: @card_drawer }
+    render_play_card game, player, nil, @card_drawer
   end
 end

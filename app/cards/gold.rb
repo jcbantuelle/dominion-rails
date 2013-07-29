@@ -19,6 +19,6 @@ module Gold
   end
 
   def log(game, player)
-    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self }
+    render_play_card game, player
   end
 end
