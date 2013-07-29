@@ -21,7 +21,7 @@ module Laboratory
   end
 
   def log(game, player)
-    gets = '+1 action'
-    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, gets: gets, card_drawer: @card_drawer }
+    get_text = '+1 action'
+    Renderer.new.render 'game/log/play_card', { game: game, player: player, card: self, get_text: get_text, card_drawer: @card_drawer }
   end
 end
