@@ -5,7 +5,7 @@ a <span class="<%= card.type_class %>"><%= card.name.titleize %></span>
   <% if same_player?(game.current_player, player) %>
     <%= card_drawer.drawn_cards.map{ |drawn_card|
       "<span class=\"#{drawn_card.type_class}\">#{drawn_card.name.titleize}</span>"
-    }.join(' ') %>
+    }.join(' ').html_safe %>
   <% else %>
     <%= card_drawer.drawn_cards.count %> card(s)
   <% end %>
