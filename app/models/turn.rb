@@ -23,4 +23,10 @@ class Turn < ActiveRecord::Base
   def add_buys(amount)
     update_attribute :buys, buys + amount
   end
+
+  def buy_card(cost)
+    buy_phase
+    update_attribute :buys, buys - 1
+    update_attribute :coins, coins - cost[:coin]
+  end
 end

@@ -1,0 +1,5 @@
+<strong>-
+  <%= same_player?(game.current_player, player) ? "Your " : "#{game.current_player.username}'s " %>
+  turn <%= ((game.turn - 1) / game.player_count) + 1 %>
+ -
+</strong>

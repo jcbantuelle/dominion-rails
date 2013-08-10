@@ -30,6 +30,8 @@ class GameController < ApplicationController
         end_turn(data)
       elsif data['action'] == 'play_card'
         play_card(data)
+      elsif data['action'] == 'buy_card'
+        buy_card(data)
       end
     end
   end

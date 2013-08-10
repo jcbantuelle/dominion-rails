@@ -7,6 +7,11 @@ $ ->
     event.preventDefault()
     socket.send(JSON.stringify(action: 'end_turn'))
 
+  $purchasable_cards = $('#kingdom-cards, #common-cards')
+  $purchasable_cards.on "click", ".card", (event) ->
+    event.preventDefault()
+    socket.send(JSON.stringify(action: 'buy_card', card_id: $(this).attr('data-card-id')))
+
   $hand = $('#hand')
   $hand.on "click", ".hand-card", (event) ->
     event.preventDefault()
@@ -19,6 +24,8 @@ $ ->
     else if response.action == 'end_turn'
       game.end_turn(response)
     else if response.action == 'play_card'
+      game.play_card(response)
+    else if response.action == 'buy_card'
       game.play_card(response)
 
   # Refresh Game
@@ -42,6 +49,17 @@ $ ->
 
   # Play Card
   window.game.play_card = (response) ->
+    game.refresh_turn_status(response)
+    game.refresh_game_info(response)
+    game.refresh_turn_actions(response)
+    game.refresh_hand(response)
+    game.update_log(response)
+    game.refresh_tooltips()
+
+  # Buy Card
+  window.game.buy_card = (response) ->
+    game.refresh_kingdom_cards(response)
+    game.refresh_common_cards(response)
     game.refresh_turn_status(response)
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)

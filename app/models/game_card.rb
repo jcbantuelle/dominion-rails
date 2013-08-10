@@ -2,6 +2,8 @@ class GameCard < ActiveRecord::Base
   belongs_to :game
   belongs_to :card
 
+  scope :by_card_id, ->(card_id) { where card_id: card_id }
+
   def kingdom?
     card.kingdom?
   end
@@ -12,6 +14,10 @@ class GameCard < ActiveRecord::Base
 
   def treasure?
     card.treasure?
+  end
+
+  def available?
+    remaining > 0
   end
 
   def type_class
@@ -28,6 +34,7 @@ class GameCard < ActiveRecord::Base
 
   def json
     {
+      id: id,
       name: name,
       type_class: type_class,
       cost: cost[:coin],

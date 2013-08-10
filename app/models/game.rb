@@ -47,4 +47,9 @@ class Game < ActiveRecord::Base
     current_turn.game_player
   end
 
+  def end_turn_log(player)
+    locals = { game: self, player: player }
+    Renderer.new.render 'game/log/end_turn', locals
+  end
+
 end
