@@ -23,7 +23,10 @@ module Market
   end
 
   def log(game, player)
-    get_text = '+1 action, +1 buy, and +$1'
-    render_play_card game, player, get_text, @card_drawer
+    locals = {
+      get_text: '+1 action, +1 buy, and +$1',
+      card_drawer: @card_drawer
+    }
+    render_play_card game, player, locals
   end
 end

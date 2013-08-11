@@ -20,6 +20,9 @@ module Smithy
   end
 
   def log(game, player)
-    render_play_card game, player, nil, @card_drawer
+    locals = {
+      card_drawer: @card_drawer
+    }
+    render_play_card game, player, locals
   end
 end

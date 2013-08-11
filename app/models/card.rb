@@ -29,10 +29,12 @@ class Card < ActiveRecord::Base
     type.map(&:to_s).join(' ')
   end
 
-  def render_play_card(game, player, get_text=nil, card_drawer=nil)
-    locals = { game: game, player: player, card: self }
-    locals[:get_text] = get_text if get_text
-    locals[:card_drawer] = card_drawer if card_drawer
+  def render_play_card(game, player, locals = {})
+    locals.merge!({
+      game: game,
+      player: player,
+      card: self
+    })
     render_log 'play_card', locals
   end
 

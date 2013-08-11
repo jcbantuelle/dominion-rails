@@ -21,7 +21,10 @@ module Village
   end
 
   def log(game, player)
-    get_text = '+2 actions'
-    render_play_card game, player, get_text, @card_drawer
+    locals = {
+      get_text: '+2 actions',
+      card_drawer: @card_drawer
+    }
+    render_play_card game, player, locals
   end
 end

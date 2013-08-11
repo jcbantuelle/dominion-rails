@@ -21,7 +21,10 @@ module Laboratory
   end
 
   def log(game, player)
-    get_text = '+1 action'
-    render_play_card game, player, get_text, @card_drawer
+    locals = {
+      get_text: '+1 action',
+      card_drawer: @card_drawer
+    }
+    render_play_card game, player, locals
   end
 end
