@@ -11,7 +11,7 @@ class CardPlayer
     play
   end
 
-  def valid_play?
+  def valid?
     has_card? && @card.playable? && (valid_action? || valid_treasure?)
   end
 

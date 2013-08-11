@@ -11,7 +11,7 @@ class CardBuyer
     @game.current_turn.buy_card @card.cost
   end
 
-  def valid_buy?
+  def valid?
     affordable? && @card.available?
   end
 
