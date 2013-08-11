@@ -1,14 +1,23 @@
 <%= same_player?(game.current_player, player) ? 'You play' : "#{game.current_player.username} plays" %>
-a <span class="<%= card.type_class %>"><%= card.name.titleize %></span>
+<span class="<%= card.type_class %>"><%= card.name.titleize %></span>
+
 <% if defined? card_drawer %>
   drawing
   <% if same_player?(game.current_player, player) %>
-    <%= card_drawer.drawn_cards.map{ |drawn_card|
-      "<span class=\"#{drawn_card.type_class}\">#{drawn_card.name.titleize}</span>"
-    }.join(' ').html_safe %>
+    <%= show_cards(card_drawer.drawn_cards) %>
   <% else %>
     <%= card_drawer.drawn_cards.count %> card(s)
   <% end %>
 <% end %>
-<%= ' and' if defined?(card_drawer) && defined?(get_text) %>
+
+<% if defined? revealed %>
+  revealing
+  <%= show_cards(revealed[:discarded]) %>
+  <% unless revealed[:drawn].blank? %>
+    and drawing
+    <%= show_cards(revealed[:drawn]) %>
+  <% end %>
+<% end %>
+
+<%= ' and' if (defined?(card_drawer) || defined?(revealed)) && defined?(get_text) %>
 <%= " getting #{get_text}" if defined? get_text %>
