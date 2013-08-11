@@ -11,19 +11,19 @@ $ ->
     if player_ids.length > 3
       alert player_count_error
     else
-      socket.send(JSON.stringify(action: 'propose', player_ids: player_ids))
+      socket.send(JSON.stringify(action: 'propose_game', player_ids: player_ids))
 
   $proposal = $("#proposal")
   # Accept Game Proposal
   $proposal.on "click", "#accept", (event) ->
     event.preventDefault()
     game_id = get_game_id()
-    socket.send(JSON.stringify(action: 'accept', game_id: game_id))
+    socket.send(JSON.stringify(action: 'accept_game', game_id: game_id))
   # Reject Game Proposal
   $proposal.on "click", "#decline", (event) ->
     event.preventDefault()
     game_id = get_game_id()
-    socket.send(JSON.stringify(action: 'decline', game_id: game_id))
+    socket.send(JSON.stringify(action: 'decline_game', game_id: game_id))
 
   socket.onmessage = (event) ->
     response = JSON.parse event.data

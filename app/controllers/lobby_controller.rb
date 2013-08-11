@@ -23,17 +23,4 @@ class LobbyController < ApplicationController
     end
   end
 
-  def process_message(data)
-    unless data == 'tubesock-ping'
-      data = JSON.parse data
-      if data['action'] == 'propose'
-        propose_game(data)
-      elsif data['action'] == 'accept'
-        accept_game(data)
-      elsif data['action'] == 'decline'
-        decline_game(data)
-      end
-    end
-  end
-
 end
