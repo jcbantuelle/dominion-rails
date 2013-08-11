@@ -15,4 +15,8 @@ class PlayerCard < ActiveRecord::Base
     card.type_class
   end
 
+  def treasure?
+    type_class.include? 'treasure'
+  end
+
 end
