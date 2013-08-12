@@ -22,14 +22,9 @@ class CardDrawer
     cards.update_all(state: 'hand', card_order: nil)
 
     if card_count < count && @player.discard.count > 0
-      shuffle_discard_into_deck
+      @player.shuffle_discard_into_deck
       move_to_hand(count - card_count)
     end
   end
 
-  def shuffle_discard_into_deck
-    @player.discard.shuffle.each_with_index do |card, index|
-      card.update(card_order: index+1, state: 'deck')
-    end
-  end
 end
