@@ -29,4 +29,8 @@ class GamePlayer < ActiveRecord::Base
     end
   end
 
+  def discard_revealed
+    player_cards.revealed.update_all state: 'discard'
+  end
+
 end

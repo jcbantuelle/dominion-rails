@@ -6,6 +6,7 @@ class PlayerCard < ActiveRecord::Base
   scope :deck, ->{ where state: 'deck' }
   scope :hand, ->{ where state: 'hand' }
   scope :discard, ->{ where state: 'discard' }
+  scope :revealed, ->{ where state: 'revealed' }
 
   def name
     card.name
