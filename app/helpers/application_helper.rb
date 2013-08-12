@@ -1,7 +1,15 @@
 module ApplicationHelper
 
+  def player_name(game_player, player)
+    same_player?(game_player, player) ? 'You' : game_player.username
+  end
+
+  def player_action(game_player, player, action)
+    same_player?(game_player, player) ? action : "#{action}s"
+  end
+
   def same_player?(game_player, player)
-    game_player.player_id == player.id
+    game_player.player_id == player.player_id
   end
 
   def show_cards(cards)

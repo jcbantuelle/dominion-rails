@@ -18,13 +18,7 @@ module Village
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(1)
     game.current_turn.add_actions(2)
+    @log_updater.get_from_card(game.current_player, '+2 actions')
   end
 
-  def log(game, player)
-    locals = {
-      get_text: '+2 actions',
-      card_drawer: @card_drawer
-    }
-    render_play_card game, player, locals
-  end
 end

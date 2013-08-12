@@ -27,6 +27,8 @@ $ ->
       game.play_card(response)
     else if response.action == 'buy_card'
       game.play_card(response)
+    else if response.action == 'log_message'
+      game.log_message(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -44,7 +46,6 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
-    game.update_log(response)
     game.refresh_tooltips()
 
   # Play Card
@@ -53,7 +54,6 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
-    game.update_log(response)
     game.refresh_tooltips()
 
   # Buy Card
@@ -64,8 +64,12 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
-    game.update_log(response)
     game.refresh_tooltips()
+
+  # Log Message
+  window.game.log_message = (response) ->
+    $('#game-log').append(HandlebarsTemplates['game/log'](response.log))
+    $('#game-log').scrollTop($('#game-log')[0].scrollHeight)
 
   window.game.refresh_kingdom_cards = (response)->
     $('#kingdom-cards').html(HandlebarsTemplates['game/cards'](response.kingdom_cards))
@@ -85,10 +89,6 @@ $ ->
 
   window.game.refresh_hand = (response)->
     $('#hand').html(HandlebarsTemplates['game/hand'](response.hand))
-
-  window.game.update_log = (response)->
-    $('#game-log').append(HandlebarsTemplates['game/log'](response.log))
-    $('#game-log').scrollTop($('#game-log')[0].scrollHeight)
 
   # Tooltip Refresh
   window.game.refresh_tooltips = ->

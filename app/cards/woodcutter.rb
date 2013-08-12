@@ -17,12 +17,7 @@ module Woodcutter
   def play(game)
     game.current_turn.add_coins(2)
     game.current_turn.add_buys(1)
+    @log_updater.get_from_card(game.current_player, '+1 buy and +$2')
   end
 
-  def log(game, player)
-    locals = {
-      get_text: '+1 buy and +$2'
-    }
-    render_play_card game, player, locals
-  end
 end

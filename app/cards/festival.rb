@@ -18,12 +18,7 @@ module Festival
     game.current_turn.add_coins(2)
     game.current_turn.add_buys(1)
     game.current_turn.add_actions(2)
+    @log_updater.get_from_card(game.current_player, '+2 actions, +1 buy, and +$2')
   end
 
-  def log(game, player)
-    locals = {
-      get_text: '+2 actions, +1 buy, and +$2'
-    }
-    render_play_card game, player, locals
-  end
 end

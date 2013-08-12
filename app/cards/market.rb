@@ -20,13 +20,7 @@ module Market
     game.current_turn.add_actions(1)
     game.current_turn.add_buys(1)
     game.current_turn.add_coins(1)
+    @log_updater.get_from_card(game.current_player, '+1 action, +1 buy, and +$1')
   end
 
-  def log(game, player)
-    locals = {
-      get_text: '+1 action, +1 buy, and +$1',
-      card_drawer: @card_drawer
-    }
-    render_play_card game, player, locals
-  end
 end

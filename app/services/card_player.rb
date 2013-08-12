@@ -15,10 +15,6 @@ class CardPlayer
     has_card? && @card.playable? && (valid_action? || valid_treasure?)
   end
 
-  def log(player)
-    @card.log(@game, player)
-  end
-
   private
 
   def valid_action?
@@ -36,6 +32,7 @@ class CardPlayer
   def play
     buy_phase if @card.treasure_card?
     play_action if @card.action_card?
+    @card.play_log(@game)
     @card.play(@game)
   end
 

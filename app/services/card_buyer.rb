@@ -8,16 +8,12 @@ class CardBuyer
 
   def buy_card
     move_to_player_discard
+    LogUpdater.new(@game).card_action(@card, 'buy')
     @game.current_turn.buy_card @card.cost
   end
 
   def valid?
     affordable? && @card.available?
-  end
-
-  def log(player)
-    locals = { game: @game, player: player, card: @card }
-    Renderer.new.render 'game/log/buy_card', locals
   end
 
   private

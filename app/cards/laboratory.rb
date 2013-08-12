@@ -18,13 +18,7 @@ module Laboratory
     game.current_turn.add_actions(1)
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(2)
+    @log_updater.get_from_card(game.current_player, '+1 action')
   end
 
-  def log(game, player)
-    locals = {
-      get_text: '+1 action',
-      card_drawer: @card_drawer
-    }
-    render_play_card game, player, locals
-  end
 end

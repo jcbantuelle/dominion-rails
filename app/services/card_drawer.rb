@@ -7,9 +7,10 @@ class CardDrawer
     @drawn_cards = []
   end
 
-  def draw(count)
+  def draw(count, end_turn = false)
     move_to_hand(count)
     adjust_deck_order
+    LogUpdater.new(@player.game).draw(@drawn_cards, @player) unless end_turn
   end
 
   private

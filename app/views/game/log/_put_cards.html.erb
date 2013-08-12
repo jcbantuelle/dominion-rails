@@ -1,0 +1,6 @@
+&nbsp;&nbsp;
+<%= player_name(target_player, player) %>
+<%= player_action(target_player, player, 'put') %>
+<%= cards.count > 0 ? show_cards(cards) : 'nothing' %>
+in <%= destination %> and
+<%= player_action(target_player, player, 'discard') %> the rest

@@ -25,7 +25,7 @@ class TurnChanger
 
   def clean_up
     @game.current_player.player_cards.where(state: %w[hand play]).update_all(state: 'discard')
-    CardDrawer.new(@game.current_player).draw(5)
+    CardDrawer.new(@game.current_player).draw(5, true)
   end
 
   def set_game_turn

@@ -29,16 +29,9 @@ class Card < ActiveRecord::Base
     type.map(&:to_s).join(' ')
   end
 
-  def render_play_card(game, player, locals = {})
-    locals.merge!({
-      game: game,
-      player: player,
-      card: self
-    })
-    render_log 'play_card', locals
+  def play_log(game)
+    @log_updater = LogUpdater.new game
+    @log_updater.card_action(self, 'play')
   end
 
-  def render_log(template, locals)
-    Renderer.new.render "game/log/#{template}", locals
-  end
 end

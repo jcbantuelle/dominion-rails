@@ -10,22 +10,19 @@ module Json::Game
 
   def end_turn_json(game, player)
     {
-      action: 'end_turn',
-      log: game.end_turn_log(player)
+      action: 'end_turn'
     }.merge(game_area(game, player)).to_json
   end
 
   def play_card_json(game, player, card_player)
     {
-      action: 'play_card',
-      log: card_player.log(player)
+      action: 'play_card'
     }.merge(game_area(game, player)).to_json
   end
 
   def buy_card_json(game, player, card_buyer)
     {
-      action: 'buy_card',
-      log: card_buyer.log(player)
+      action: 'buy_card'
     }.merge(card_area(game)).merge(game_area(game, player)).to_json
   end
 
