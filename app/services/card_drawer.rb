@@ -9,7 +9,6 @@ class CardDrawer
 
   def draw(count, end_turn = false)
     move_to_hand(count)
-    adjust_deck_order
     LogUpdater.new(@player.game).draw(@drawn_cards, @player) unless end_turn
   end
 
@@ -25,14 +24,6 @@ class CardDrawer
     if card_count < count && @player.discard.count > 0
       shuffle_discard_into_deck
       move_to_hand(count - card_count)
-    end
-  end
-
-  def adjust_deck_order
-    first_card = @player.deck.first
-    if first_card
-      offset = first_card.card_order - 1
-      @player.deck.update_all ['card_order = card_order - ?', offset]
     end
   end
 
