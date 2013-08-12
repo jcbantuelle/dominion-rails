@@ -21,14 +21,14 @@ module Websockets::Lobby::Propose
     game_players = game.players
 
     game_players.each do |player|
-      send_lobby_data player, game_proposal_json(game, player)
+      WebsocketDataSender.send_lobby_data player, game_proposal_json(game, player)
     end
 
     set_timeout(game)
   end
 
   def send_player_in_game_error(in_game_players)
-    send_lobby_data current_player, player_in_game_json(in_game_players)
+    WebsocketDataSender.send_lobby_data current_player, player_in_game_json(in_game_players)
   end
 
   def send_timeout(game)
@@ -37,7 +37,7 @@ module Websockets::Lobby::Propose
     game.destroy
 
     game_players.each do |player|
-      send_lobby_data player, timeout_json(timeout_players)
+      WebsocketDataSender.send_lobby_data player, timeout_json(timeout_players)
     end
     refresh_lobby
   end

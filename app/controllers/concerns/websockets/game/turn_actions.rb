@@ -4,7 +4,7 @@ module Websockets::Game::TurnActions
     TurnChanger.new(@game).next_turn
     LogUpdater.new(@game).end_turn
     @game.players.each do |player|
-      send_game_data player, @game, end_turn_json(@game, player)
+      WebsocketDataSender.send_game_data player, @game, end_turn_json(@game, player)
     end
   end
 
@@ -24,7 +24,7 @@ module Websockets::Game::TurnActions
       if card_service.valid?
         card_service.send("#{action}_card")
         @game.players.each do |player|
-          send_game_data player, @game, send("#{action}_card_json", @game, player, card_service)
+          WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
         end
       end
     end

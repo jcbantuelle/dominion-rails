@@ -13,16 +13,16 @@ module Websockets::Lobby::Accept
 
   def send_accepted_game(game)
     game.players.each do |player|
-      send_lobby_data player, accepted_json(game)
+      WebsocketDataSender.send_lobby_data player, accepted_json(game)
     end
   end
 
   def send_accept_received
-    send_lobby_data current_player, accept_received_json
+    WebsocketDataSender.send_lobby_data current_player, accept_received_json
   end
 
   def send_player_count_error
-    send_lobby_data current_player, player_count_error_json
+    WebsocketDataSender.send_lobby_data current_player, player_count_error_json
   end
 
 end
