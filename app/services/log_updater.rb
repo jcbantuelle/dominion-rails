@@ -1,7 +1,5 @@
 class LogUpdater
 
-  include Json::Log
-
   def initialize(game)
     @game = game
   end
