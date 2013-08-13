@@ -17,7 +17,7 @@ module Json::Game
   def play_card_json(game, player)
     {
       action: 'play_card'
-    }.merge(game_area(game, player)).to_json
+    }.merge(card_area(game)).merge(game_area(game, player)).to_json
   end
 
   def buy_card_json(game, player)
