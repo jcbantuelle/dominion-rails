@@ -44,7 +44,7 @@ class GameCreator
 
   def draw_hands
     @game.game_players.each do |player|
-      CardDrawer.new(player).draw(5)
+      CardDrawer.new(player).draw(5, false)
     end
   end
 

@@ -7,9 +7,9 @@ class CardDrawer
     @drawn_cards = []
   end
 
-  def draw(count, end_turn = false)
+  def draw(count, update_log = true)
     move_to_hand(count)
-    LogUpdater.new(@player.game).draw(@drawn_cards, @player) unless end_turn
+    LogUpdater.new(@player.game).draw(@drawn_cards, @player) if update_log
   end
 
   private
