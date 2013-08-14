@@ -52,7 +52,11 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    game_players.sort{ |p1, p2| p2.score <=> p1.score }.first.username
+    ranked_players.select{ |player| player.score == ranked_players.first.score }.map(&:username).join(' & ')
+  end
+
+  def ranked_players
+    @ranked_players ||= game_players.sort{ |p1, p2| p2.score <=> p1.score }
   end
 
   def end_game_players
