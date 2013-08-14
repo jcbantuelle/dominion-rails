@@ -14,6 +14,14 @@ module Json::Game
     }.merge(game_area(game, player)).to_json
   end
 
+  def end_game_json(game, player)
+    {
+      action: 'end_game',
+      winner: game.winner,
+      players: game.end_game_players
+    }.to_json
+  end
+
   def play_card_json(game, player)
     {
       action: 'play_card'

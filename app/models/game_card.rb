@@ -3,6 +3,7 @@ class GameCard < ActiveRecord::Base
   belongs_to :card
 
   scope :by_card_id, ->(card_id) { where card_id: card_id }
+  scope :empty_piles, -> { where remaining: 0 }
 
   def kingdom?
     card.kingdom?

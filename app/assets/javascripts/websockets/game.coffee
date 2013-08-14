@@ -29,6 +29,8 @@ $ ->
       game.play_card(response)
     else if response.action == 'log_message'
       game.log_message(response)
+    else if response.action == 'end_game'
+      game.end_game(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -67,6 +69,11 @@ $ ->
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
     game.refresh_tooltips()
+
+  # End Game
+  window.game.end_game = (response) ->
+    $('#hand').empty()
+    $('#action-area').html(HandlebarsTemplates['game/end_game'](response))
 
   # Log Message
   window.game.log_message = (response) ->

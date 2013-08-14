@@ -1,11 +1,8 @@
 module Websockets::Game::TurnActions
 
   def end_turn(data)
-    TurnChanger.new(@game).next_turn
-    LogUpdater.new(@game).end_turn
-    @game.players.each do |player|
-      WebsocketDataSender.send_game_data player, @game, end_turn_json(@game, player)
-    end
+    TurnEnder.new(@game).end_turn
+    send_end_turn_data
   end
 
   def play_card(data)
@@ -32,5 +29,12 @@ module Websockets::Game::TurnActions
 
   def new_service(action, data)
     "Card#{action.titleize}er".constantize.new @game, data['card_id']
+  end
+
+  def send_end_turn_data
+    @game.players.each do |player|
+      json_content = @game.finished? ? end_game_json(@game, player) : end_turn_json(@game, player)
+      WebsocketDataSender.send_game_data player, @game, json_content
+    end
   end
 end

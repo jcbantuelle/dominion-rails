@@ -47,4 +47,22 @@ class Game < ActiveRecord::Base
     current_turn.game_player
   end
 
+  def end_game
+    update_attribute :finished, true
+  end
+
+  def winner
+    game_players.sort{ |p1, p2| p2.score <=> p1.score }.first.username
+  end
+
+  def end_game_players
+    game_players.map{ |player|
+      {
+        id: player.id,
+        username: player.username,
+        score: player.score
+      }
+    }
+  end
+
 end

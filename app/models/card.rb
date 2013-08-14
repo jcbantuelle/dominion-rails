@@ -2,6 +2,7 @@ class Card < ActiveRecord::Base
 
   scope :card_type, ->(card_type) { where({card_type => true}) }
   scope :card_name, ->(card_name) { where(name: card_name) }
+  scope :end_game_cards, ->{ where(name: %w[province colony])}
 
   after_find :load_card_module
 
