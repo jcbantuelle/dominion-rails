@@ -5,6 +5,10 @@ module Websockets::Game::TurnActions
     send_end_turn_data
   end
 
+  def end_game
+    send_end_turn_data
+  end
+
   def play_card(data)
     card_action('play', data)
   end

@@ -14,6 +14,7 @@ class GameController < ApplicationController
       ApplicationController.games[@game.id][current_player.id] = tubesock
       tubesock.onopen do
         refresh_game
+        end_game if @game.finished?
       end
       tubesock.onmessage do |data|
         @game.reload
