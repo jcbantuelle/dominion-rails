@@ -18,7 +18,7 @@ module Websockets::Game::TurnActions
   def card_action(action, data)
     if @game.current_player.player_id == current_player.id
       card_service = new_service(action, data)
-      if card_service.valid?
+      if card_service.send("valid_#{action}?")
         card_service.send("#{action}_card")
         @game.players.each do |player|
           WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
@@ -28,6 +28,7 @@ module Websockets::Game::TurnActions
   end
 
   def new_service(action, data)
+    action = 'gain' if action == 'buy'
     "Card#{action.titleize}er".constantize.new @game, data['card_id']
   end
 

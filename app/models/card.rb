@@ -35,4 +35,11 @@ class Card < ActiveRecord::Base
     @log_updater.card_action(self, 'play')
   end
 
+  def gain_card(game, player, name, destination)
+    card = Card.by_name(name)
+    game_card = game.game_cards.by_card_id(card.id)
+    card_gainer = CardGainer.new(game, game_card.id)
+    card_gainer.gain_card(destination)
+  end
+
 end
