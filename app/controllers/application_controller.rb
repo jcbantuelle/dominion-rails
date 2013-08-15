@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :unset_lobby_status
   before_filter :keep_player_active
+  before_filter :clear_finished_games
   before_filter :log_out_inactive_players
   before_filter :configure_permitted_parameters, if: :devise_controller?
 

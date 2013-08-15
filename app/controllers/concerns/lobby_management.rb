@@ -28,6 +28,14 @@ module LobbyManagement
     ApplicationController.lobby.reject!{ |player_id, socket| game_players.include? player_id }
   end
 
+  def clear_finished_games
+    Player.all.each do |player|
+      unless player.game.nil?
+        player.update_attribute(:current_game, nil) if player.game.finished?
+      end
+    end
+  end
+
   def update_lobby
     ApplicationController.lobby.each_pair do |player_id, socket|
       lobby_players = players_without_self(player_id)
