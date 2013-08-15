@@ -1,6 +1,6 @@
 class CardPlayer
 
-  def initialize(game, player, card_id)
+  def initialize(game, card_id)
     @game = game
     @card = Card.find card_id
     @game.reload

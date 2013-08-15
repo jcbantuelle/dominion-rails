@@ -6,30 +6,35 @@ module Websockets::Game::TurnActions
   end
 
   def play_card(data)
-    card_action('play', data)
-  end
-
-  def buy_card(data)
-    card_action('buy', data)
-  end
-
-  private
-
-  def card_action(action, data)
-    if @game.current_player.player_id == current_player.id
-      card_service = new_service(action, data)
-      if card_service.send("valid_#{action}?")
-        card_service.send("#{action}_card")
-        @game.players.each do |player|
-          WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
-        end
+    if can_play?
+      player = CardPlayer.new @game, data['card_id']
+      if player.valid_play?
+        player.play_card
+        send_card_action_data('play')
       end
     end
   end
 
-  def new_service(action, data)
-    action = 'gain' if action == 'buy'
-    "Card#{action.titleize}er".constantize.new @game, @game.current_player, data['card_id']
+  def buy_card(data)
+    if can_play?
+      gainer = CardGainer.new @game, @game.current_player, data['card_id']
+      if gainer.valid_buy?
+        gainer.buy_card
+        send_card_action_data('buy')
+      end
+    end
+  end
+
+  private
+
+  def can_play?
+    @game.current_player.player_id == current_player.id
+  end
+
+  def send_card_action_data(action)
+    @game.players.each do |player|
+      WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
+    end
   end
 
   def send_end_turn_data
