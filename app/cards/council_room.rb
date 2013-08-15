@@ -14,9 +14,15 @@ module CouncilRoom
     [:action]
   end
 
-  def play
-    # +4 cards
-    # +1 buy
-    # Each other player draws 1 card
+  def play(game)
+    @card_drawer = CardDrawer.new(game.current_player)
+    @card_drawer.draw(4)
+    game.current_turn.add_buys(1)
+
+    game.game_players.each do |player|
+      unless player.id == game.current_player.id
+        CardDrawer.new(player).draw(1)
+      end
+    end
   end
 end
