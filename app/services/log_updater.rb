@@ -8,9 +8,9 @@ class LogUpdater
     send_message 'end_turn'
   end
 
-  def card_action(card, action)
+  def card_action(player, card, action)
     locals = {
-      target_player: @game.current_player,
+      target_player: player,
       card: card,
       action: action
     }

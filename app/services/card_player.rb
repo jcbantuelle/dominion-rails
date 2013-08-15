@@ -1,6 +1,6 @@
 class CardPlayer
 
-  def initialize(game, card_id)
+  def initialize(game, player, card_id)
     @game = game
     @card = Card.find card_id
     @game.reload
@@ -32,7 +32,7 @@ class CardPlayer
   def play
     buy_phase if @card.treasure_card?
     play_action if @card.action_card?
-    @card.play_log(@game)
+    @card.play_log(@game.current_player, @game)
     @card.play(@game)
   end
 

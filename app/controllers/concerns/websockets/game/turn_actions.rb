@@ -29,7 +29,7 @@ module Websockets::Game::TurnActions
 
   def new_service(action, data)
     action = 'gain' if action == 'buy'
-    "Card#{action.titleize}er".constantize.new @game, data['card_id']
+    "Card#{action.titleize}er".constantize.new @game, @game.current_player, data['card_id']
   end
 
   def send_end_turn_data

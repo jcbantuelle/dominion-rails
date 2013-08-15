@@ -30,15 +30,15 @@ class Card < ActiveRecord::Base
     type.map(&:to_s).join(' ')
   end
 
-  def play_log(game)
+  def play_log(player, game)
     @log_updater = LogUpdater.new game
-    @log_updater.card_action(self, 'play')
+    @log_updater.card_action(player, self, 'play')
   end
 
   def gain_card(game, player, name, destination)
     card = Card.by_name(name)
     game_card = game.game_cards.by_card_id(card.id)
-    card_gainer = CardGainer.new(game, game_card.id)
+    card_gainer = CardGainer.new(game, player, game_card.id)
     card_gainer.gain_card(destination)
   end
 
