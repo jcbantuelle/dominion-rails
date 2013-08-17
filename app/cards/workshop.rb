@@ -4,7 +4,7 @@ module Workshop
     10
   end
 
-  def cost
+  def cost(game)
     {
       coin: 3
     }

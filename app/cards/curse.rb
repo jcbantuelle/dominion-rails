@@ -11,7 +11,7 @@ module Curse
     end
   end
 
-  def cost
+  def cost(game)
     {
       coin: 0
     }

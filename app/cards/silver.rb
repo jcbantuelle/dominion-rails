@@ -4,7 +4,7 @@ module Silver
     40
   end
 
-  def cost
+  def cost(game)
     {
       coin: 3
     }

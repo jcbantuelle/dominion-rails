@@ -10,7 +10,7 @@ class CardGainer
   def buy_card
     add_to_deck('discard')
     LogUpdater.new(@game).card_action(@player, @card, 'buy')
-    @game.current_turn.buy_card @card.cost
+    @game.current_turn.buy_card @card.cost(@game)
   end
 
   def valid_buy?

@@ -4,7 +4,7 @@ module Adventurer
     10
   end
 
-  def cost
+  def cost(game)
     {
       coin: 6
     }

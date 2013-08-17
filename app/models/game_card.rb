@@ -29,7 +29,7 @@ class GameCard < ActiveRecord::Base
     card.name
   end
 
-  def cost
+  def cost(game)
     card.cost
   end
 

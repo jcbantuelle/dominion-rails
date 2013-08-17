@@ -4,7 +4,7 @@ module Duchy
     victory_card_count(game)
   end
 
-  def cost
+  def cost(game)
     {
       coin: 5
     }

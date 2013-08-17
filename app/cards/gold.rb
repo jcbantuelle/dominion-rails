@@ -4,7 +4,7 @@ module Gold
     30
   end
 
-  def cost
+  def cost(game)
     {
       coin: 6
     }

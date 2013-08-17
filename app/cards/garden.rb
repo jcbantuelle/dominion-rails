@@ -4,7 +4,7 @@ module Garden
     game.player_count == 2 ? 8 : 12
   end
 
-  def cost
+  def cost(game)
     {
       coin: 4
     }

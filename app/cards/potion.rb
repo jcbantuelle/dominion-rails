@@ -4,7 +4,7 @@ module Potion
     16
   end
 
-  def cost
+  def cost(game)
     {
       coin: 4
     }
