@@ -56,3 +56,7 @@ $player_margin: 25px;
 .action.victory {
   @include gradient($action, $victory);
 }
+
+.treasure.victory {
+  @include gradient($treasure, $victory);
+}
