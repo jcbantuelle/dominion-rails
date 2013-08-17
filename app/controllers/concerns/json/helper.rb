@@ -9,15 +9,15 @@ module Json::Helper
   end
 
   def common_cards(game)
-    game_cards(game, 'victory') + game_cards(game, 'treasure') + [game.curse_card.json]
+    game_cards(game, 'victory') + game_cards(game, 'treasure') + [game.curse_card.json(game)]
   end
 
   def game_cards(game, type)
-    sort_cards(game.send("#{type}_cards")).collect(&:json)
+    sort_cards(game, game.send("#{type}_cards")).collect{ |card| card.json(game) }
   end
 
-  def sort_cards(cards)
-    cards.sort{ |a, b| b.cost[:coin] <=> a.cost[:coin] }
+  def sort_cards(game, cards)
+    cards.sort{ |a, b| b.cost(game)[:coin] <=> a.cost(game)[:coin] }
   end
 
   def sorted_hand(player)

@@ -30,15 +30,15 @@ class GameCard < ActiveRecord::Base
   end
 
   def cost(game)
-    card.cost
+    card.cost game
   end
 
-  def json
+  def json(game)
     {
       id: id,
       name: name,
       type_class: type_class,
-      cost: cost[:coin],
+      cost: cost(game)[:coin],
       remaining: remaining,
       title: name.titleize
     }

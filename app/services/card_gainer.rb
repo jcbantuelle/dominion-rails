@@ -40,7 +40,7 @@ class CardGainer
   end
 
   def affordable?
-    @game.current_turn.coins >= @card.cost[:coin]
+    @game.current_turn.coins >= @card.cost(@game)[:coin]
   end
 
   def valid_gain?
