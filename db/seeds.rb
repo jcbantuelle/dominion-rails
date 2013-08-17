@@ -11,17 +11,39 @@ def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil)
 end
 
 # Treasure Cards
-cards = %w(copper silver gold)
+cards = %w(copper silver gold potion platinum)
 create_cards(cards, false, true, false)
 
 # Victory Cards
-cards = %w(estate duchy province)
+cards = %w(estate duchy province colony)
 create_cards(cards, false, false, true)
 
 # Curse
 cards = %w(curse)
 create_cards(cards)
 
-# Base Set Kingdom
-cards = %w(moat chapel cellar chancellor village woodcutter workshop bureaucrat feast gardens militia moneylender remodel smithy spy thief throne_room council_room festival laboratory library market mine witch adventurer)
+# Base Kingdom Set
+#cards = %w(moat chapel cellar chancellor village woodcutter workshop bureaucrat feast gardens militia moneylender remodel smithy spy thief throne_room council_room festival laboratory library market mine witch adventurer)
+cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer)
 create_cards(cards, true, false, false, 'base')
+
+# Intrigue Kingdom Set
+#cards = %w(coppersmith great_hall duke harem)
+cards = %w(great_hall duke harem)
+create_cards(cards, true, false, false, 'intrigue')
+
+# Seaside Kingdom Set
+#cards = %w(cutpurse bazaar)
+#create_cards(cards, true, false, false, 'seaside')
+#
+## Alchemy Kingdom Set
+#cards = %w(vineyard familiar)
+#create_cards(cards, true, false, false, 'alchemy')
+#
+## Prosperity Kingdom Set
+#cards = %w(monument quarry workers_village venture grand_market bank)
+#create_cards(cards, true, false, false, 'prosperity')
+#
+## Cornucopia Kingdom Set
+#cards = %w(hunting_party fairgrounds)
+#create_cards(cards, true, false, false, 'cornucopia')
