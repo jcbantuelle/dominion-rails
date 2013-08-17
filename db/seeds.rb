@@ -33,8 +33,8 @@ cards = %w(great_hall duke harem)
 create_cards(cards, true, false, false, 'intrigue')
 
 # Seaside Kingdom Set
-#cards = %w(cutpurse bazaar)
-#create_cards(cards, true, false, false, 'seaside')
+cards = %w(cutpurse bazaar)
+create_cards(cards, true, false, false, 'seaside')
 #
 ## Alchemy Kingdom Set
 #cards = %w(vineyard familiar)
