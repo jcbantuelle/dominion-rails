@@ -52,6 +52,14 @@ class LogUpdater
     send_message('get_from_card', locals)
   end
 
+  def discard(player, cards)
+    locals = {
+      target_player: player,
+      cards: cards
+    }
+    send_message('discard_cards', locals)
+  end
+
   private
 
   def send_message(template, custom_locals = {})

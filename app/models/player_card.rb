@@ -24,4 +24,8 @@ class PlayerCard < ActiveRecord::Base
     card.respond_to?(:value) ? card.value(game_player.player_cards) : 0
   end
 
+  def discard
+    update_attribute(:state, 'discard')
+  end
+
 end
