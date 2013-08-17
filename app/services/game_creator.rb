@@ -57,11 +57,11 @@ class GameCreator
   end
 
   def victory_cards
-    Card.card_type(:victory)
+    Card.card_name(%w[estate duchy province])
   end
 
   def treasure_cards
-    Card.card_type(:treasure)
+    Card.card_name(%w[copper silver gold])
   end
 
   def miscellaneous_cards
