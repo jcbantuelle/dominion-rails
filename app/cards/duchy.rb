@@ -1,7 +1,7 @@
 module Duchy
 
   def starting_count(game)
-    game.player_count < 3 ? 8 : 12
+    victory_card_count(game)
   end
 
   def cost

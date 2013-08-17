@@ -30,6 +30,10 @@ class Card < ActiveRecord::Base
     type.map(&:to_s).join(' ')
   end
 
+  def victory_card_count(game)
+    game.player_count == 2 ? 8 : 12
+  end
+
   def play_log(player, game)
     @log_updater = LogUpdater.new game
     @log_updater.card_action(player, self, 'play')
