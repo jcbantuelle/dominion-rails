@@ -20,13 +20,15 @@ module Json::Helper
     cards.sort{ |a, b| b.cost(game)[:coin] <=> a.cost(game)[:coin] }
   end
 
-  def sorted_hand(player)
-    grouped_cards = player.hand.group_by { |card| card.name }
-    grouped_cards.map{ |name,cards|
+  def grouped_cards(cards)
+    grouped_cards = cards.group_by { |card| card.name }
+    grouped_cards.map{ |name, card_group|
       {
         name: name,
-        count: cards.count,
-        card_id: cards.first.card_id
+        count: card_group.count,
+        card_id: card_group.first.card_id,
+        type_class: card_group.first.type_class,
+        title: name.titleize
       }
     }
   end

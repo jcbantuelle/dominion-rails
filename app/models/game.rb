@@ -59,16 +59,6 @@ class Game < ActiveRecord::Base
     @ranked_players ||= game_players.sort{ |p1, p2| p2.score <=> p1.score }
   end
 
-  def end_game_players
-    game_players.map{ |player|
-      {
-        id: player.id,
-        username: player.username,
-        score: player.score
-      }
-    }
-  end
-
   def has_potions?
     game_cards.select{ |game_card|
       game_card.cost(self)[:potion].present?

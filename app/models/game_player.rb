@@ -33,8 +33,12 @@ class GamePlayer < ActiveRecord::Base
     player_cards.revealed.update_all state: 'discard'
   end
 
+  def point_cards
+    player_cards.select{ |card| card.point_card? }
+  end
+
   def score
-    player_cards.map{ |card| card.value if card.respond_to? :value }.inject(:+)
+    point_cards.map(&:value).inject(:+)
   end
 
 end

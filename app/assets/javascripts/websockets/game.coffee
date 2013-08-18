@@ -40,6 +40,7 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
+    game.refresh_end_game(response)
     game.refresh_tooltips()
 
   # End Turn
@@ -72,8 +73,9 @@ $ ->
 
   # End Game
   window.game.end_game = (response) ->
-    $('#hand').empty()
-    $('#action-area').html(HandlebarsTemplates['game/end_game'](response))
+    $('<div id="finished-game"></div>').insertBefore('#action-area');
+    $('#hand, #action-area').remove()
+    game.refresh_end_game(response)
 
   # Log Message
   window.game.log_message = (response) ->
@@ -98,6 +100,9 @@ $ ->
 
   window.game.refresh_hand = (response)->
     $('#hand').html(HandlebarsTemplates['game/hand'](response.hand))
+
+  window.game.refresh_end_game = (response)->
+    $('#finished-game').html(HandlebarsTemplates['game/end_game'](response))
 
   # Tooltip Refresh
   window.game.refresh_tooltips = ->

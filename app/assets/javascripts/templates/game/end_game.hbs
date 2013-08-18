@@ -2,6 +2,12 @@
 <br />
 <br />
 {{#each players}}
-  <strong>{{this.username}}</strong>: {{this.score}}
+  <strong>{{this.username}}</strong>:
+  <br />
+  {{this.score}} Points
+  <br />
+  {{#each cards}}
+    {{count}} x <span class="{{type_class}}">{{title}}</span>
+  {{/each}}
   <br />
 {{/each}}

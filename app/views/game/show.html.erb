@@ -14,14 +14,7 @@
       <strong>- <%= @game.current_player.player_id == current_player.id ? 'Your' : "#{@game.current_turn.game_player.username}'s" %> turn <%= ((@game.turn - 1) / @game.player_count) + 1 %> -</strong>
     </div>
     <% if @game.finished? %>
-      <div>
-        <strong><%= @game.winner %></strong> wins the game!
-        <br />
-        <br />
-        <% @game.end_game_players.each do |player| %>
-          <strong><%= player[:username] %></strong>: <%= player[:score] %>
-          <br />
-        <% end %>
+      <div id="finished-game">
       </div>
     <% else %>
       <div id="action-area">

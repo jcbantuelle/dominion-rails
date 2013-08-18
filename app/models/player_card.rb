@@ -24,8 +24,12 @@ class PlayerCard < ActiveRecord::Base
     type_class.include? 'action'
   end
 
+  def point_card?
+    card.respond_to? :value
+  end
+
   def value
-    card.respond_to?(:value) ? card.value(game_player.player_cards) : 0
+    point_card? ? card.value(game_player.player_cards) : 0
   end
 
   def discard
