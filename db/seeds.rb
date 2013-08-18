@@ -37,8 +37,8 @@ cards = %w(cutpurse bazaar)
 create_cards(cards, true, false, false, 'seaside')
 #
 ## Alchemy Kingdom Set
-#cards = %w(vineyard familiar)
-#create_cards(cards, true, false, false, 'alchemy')
+cards = %w(vineyard familiar)
+create_cards(cards, true, false, false, 'alchemy')
 #
 ## Prosperity Kingdom Set
 #cards = %w(monument quarry workers_village venture grand_market bank)
