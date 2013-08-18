@@ -41,8 +41,8 @@ cards = %w(vineyard familiar)
 create_cards(cards, true, false, false, 'alchemy')
 #
 ## Prosperity Kingdom Set
-cards = %w(monument)
-# quarry workers_village venture grand_market bank)
+cards = %w(monument workers_village)
+# quarry venture grand_market bank)
 create_cards(cards, true, false, false, 'prosperity')
 #
 ## Cornucopia Kingdom Set
