@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+  INDENTED_ACTIONS = %w[gain]
+
   def player_name(game_player, player)
     same_player?(game_player, player) ? 'You' : game_player.username
   end
@@ -17,4 +19,9 @@ module ApplicationHelper
       "<span class=\"#{card.type_class}\">#{card.name.titleize}</span>"
     }.join(' ').html_safe
   end
+
+  def indent_message(action)
+    '&nbsp;&nbsp;'.html_safe if INDENTED_ACTIONS.include?(action)
+  end
+
 end
