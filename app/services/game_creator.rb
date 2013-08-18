@@ -23,7 +23,7 @@ class GameCreator
     players = Player.where id: @player_ids
     players.update_all current_game: @game.id
     players.shuffle.each_with_index do |player, index|
-      GamePlayer.create(game_id: @game.id, player_id: player.id, turn_order: index+1)
+      GamePlayer.create(game_id: @game.id, player_id: player.id, turn_order: index+1, victory_tokens: 0)
     end
   end
 

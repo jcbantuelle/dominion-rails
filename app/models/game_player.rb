@@ -38,7 +38,10 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def score
-    point_cards.map(&:value).inject(:+)
+    point_cards.map(&:value).inject(:+) + victory_tokens
   end
 
+  def add_victory_tokens(amount)
+    update_attribute :victory_tokens, victory_tokens + amount
+  end
 end

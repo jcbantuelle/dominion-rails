@@ -70,7 +70,8 @@ module Json::Game
         id: player.id,
         username: player.username,
         score: player.score,
-        cards: grouped_cards(player.point_cards)
+        cards: grouped_cards(player.point_cards),
+        victory_tokens: player.victory_tokens
       }
       assign_card_html(game, player, json)
     }
