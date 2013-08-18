@@ -69,4 +69,10 @@ class Game < ActiveRecord::Base
     }
   end
 
+  def has_potions?
+    game_cards.select{ |game_card|
+      game_card.cost(self)[:potion].present?
+    }.count > 0
+  end
+
 end

@@ -15,7 +15,7 @@ module Potion
   end
 
   def play(game)
-    #game.current_turn.add_coins(3)
+    game.current_turn.add_potions(1)
   end
 
   def log(game, player)

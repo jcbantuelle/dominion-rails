@@ -24,9 +24,14 @@ class Turn < ActiveRecord::Base
     update_attribute :buys, buys + amount
   end
 
+  def add_potions(amount)
+    update_attribute :potions, potions + amount
+  end
+
   def buy_card(cost)
     buy_phase
     update_attribute :buys, buys - 1
     update_attribute :coins, coins - cost[:coin]
+    update_attribute :potions, potions - cost[:potion] if cost[:potion].present?
   end
 end

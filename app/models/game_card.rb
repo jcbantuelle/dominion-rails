@@ -38,7 +38,8 @@ class GameCard < ActiveRecord::Base
       id: id,
       name: name,
       type_class: type_class,
-      cost: cost(game)[:coin],
+      coin_cost: cost(game)[:coin],
+      potion_cost: cost(game)[:potion],
       remaining: remaining,
       title: name.titleize
     }

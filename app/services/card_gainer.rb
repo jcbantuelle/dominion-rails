@@ -40,7 +40,7 @@ class CardGainer
   end
 
   def affordable?
-    @game.current_turn.coins >= @card.cost(@game)[:coin]
+    enough_coins? && enough_potions?
   end
 
   def valid_gain?
@@ -50,6 +50,14 @@ class CardGainer
   def prepare_top_of_deck
     GamePlayer.find(@player.id).deck.update_all ['card_order = card_order + 1']
     @new_card_attributes[:card_order] = 1
+  end
+
+  def enough_coins?
+    @game.current_turn.coins >= @card.cost(@game)[:coin]
+  end
+
+  def enough_potions?
+    @card.cost(@game)[:potion].nil? || @game.current_turn.potions >= @card.cost(@game)[:potion]
   end
 
 end

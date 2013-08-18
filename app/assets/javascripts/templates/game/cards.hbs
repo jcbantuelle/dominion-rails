@@ -7,7 +7,14 @@
       </div>
     </div>
     <div class="card-details">
-      ${{cost}}<br /><span class="remaining">({{remaining}})</span>
+      ${{coin_cost}}
+      {{#if potion_cost}}
+        {{#times potion_cost}}
+          &nabla;
+        {{/times}}
+      {{/if}}
+      <br />
+      <span class="remaining">({{remaining}})</span>
     </div>
     <div class="card-name">
       <span class="<%= card.type_class %>">{{title}}</span>

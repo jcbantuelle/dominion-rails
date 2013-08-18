@@ -28,8 +28,10 @@ class GameCreator
   end
 
   def add_game_cards
-    game_cards.each do |card|
-      GameCard.create(game_id: @game.id, card_id: card.id, remaining: card.starting_count(@game))
+    %w[kingdom victory treasure miscellaneous].each do |card_type|
+      send("#{card_type}_cards").each do |card|
+        GameCard.create(game_id: @game.id, card_id: card.id, remaining: card.starting_count(@game))
+      end
     end
   end
 
@@ -48,16 +50,14 @@ class GameCreator
     end
   end
 
-  def game_cards
-    kingdom_cards + victory_cards + treasure_cards + miscellaneous_cards
-  end
-
   def kingdom_cards
     Card.card_type(:kingdom).shuffle.take(10)
   end
 
   def victory_cards
-    Card.card_name(%w[estate duchy province])
+    cards = %w[estate duchy province]
+    cards << 'potion' if @game.has_potions?
+    Card.card_name(cards)
   end
 
   def treasure_cards
