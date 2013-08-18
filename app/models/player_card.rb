@@ -20,6 +20,10 @@ class PlayerCard < ActiveRecord::Base
     type_class.include? 'treasure'
   end
 
+  def action?
+    type_class.include? 'action'
+  end
+
   def value
     card.respond_to?(:value) ? card.value(game_player.player_cards) : 0
   end
