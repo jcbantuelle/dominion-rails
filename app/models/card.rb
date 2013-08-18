@@ -34,6 +34,10 @@ class Card < ActiveRecord::Base
     game.player_count == 2 ? 8 : 12
   end
 
+  def belongs_to_set?(set)
+    self.set == set
+  end
+
   def play_log(player, game)
     @log_updater = LogUpdater.new game
     @log_updater.card_action(player, self, 'play')

@@ -17,6 +17,10 @@ class GameCard < ActiveRecord::Base
     card.treasure?
   end
 
+  def belongs_to_set?(set)
+    card.belongs_to_set?(set)
+  end
+
   def available?
     remaining > 0
   end

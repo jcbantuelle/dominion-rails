@@ -65,4 +65,8 @@ class Game < ActiveRecord::Base
     }.count > 0
   end
 
+  def cards_by_set(set)
+    game_cards.select{ |card| card.belongs_to_set?(set) }
+  end
+
 end

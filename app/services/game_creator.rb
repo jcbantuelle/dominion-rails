@@ -56,12 +56,15 @@ class GameCreator
 
   def victory_cards
     cards = %w[estate duchy province]
-    cards << 'potion' if @game.has_potions?
+    cards << 'colony' if prosperity_game?
     Card.card_name(cards)
   end
 
   def treasure_cards
-    Card.card_name(%w[copper silver gold])
+    cards = %w[copper silver gold]
+    cards << 'potion' if @game.has_potions?
+    cards << 'platinum' if prosperity_game?
+    Card.card_name(cards)
   end
 
   def miscellaneous_cards
@@ -70,6 +73,14 @@ class GameCreator
 
   def starting_deck
     ([Card.by_name('estate')]*3) + ([Card.by_name('copper')]*7)
+  end
+
+  def prosperity_game?
+    @prosperity_game ||= @game.cards_by_set('prosperity').count > random_number
+  end
+
+  def random_number
+    (rand 10) + 1
   end
 
 end
