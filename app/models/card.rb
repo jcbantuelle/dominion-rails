@@ -46,4 +46,15 @@ class Card < ActiveRecord::Base
     card_gainer.gain_card(destination)
   end
 
+  def give_card_to_players(game, card_name, destination)
+    card = Card.by_name card_name
+    game_card = game.game_cards.by_card_id(card.id).first
+
+    game.game_players.each do |player|
+      unless player.id == game.current_player.id
+        CardGainer.new(game, player, game_card.id).gain_card(destination)
+      end
+    end
+  end
+
 end
