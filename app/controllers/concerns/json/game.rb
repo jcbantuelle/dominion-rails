@@ -65,13 +65,23 @@ module Json::Game
 
   def end_game_players(game)
     game.game_players.map{ |player|
-      {
+      point_cards = grouped_cards(player.point_cards)
+      json = {
         id: player.id,
         username: player.username,
         score: player.score,
         cards: grouped_cards(player.point_cards)
       }
+      assign_card_html(game, player, json)
     }
+  end
+
+  def assign_card_html(game, player, json)
+    json[:cards].each_with_index{ |card, index|
+      html = Card.find(card[:card_id]).results(player.player_cards)
+      json[:cards][index][:html] = html
+    }
+    json
   end
 
 end

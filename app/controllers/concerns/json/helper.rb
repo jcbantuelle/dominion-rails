@@ -26,9 +26,7 @@ module Json::Helper
       {
         name: name,
         count: card_group.count,
-        card_id: card_group.first.card_id,
-        type_class: card_group.first.type_class,
-        title: name.titleize
+        card_id: card_group.first.card_id
       }
     }
   end

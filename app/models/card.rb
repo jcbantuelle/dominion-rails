@@ -38,6 +38,10 @@ class Card < ActiveRecord::Base
     self.set == set
   end
 
+  def card_html
+    "<span class=\"#{type_class}\">#{name.titleize}</span>".html_safe
+  end
+
   def play_log(player, game)
     @log_updater = LogUpdater.new game
     @log_updater.card_action(player, self, 'play')

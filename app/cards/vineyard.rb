@@ -16,6 +16,14 @@ module Vineyard
   end
 
   def value(deck)
-    deck.select(&:action?).count / 3
+    action_count(deck) / 3
+  end
+
+  def results(deck)
+    card_html + " (#{action_count(deck)} Actions)"
+  end
+
+  def action_count(deck)
+    deck.select(&:action?).count
   end
 end

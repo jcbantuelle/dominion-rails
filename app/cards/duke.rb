@@ -15,6 +15,14 @@ module Duke
   end
 
   def value(deck)
+    duchy_count(deck)
+  end
+
+  def results(deck)
+    card_html + " (#{duchy_count(deck)} Duchies)"
+  end
+
+  def duchy_count(deck)
     duchy = Card.by_name('duchy')
     deck.select{|card| card.card_id == duchy.id }.count
   end

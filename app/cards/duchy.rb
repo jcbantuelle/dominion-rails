@@ -17,4 +17,8 @@ module Duchy
   def value(deck)
     3
   end
+
+  def results(player)
+    card_html
+  end
 end

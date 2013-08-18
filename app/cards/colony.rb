@@ -17,4 +17,8 @@ module Colony
   def value(deck)
     10
   end
+
+  def results(player)
+    card_html
+  end
 end

@@ -22,4 +22,8 @@ module Harem
     game.current_turn.add_coins(2)
   end
 
+  def results(deck)
+    card_html
+  end
+
 end

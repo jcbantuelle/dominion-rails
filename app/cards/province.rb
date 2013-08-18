@@ -17,4 +17,8 @@ module Province
   def value(deck)
     6
   end
+
+  def results(player)
+    card_html
+  end
 end

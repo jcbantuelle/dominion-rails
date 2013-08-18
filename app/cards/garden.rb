@@ -17,4 +17,8 @@ module Garden
   def value(deck)
     deck.length / 10
   end
+
+  def results(deck)
+    card_html + " (#{deck.length} Cards)"
+  end
 end
