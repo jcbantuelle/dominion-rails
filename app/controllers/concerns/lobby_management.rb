@@ -34,7 +34,7 @@ module LobbyManagement
         player.update_attribute(:current_game, nil) if player.game.finished?
       end
     end
-    current_player.reload
+    current_player.reload if current_player
   end
 
   def update_lobby
