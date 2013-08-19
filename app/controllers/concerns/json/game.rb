@@ -35,7 +35,9 @@ module Json::Game
   private
 
   def game_content(game, player)
-    game_area(game, player).merge(card_area(game)).merge(end_game(game))
+    json = game_area(game, player).merge(card_area(game))
+    json.merge!(end_game(game)) if game.finished?
+    json
   end
 
   def game_area(game, player)
