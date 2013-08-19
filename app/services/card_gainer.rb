@@ -14,7 +14,7 @@ class CardGainer
   end
 
   def valid_buy?
-    affordable? && @card.available?
+    enough_buys? && affordable? && @card.available?
   end
 
   def gain_card(destination)
@@ -37,6 +37,10 @@ class CardGainer
 
     prepare_top_of_deck if destination == 'deck'
     PlayerCard.create @new_card_attributes
+  end
+
+  def enough_buys?
+    @game.current_turn.buys > 0
   end
 
   def affordable?
