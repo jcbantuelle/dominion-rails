@@ -24,4 +24,8 @@ module Curse
   def value(deck)
     -1
   end
+
+  def results(player)
+    card_html
+  end
 end
