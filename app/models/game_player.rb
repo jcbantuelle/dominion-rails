@@ -23,6 +23,10 @@ class GamePlayer < ActiveRecord::Base
     player_cards.discard
   end
 
+  def in_play
+    player_cards.in_play
+  end
+
   def shuffle_discard_into_deck
     discard.shuffle.each_with_index do |card, index|
       card.update(card_order: index+1, state: 'deck')
