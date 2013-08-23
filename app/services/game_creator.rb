@@ -80,7 +80,7 @@ class GameCreator
   end
 
   def random_number
-    (rand 10) + 1
+    @random_number ||= (rand 10) + 1
   end
 
 end
