@@ -31,7 +31,6 @@ module Venture
   end
 
   def reveal_cards(game)
-    game.reload
     game.current_player.deck.each do |card|
       @revealed << card
       if card.treasure?
@@ -61,9 +60,9 @@ module Venture
 
   def play_treasure(game)
     @treasure.update_attribute :state, 'play'
+    game.current_player.player_cards.reload
     played_card = @treasure.card
     played_card.log_updater = LogUpdater.new game
-    game.reload
     played_card.play(game)
   end
 end
