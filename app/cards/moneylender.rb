@@ -14,8 +14,18 @@ module Moneylender
     [:action]
   end
 
-  def play
-    # Trash a Copper from hand
-    # If you do, +3 coin
+  def play(game)
+    if trash_copper(game)
+      game.current_turn.add_coins(3)
+      @log_updater.get_from_card(game.current_player, '+$3')
+    end
+  end
+
+  def trash_copper(game)
+    copper = game.current_player.find_card_in_hand('copper')
+    unless copper.nil?
+      CardTrasher.new(copper).trash
+    end
+    copper.present?
   end
 end
