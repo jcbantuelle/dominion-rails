@@ -48,4 +48,9 @@ class GamePlayer < ActiveRecord::Base
   def add_victory_tokens(amount)
     update_attribute :victory_tokens, victory_tokens + amount
   end
+
+  def find_card_in_hand(name)
+    card = Card.by_name name
+    hand.select{ |c| c.card_id == card.id }.first
+  end
 end

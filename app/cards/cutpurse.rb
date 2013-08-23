@@ -18,7 +18,6 @@ module Cutpurse
     game.current_turn.add_coins(2)
     @log_updater.get_from_card(game.current_player, '+$2')
 
-    @copper = Card.by_name 'copper'
     game.game_players.each do |player|
       discard_copper(game, player)
     end
@@ -26,12 +25,12 @@ module Cutpurse
 
   def discard_copper(game, player)
     unless player.id == game.current_player.id
-      copper_in_hand = player.hand.select{|card| card.card_id == @copper.id }
-      if copper_in_hand.count > 0
-        copper_in_hand.first.discard
-        @log_updater.discard(player, [copper_in_hand.first])
-      else
+      copper = player.find_card_in_hand('copper')
+      if copper.nil?
         @log_updater.reveal(player, player.hand, 'hand')
+      else
+        copper.discard
+        @log_updater.discard(player, [copper])
       end
     end
   end
