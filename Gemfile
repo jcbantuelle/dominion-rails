@@ -38,6 +38,10 @@ gem 'twitter-bootstrap-rails', '= 2.2.6'
 gem 'puma'
 gem 'tubesock'
 
+# Capistrano
+gem 'capistrano'
+gem 'rvm-capistrano'
+
 group :development do
   # Debugging Tools
   gem 'pry-rails'
