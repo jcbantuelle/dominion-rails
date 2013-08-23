@@ -28,8 +28,8 @@ cards = %w(village woodcutter gardens smithy council_room festival laboratory ma
 create_cards(cards, true, false, false, 'base')
 
 # Intrigue
-cards = %w(great_hall duke harem)
-# shanty_town coppersmith bridge conspirator
+cards = %w(great_hall duke harem coppersmith)
+# shanty_town bridge conspirator
 # courtyard pawn secret_chamber masquerade steward swindler wishing_well baron ironworks mining_village scount minion saboteur torturer trading_post tribute upgrade nobles
 create_cards(cards, true, false, false, 'intrigue')
 

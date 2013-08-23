@@ -28,6 +28,10 @@ class Turn < ActiveRecord::Base
     update_attribute :potions, potions + amount
   end
 
+  def add_coppersmith
+    update_attribute :coppersmith, coppersmith + 1
+  end
+
   def buy_card(cost)
     buy_phase
     update_attribute :buys, buys - 1
