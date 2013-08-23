@@ -32,7 +32,7 @@ gem 'devise', '~> 3'
 # Twitter Bootstrap
 gem 'therubyracer'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '= 2.2.6'
 
 # Websocket Support
 gem 'puma'
