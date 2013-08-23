@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def player_action(game_player, player, action)
-    same_player?(game_player, player) ? action : "#{action}s"
+    same_player?(game_player, player) ? action : action.pluralize
   end
 
   def same_player?(game_player, player)
