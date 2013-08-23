@@ -34,6 +34,11 @@ task :update_configs do
   run "cp -Rf #{shared_path}/config/* #{release_path}/config"
 end
 
+desc 'Seed Database with Implemented Cards'
+task :seed_cards do
+  run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake seed_cards"
+end
+
 namespace :puma do
   desc "Start the application"
   task :start, :roles => :app, :except => { :no_release => true } do
@@ -44,3 +49,4 @@ end
 # Set up our callbacks
 after 'deploy:setup', :create_configs
 after 'deploy:finalize_update', :update_configs
+after 'deploy:restart', :seed_cards
