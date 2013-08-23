@@ -34,7 +34,19 @@ class GameCard < ActiveRecord::Base
   end
 
   def cost(game)
-    card.cost game
+    base_cost = card.cost game
+    base_coin = base_cost[:coin]
+
+    discount = 0
+    discount += game.current_turn.global_discount unless game.current_turn.nil?
+
+    calculated_coin = base_coin - discount
+    calculated_coin = 0 if calculated_coin < 0
+
+    cost_values = [[:coin, calculated_coin]]
+    cost_values << [:potion, base_cost[:potion]] unless base_cost[:potion].nil?
+
+    Hash[cost_values]
   end
 
   def json(game)
