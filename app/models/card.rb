@@ -33,7 +33,7 @@ class Card < ActiveRecord::Base
   end
 
   def victory_card_count(game)
-    game.player_count == 2 ? 8 : 12
+    game.player_count < 3 ? 8 : 12
   end
 
   def belongs_to_set?(set)
