@@ -22,7 +22,6 @@ module SeaHag
   def discard_top_card(game)
     game.game_players.each do |player|
       unless player.id == game.current_player.id
-        binding.pry
         player.shuffle_discard_into_deck if player.needs_reshuffle?
         unless player.empty_deck?
           card = player.player_cards.deck.first
