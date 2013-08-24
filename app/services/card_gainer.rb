@@ -2,7 +2,6 @@ class CardGainer
 
   def initialize(game, player, card_id)
     @game = game
-    @game.reload
     @player = player
     @card = @game.game_cards.find card_id
   end

@@ -3,7 +3,6 @@ class CardPlayer
   def initialize(game, card_id)
     @game = game
     @card = Card.find card_id
-    @game.reload
   end
 
   def play_card
