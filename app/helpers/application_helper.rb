@@ -28,4 +28,9 @@ module ApplicationHelper
     '&nbsp;&nbsp;'.html_safe if INDENTED_ACTIONS.include?(action)
   end
 
+  def card_destination(destination)
+    message = destination == 'deck' ? 'on ' : 'in '
+    message += destination
+  end
+
 end

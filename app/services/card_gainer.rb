@@ -19,7 +19,7 @@ class CardGainer
   def gain_card(destination)
     if valid_gain?
       add_to_deck(destination)
-      LogUpdater.new(@game).card_action(@player, @card, 'gain')
+      LogUpdater.new(@game).card_action(@player, @card, 'gain', destination)
     end
   end
 

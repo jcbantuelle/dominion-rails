@@ -2,3 +2,4 @@
 <%= player_name(target_player, player) %>
 <%= player_action(target_player, player, action) %>
 <span class="<%= card.type_class %>"><%= card.name.titleize %></span>
+<%= card_destination(destination) unless destination.nil? %>

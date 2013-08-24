@@ -8,11 +8,12 @@ class LogUpdater
     send_message 'end_turn'
   end
 
-  def card_action(player, card, action)
+  def card_action(player, card, action, destination=nil)
     locals = {
       target_player: player,
       card: card,
-      action: action
+      action: action,
+      destination: destination
     }
 
     send_message('card_action', locals)
@@ -52,10 +53,11 @@ class LogUpdater
     send_message('get_from_card', locals)
   end
 
-  def discard(player, cards)
+  def discard(player, cards, source=nil)
     locals = {
       target_player: player,
-      cards: cards
+      cards: cards,
+      source: source
     }
     send_message('discard_cards', locals)
   end
