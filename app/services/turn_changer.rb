@@ -2,7 +2,6 @@ class TurnChanger
 
   def initialize(game)
     @game = game
-    @game.reload
   end
 
   def first_turn
@@ -19,7 +18,7 @@ class TurnChanger
   private
 
   def next_player
-    turn = (@game.turn-1) % @game.player_count
+    turn = (@next_turn - 1) % @game.player_count
     @game.game_players[turn]
   end
 
@@ -29,11 +28,12 @@ class TurnChanger
   end
 
   def set_game_turn
-    turn = @game.turn.nil? ? 1 : @game.turn+1
-    @game.update_attribute :turn, turn
+    current_turn = @game.current_turn
+    @next_turn = current_turn.nil? ? 1 : current_turn.turn + 1
   end
 
   def create_turn
-    Turn.create game_player: next_player, game: @game, turn: @game.turn, actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action'
+    turn = Turn.create game_player: next_player, game: @game, turn: @next_turn, actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action'
+    @game.update_attribute :turn_id, turn.id
   end
 end

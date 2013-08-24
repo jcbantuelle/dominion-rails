@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130823231100) do
+ActiveRecord::Schema.define(version: 20130824001255) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20130823231100) do
   add_index "game_trashes", ["game_id"], name: "index_game_trashes_on_game_id", using: :btree
 
   create_table "games", force: true do |t|
-    t.integer  "turn"
+    t.integer  "turn_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "proposer_id"

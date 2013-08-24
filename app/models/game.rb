@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   has_many :game_cards, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
   has_many :turns, ->{ ordered }, dependent: :destroy
+  belongs_to :current_turn, class_name: 'Turn', foreign_key: 'turn_id'
   belongs_to :proposer, class_name: 'Player', foreign_key: 'proposer_id'
 
   before_destroy { |record| record.players.update_all(current_game: nil) }
@@ -37,10 +38,6 @@ class Game < ActiveRecord::Base
 
   def game_player(player_id)
     game_players.where(player_id: player_id).first
-  end
-
-  def current_turn
-    turns(true).first
   end
 
   def current_player

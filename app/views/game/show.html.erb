@@ -11,7 +11,7 @@
   <div id="game-area" class="span6">
     <div id="game-log">
       Turn Order is: <%= @game.game_players.collect(&:username).join(', ') %><br /><br />
-      <strong>- <%= @game.current_player.player_id == current_player.id ? 'Your' : "#{@game.current_turn.game_player.username}'s" %> turn <%= ((@game.turn - 1) / @game.player_count) + 1 %> -</strong>
+      <strong>- <%= @game.current_player.player_id == current_player.id ? 'Your' : "#{@game.current_player.username}'s" %> turn <%= ((@game.current_turn.turn - 1) / @game.player_count) + 1 %> -</strong>
     </div>
     <% if @game.finished? %>
       <div id="finished-game">
