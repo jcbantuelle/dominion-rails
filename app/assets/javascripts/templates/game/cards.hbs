@@ -1,5 +1,5 @@
 {{#each this}}
-  <div class="card-container">
+  <div class="card-container {{#unless remaining}}empty-pile{{/unless}}">
     <div>
       <img src="/images/cards/{{name}}.jpg", width="29" height="46" class="card" data-card-id="{{id}}" />
       <div class="card-tooltip">
