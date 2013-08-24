@@ -55,7 +55,7 @@ module Adventurer
   end
 
   def reveal_finished?(game)
-    @treasures.count == 2 || game.current_player.discard.count == 0
+    @treasures.count == 2 || game.current_player.empty_discard?
   end
 
 end
