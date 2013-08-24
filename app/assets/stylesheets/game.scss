@@ -5,6 +5,18 @@ $card_height: 46px;
   padding-bottom: 5px;
 }
 
+.card-container.empty-pile .card-name span {
+  text-decoration: line-through;
+}
+
+.card-container.empty-pile .remaining {
+  color: red;
+}
+
+.card-container.empty-pile img.card {
+  opacity: 0.4;
+}
+
 .card-container div {
   float: right;
 }
