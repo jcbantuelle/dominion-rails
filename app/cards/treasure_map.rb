@@ -24,9 +24,9 @@ module TreasureMap
 
   def trash_treasure_maps(game)
     map_in_play = game.current_player.find_card_in_play('treasure_map')
-    CardTrasher.new(map_in_play).trash
+    CardTrasher.new([map_in_play]).trash
     map_in_hand = game.current_player.find_card_in_hand('treasure_map')
-    CardTrasher.new(map_in_hand).trash unless map_in_hand.nil?
+    CardTrasher.new([map_in_hand]).trash('hand') unless map_in_hand.nil?
     map_in_hand.present?
   end
 end

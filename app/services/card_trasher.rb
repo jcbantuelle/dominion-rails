@@ -1,15 +1,17 @@
 class CardTrasher
 
-  def initialize(card)
-    @card = card
-    @player = @card.game_player
+  def initialize(cards)
+    @cards = cards
+    @player = @cards.first.game_player
     @game = @player.game
   end
 
-  def trash
-    GameTrash.create game: @game, card: @card.card
-    @card.destroy
-    LogUpdater.new(@player.game).trash(@player, [@card])
+  def trash(source=nil)
+    @cards.each do |game_card|
+      GameTrash.create game: @game, card: game_card.card
+      game_card.destroy
+    end
+    LogUpdater.new(@player.game).trash(@player, @cards, source)
   end
 
 end
