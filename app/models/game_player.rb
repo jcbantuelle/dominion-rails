@@ -54,6 +54,11 @@ class GamePlayer < ActiveRecord::Base
     hand.select{ |c| c.card_id == card.id }.first
   end
 
+  def find_card_in_play(name)
+    card = Card.by_name name
+    in_play.select{ |c| c.card_id == card.id }.first
+  end
+
   def empty_deck?
     player_cards.deck.empty?
   end

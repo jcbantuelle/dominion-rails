@@ -57,14 +57,23 @@ class Card < ActiveRecord::Base
   end
 
   def give_card_to_players(game, card_name, destination)
-    card = Card.by_name card_name
-    game_card = game.game_cards.by_card_id(card.id).first
+    game_card = find_game_card(game, card_name)
 
     game.game_players.each do |player|
       unless player.id == game.current_player.id
         CardGainer.new(game, player, game_card.id).gain_card(destination)
       end
     end
+  end
+
+  def give_card_to_self(game, card_name, destination)
+    game_card = find_game_card(game, card_name)
+    CardGainer.new(game, game.current_player, game_card.id).gain_card(destination)
+  end
+
+  def find_game_card(game, card_name)
+    card = Card.by_name card_name
+    game.game_cards.by_card_id(card.id).first
   end
 
 end
