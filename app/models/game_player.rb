@@ -53,4 +53,16 @@ class GamePlayer < ActiveRecord::Base
     card = Card.by_name name
     hand.select{ |c| c.card_id == card.id }.first
   end
+
+  def empty_deck?
+    player_cards.deck.empty?
+  end
+
+  def empty_discard?
+    player_cards.discard.empty?
+  end
+
+  def needs_reshuffle?
+    empty_deck? && !empty_discard?
+  end
 end
