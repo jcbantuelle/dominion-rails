@@ -14,6 +14,7 @@ class TurnChanger
     set_game_turn
     create_turn
     update_log
+    resolve_durations
   end
 
   private
@@ -40,5 +41,14 @@ class TurnChanger
 
   def update_log
     LogUpdater.new(@game).end_turn
+  end
+
+  def resolve_durations
+    @game.current_player.duration.each do |player_card|
+      card = player_card.card
+      card.log_updater = LogUpdater.new @game
+      card.duration(@game)
+    end
+    @game.current_player.duration.update_all(state: 'play')
   end
 end

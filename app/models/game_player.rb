@@ -23,6 +23,10 @@ class GamePlayer < ActiveRecord::Base
     player_cards.discard
   end
 
+  def duration
+    player_cards.duration
+  end
+
   def in_play
     player_cards.in_play
   end

@@ -25,7 +25,8 @@ class CardPlayer
   end
 
   def move_from_hand_to_play
-    @game.current_player.hand.where(card_id: @card.id).first.update_attribute(:state, 'play')
+    new_state = @card.duration_card? ? 'duration' : 'play'
+    @game.current_player.hand.where(card_id: @card.id).first.update_attribute(:state, new_state)
     @game.current_turn.add_played_action if @card.action_card?
   end
 

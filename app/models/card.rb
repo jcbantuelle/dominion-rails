@@ -28,6 +28,10 @@ class Card < ActiveRecord::Base
     type.include?(:action)
   end
 
+  def duration_card?
+    type.include?(:duration)
+  end
+
   def type_class
     type.map(&:to_s).join(' ')
   end

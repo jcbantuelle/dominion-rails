@@ -3,6 +3,7 @@ $victory: lightgreen;
 $reaction: lightblue;
 $treasure: gold;
 $curse: violet;
+$duration: orange;
 $busy: grey;
 $player_margin: 25px;
 
@@ -43,6 +44,10 @@ $player_margin: 25px;
 
 .reaction {
   background-color: $reaction;
+}
+
+.duration {
+  background-color: $duration;
 }
 
 .treasure {
