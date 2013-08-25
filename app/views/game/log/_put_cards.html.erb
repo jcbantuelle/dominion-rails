@@ -2,5 +2,7 @@
 <%= player_name(target_player, player) %>
 <%= player_action(target_player, player, 'put') %>
 <%= show_cards(cards) %>
-<%= card_destination(destination) %> and
-<%= player_action(target_player, player, 'discard') %> the rest
+<%= card_destination(destination) %>
+<% if discard %>
+  and <%= player_action(target_player, player, 'discard') %> the rest
+<% end %>

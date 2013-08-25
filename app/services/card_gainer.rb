@@ -7,8 +7,8 @@ class CardGainer
   end
 
   def buy_card
-    add_to_deck('discard')
     LogUpdater.new(@game).card_action(@player, @card, 'buy')
+    add_to_deck('discard')
     @game.current_turn.buy_card @card.cost(@game)
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
@@ -20,8 +20,8 @@ class CardGainer
 
   def gain_card(destination)
     if valid_gain?
-      add_to_deck(destination)
       LogUpdater.new(@game).card_action(@player, @card, 'gain', destination)
+      add_to_deck(destination)
     end
   end
 
@@ -29,6 +29,8 @@ class CardGainer
 
   def add_to_deck(destination)
     @card.update_attribute :remaining, @card.remaining - 1
+
+    destination = @card.card.gain_destination(@game, @player) if @card.card.respond_to?(:gain_destination)
 
     @new_card_attributes = {
       game_player_id: @player.id,
