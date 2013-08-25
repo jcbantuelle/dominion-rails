@@ -10,7 +10,8 @@ class CardGainer
     add_to_deck('discard')
     LogUpdater.new(@game).card_action(@player, @card, 'buy')
     @game.current_turn.buy_card @card.cost(@game)
-    process_hoard if @card.card.victory_card?
+    process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
+    process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
   end
 
   def valid_buy?
@@ -68,10 +69,26 @@ class CardGainer
     !@card.card.respond_to?(:allowed?) || @card.card.allowed?(@game)
   end
 
+  def valid_hoard_gain?
+    @card.card.victory_card?
+  end
+
   def process_hoard
     gold = GameCard.by_card_name('gold').first
     card_gainer = CardGainer.new @game, @game.current_player, gold.id
     @game.current_turn.hoards.times do
+      card_gainer.gain_card('discard')
+    end
+  end
+
+  def valid_talisman_gain?
+    card_cost = @card.cost(@game)
+    !@card.card.victory_card? && card_cost[:coin] <= 4 && card_cost[:potion].nil?
+  end
+
+  def process_talisman
+    card_gainer = CardGainer.new @game, @game.current_player, @card.id
+    @game.current_turn.talismans.times do
       card_gainer.gain_card('discard')
     end
   end

@@ -48,6 +48,10 @@ class Turn < ActiveRecord::Base
     update_attribute :hoards, hoards + 1
   end
 
+  def add_talisman
+    update_attribute :talismans, talismans + 1
+  end
+
   def remove_tactician
     update_attribute :tacticians, tacticians - 1
   end
