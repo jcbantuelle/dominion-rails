@@ -32,6 +32,10 @@ class Card < ActiveRecord::Base
     type.include?(:attack)
   end
 
+  def victory_card?
+    type.include?(:victory)
+  end
+
   def duration_card?
     type.include?(:duration)
   end

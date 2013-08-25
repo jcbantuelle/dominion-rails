@@ -10,6 +10,7 @@ class CardGainer
     add_to_deck('discard')
     LogUpdater.new(@game).card_action(@player, @card, 'buy')
     @game.current_turn.buy_card @card.cost(@game)
+    process_hoard if @card.card.victory_card?
   end
 
   def valid_buy?
@@ -65,6 +66,14 @@ class CardGainer
 
   def allowed_to_buy?
     !@card.card.respond_to?(:allowed?) || @card.card.allowed?(@game)
+  end
+
+  def process_hoard
+    gold = GameCard.by_card_name('gold').first
+    card_gainer = CardGainer.new @game, @game.current_player, gold.id
+    @game.current_turn.hoards.times do
+      card_gainer.gain_card('discard')
+    end
   end
 
 end
