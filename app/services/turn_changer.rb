@@ -48,7 +48,7 @@ class TurnChanger
 
   def create_turn
     if @outpost
-      @game.current_turn.update actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action', coppersmith: 0, global_discount: 0, played_actions: 0, tacticians: 0, lighthouse: 0, action_discount: 0, hoards: 0, talismans: 0
+      @game.current_turn.update actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action', coppersmith: 0, global_discount: 0, played_actions: 0, tacticians: 0, lighthouse: 0, action_discount: 0, hoards: 0, talismans: 0, crossroads: 0
     else
       turn = Turn.create game_player: next_player, game: @game, turn: @next_turn
       @game.update_attribute :turn_id, turn.id

@@ -60,6 +60,10 @@ class Turn < ActiveRecord::Base
     update_attribute :lighthouse, true
   end
 
+  def add_crossroad
+    update_attribute :crossroads, crossroads + 1
+  end
+
   def add_outpost
     update_attribute :outpost, true
   end
