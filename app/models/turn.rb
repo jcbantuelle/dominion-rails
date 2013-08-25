@@ -28,6 +28,10 @@ class Turn < ActiveRecord::Base
     update_attribute :potions, potions + amount
   end
 
+  def add_played_action
+    update_attribute :played_actions, played_actions + 1
+  end
+
   def add_coppersmith
     update_attribute :coppersmith, coppersmith + 1
   end
