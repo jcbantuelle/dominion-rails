@@ -5,12 +5,7 @@ class TurnEnder
   end
 
   def end_turn
-    if game_over?
-      end_game
-    else
-      change_turn
-      update_log
-    end
+    game_over? ? end_game : change_turn
   end
 
   private
@@ -25,10 +20,6 @@ class TurnEnder
 
   def change_turn
     TurnChanger.new(@game).next_turn
-  end
-
-  def update_log
-    LogUpdater.new(@game).end_turn
   end
 
   def three_empty_piles?

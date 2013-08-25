@@ -13,6 +13,7 @@ class TurnChanger
     clean_up
     set_game_turn
     create_turn
+    update_log
   end
 
   private
@@ -35,5 +36,9 @@ class TurnChanger
   def create_turn
     turn = Turn.create game_player: next_player, game: @game, turn: @next_turn, actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action'
     @game.update_attribute :turn_id, turn.id
+  end
+
+  def update_log
+    LogUpdater.new(@game).end_turn
   end
 end
