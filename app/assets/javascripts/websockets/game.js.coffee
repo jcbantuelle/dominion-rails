@@ -45,6 +45,8 @@ $ ->
 
   # End Turn
   window.game.end_turn = (response) ->
+    game.refresh_kingdom_cards(response)
+    game.refresh_common_cards(response)
     game.refresh_turn_status(response)
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
