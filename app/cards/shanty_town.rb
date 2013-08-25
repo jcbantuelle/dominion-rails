@@ -16,13 +16,27 @@ module ShantyTown
 
   def play(game)
     game.current_turn.add_actions(2)
+    reveal_hand(game)
+    @log_updater.get_from_card(game.current_player, '+2 actions')
+  end
+
+  private
+
+  def reveal_hand(game)
     hand = game.current_player.player_cards.hand
     @log_updater.reveal(game.current_player, hand, 'hand')
-    if hand.select(&:action?).count == 0
+    draw_cards(game, hand)
+  end
+
+  def draw_cards(game, hand)
+    if no_actions?(hand)
       @card_drawer = CardDrawer.new(game.current_player)
       @card_drawer.draw(2)
     end
-    @log_updater.get_from_card(game.current_player, '+2 actions')
+  end
+
+  def no_actions?(hand)
+    hand.select(&:action?).count == 0
   end
 
 end
