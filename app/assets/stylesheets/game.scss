@@ -1,5 +1,13 @@
 $card_height: 46px;
 
+body {
+  overflow-y: scroll;
+}
+
+#kingdom-cards {
+  width: 210px;
+}
+
 .card-container {
   height: $card_height;
   padding-bottom: 5px;
@@ -55,7 +63,7 @@ $card_height: 46px;
 #game-log {
   height: 250px;
   overflow: scroll;
-  width: 800px;
+  width: 700px;
 }
 
 #hand {
