@@ -19,10 +19,7 @@ module GrandMarket
   end
 
   def play(game)
-    @card_drawer = CardDrawer.new(game.current_player)
-    @card_drawer.draw(1)
-    game.current_turn.add_actions(1)
-    game.current_turn.add_buys(1)
+    market(game)
     game.current_turn.add_coins(2)
     @log_updater.get_from_card(game.current_player, '+1 action, +1 buy, and +$2')
   end
