@@ -18,7 +18,4 @@ module Potion
     game.current_turn.add_potions(1)
   end
 
-  def log(game, player)
-    render_play_card game, player
-  end
 end

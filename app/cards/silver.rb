@@ -18,7 +18,4 @@ module Silver
     game.current_turn.add_coins(2)
   end
 
-  def log(game, player)
-    render_play_card game, player
-  end
 end

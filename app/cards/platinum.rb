@@ -18,7 +18,4 @@ module Platinum
     game.current_turn.add_coins(5)
   end
 
-  def log(game, player)
-    render_play_card game, player
-  end
 end

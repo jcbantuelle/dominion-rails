@@ -20,10 +20,6 @@ module Bank
     @log_updater.get_from_card(game.current_player, "+$#{coins}")
   end
 
-  def log(game, player)
-    render_play_card game, player
-  end
-
   def treasures_in_play(game)
     game.current_player.in_play.select(&:treasure?).count
   end

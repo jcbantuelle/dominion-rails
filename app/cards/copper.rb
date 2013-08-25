@@ -20,7 +20,4 @@ module Copper
     @log_updater.get_from_card(game.current_player, "+$#{coppersmith} from Coppersmith") if coppersmith > 0
   end
 
-  def log(game, player)
-    render_play_card game, player
-  end
 end
