@@ -54,10 +54,9 @@ create_cards(cards, true, false, false, 'prosperity')
 cards = %w(hunting_party fairgrounds menagerie harvest farming_village fortune_teller)
 # hamlet horse_traders remake tournament young_witch horn_of_plenty jester
 # bag_of_gold diadem followers princess trusty_steed
- create_cards(cards, true, false, false, 'cornucopia')
+create_cards(cards, true, false, false, 'cornucopia')
 #
 # Hinterlands
-cards = %w(crossroads nomad_camp silk_road cache)
-# highway
+cards = %w(crossroads nomad_camp silk_road cache highway)
 # duchess fools_gold develop oasis oracle scheme tunnel jack_of_all_trades noble_brigand spice_merchant trader cartographer embassy haggler ill_gotten_gains inn mandarin margrave stables border_village farmland
 create_cards(cards, true, false, false, 'hinterlands')
