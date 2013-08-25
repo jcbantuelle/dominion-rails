@@ -55,6 +55,9 @@ class Turn < ActiveRecord::Base
   def add_global_discount(amount)
     update_attribute :global_discount, global_discount + amount
   end
+
+  def add_action_discount(amount)
+    update_attribute :action_discount, action_discount + amount
   end
 
   def buy_card(cost)
