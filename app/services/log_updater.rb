@@ -8,6 +8,13 @@ class LogUpdater
     send_message 'end_turn'
   end
 
+  def outpost_turn
+    locals = {
+      outpost: Card.by_name('outpost')
+    }
+    send_message 'outpost_turn', locals
+  end
+
   def card_action(player, card, action, destination=nil)
     locals = {
       target_player: player,

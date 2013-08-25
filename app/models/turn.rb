@@ -48,6 +48,10 @@ class Turn < ActiveRecord::Base
     update_attribute :lighthouse, true
   end
 
+  def add_outpost
+    update_attribute :outpost, true
+  end
+
   def add_global_discount
     update_attribute :global_discount, global_discount + 1
   end

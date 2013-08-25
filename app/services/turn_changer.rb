@@ -10,6 +10,7 @@ class TurnChanger
   end
 
   def next_turn
+    resolve_outpost
     clean_up
     set_game_turn
     create_turn
@@ -24,23 +25,42 @@ class TurnChanger
     @game.game_players[turn]
   end
 
+  def resolve_outpost
+    if !@game.current_turn.outpost? && @game.current_player.player_cards.duration.select{ |c| c.name == 'outpost' }.count > 0
+      @outpost = true
+      @game.current_turn.add_outpost
+    end
+    @outpost ||= false
+  end
+
   def clean_up
     @game.current_player.player_cards.where(state: %w[hand play]).update_all(state: 'discard')
-    CardDrawer.new(@game.current_player).draw(5, false)
+    draw_count = @outpost ? 3 : 5
+    CardDrawer.new(@game.current_player).draw(draw_count, false)
   end
 
   def set_game_turn
-    current_turn = @game.current_turn
-    @next_turn = current_turn.nil? ? 1 : current_turn.turn + 1
+    unless @outpost
+      current_turn = @game.current_turn
+      @next_turn = current_turn.nil? ? 1 : current_turn.turn + 1
+    end
   end
 
   def create_turn
-    turn = Turn.create game_player: next_player, game: @game, turn: @next_turn, actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action'
-    @game.update_attribute :turn_id, turn.id
+    if @outpost
+      @game.current_turn.update actions: 1, buys: 1, coins: 0, potions: 0, phase: 'action', coppersmith: 0, global_discount: 0, played_actions: 0, tacticians: 0, lighthouse: 0
+    else
+      turn = Turn.create game_player: next_player, game: @game, turn: @next_turn
+      @game.update_attribute :turn_id, turn.id
+    end
   end
 
   def update_log
-    LogUpdater.new(@game).end_turn
+    if @outpost
+      LogUpdater.new(@game).outpost_turn
+    else
+      LogUpdater.new(@game).end_turn
+    end
   end
 
   def resolve_durations
