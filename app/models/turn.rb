@@ -52,8 +52,9 @@ class Turn < ActiveRecord::Base
     update_attribute :outpost, true
   end
 
-  def add_global_discount
-    update_attribute :global_discount, global_discount + 1
+  def add_global_discount(amount)
+    update_attribute :global_discount, global_discount + amount
+  end
   end
 
   def buy_card(cost)

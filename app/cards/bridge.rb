@@ -17,7 +17,7 @@ module Bridge
   def play(game)
     game.current_turn.add_coins(1)
     game.current_turn.add_buys(1)
-    game.current_turn.add_global_discount
+    game.current_turn.add_global_discount(1)
     @log_updater.get_from_card(game.current_player, '+1 buy and +$1')
   end
 
