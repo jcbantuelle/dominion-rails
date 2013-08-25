@@ -16,7 +16,7 @@ class GameController < ApplicationController
         refresh_game
       end
       tubesock.onmessage do |data|
-        @game.reload
+        @game = Game.find_uncached @game.id # Rails caches this even on .reload :(
         process_message data
       end
       ActiveRecord::Base.clear_active_connections!

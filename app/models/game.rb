@@ -66,4 +66,10 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.belongs_to_set?(set) }
   end
 
+  def self.find_uncached(game_id)
+    uncached do
+      find game_id
+    end
+  end
+
 end
