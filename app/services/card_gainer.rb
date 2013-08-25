@@ -74,7 +74,7 @@ class CardGainer
   end
 
   def process_hoard
-    gold = GameCard.by_card_name('gold').first
+    gold = GameCard.by_game_id_and_card_name(@game.id, 'gold').first
     card_gainer = CardGainer.new @game, @game.current_player, gold.id
     @game.current_turn.hoards.times do
       card_gainer.gain_card('discard')

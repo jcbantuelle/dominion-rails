@@ -3,7 +3,7 @@ class GameCard < ActiveRecord::Base
   belongs_to :card
 
   scope :by_card_id, ->(card_id) { where card_id: card_id }
-  scope :by_card_name, ->(card_name) { joins(:card).where('cards.name = ?', card_name) }
+  scope :by_game_id_and_card_name, ->(game_id, card_name) { joins(:card).where('cards.name = ? AND game_id = ?', card_name, game_id) }
   scope :empty_piles, -> { where remaining: 0 }
 
   def kingdom?
