@@ -6,3 +6,4 @@
 <% else %>
   <%= cards.count %> card<%= 's' unless cards.count == 1 %>
 <% end %>
+<%= "from #{source.card_html}".html_safe unless source.nil? %>

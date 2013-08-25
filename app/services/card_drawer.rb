@@ -12,6 +12,11 @@ class CardDrawer
     LogUpdater.new(@player.game).draw(@drawn_cards, @player) if update_log
   end
 
+  def draw_duration(count, card)
+    move_to_hand(count)
+    LogUpdater.new(@player.game).draw(@drawn_cards, @player, card)
+  end
+
   private
 
   def move_to_hand(count)

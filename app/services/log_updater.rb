@@ -19,10 +19,11 @@ class LogUpdater
     send_message('card_action', locals)
   end
 
-  def draw(cards, player)
+  def draw(cards, player, source=nil)
     locals = {
       target_player: player,
-      cards: cards
+      cards: cards,
+      source: source
     }
     send_message('draw_cards', locals)
   end
