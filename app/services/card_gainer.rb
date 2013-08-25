@@ -13,7 +13,7 @@ class CardGainer
   end
 
   def valid_buy?
-    enough_buys? && affordable? && @card.available?
+    enough_buys? && affordable? && @card.available? && allowed_to_buy?
   end
 
   def gain_card(destination)
@@ -61,6 +61,10 @@ class CardGainer
 
   def enough_potions?
     @card.cost(@game)[:potion].nil? || @game.current_turn.potions >= @card.cost(@game)[:potion]
+  end
+
+  def allowed_to_buy?
+    !@card.card.respond_to?(:allowed?) || @card.card.allowed?(@game)
   end
 
 end
