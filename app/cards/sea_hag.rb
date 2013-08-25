@@ -15,20 +15,19 @@ module SeaHag
   end
 
   def play(game)
-    discard_top_card(game)
-    give_card_to_players(game, 'curse', 'deck')
   end
 
-  def discard_top_card(game)
-    game.game_players.each do |player|
-      unless player.id == game.current_player.id
-        player.shuffle_discard_into_deck if player.needs_reshuffle?
-        unless player.empty_deck?
-          card = player.player_cards.deck.first
-          card.update_attribute :state, 'discard'
-          @log_updater.discard(player, [card], 'deck')
-        end
-      end
+  def attack(game, player)
+    discard_top_card(game, player)
+    give_card_to_player(game, player, 'curse', 'deck')
+  end
+
+  def discard_top_card(game, player)
+    player.shuffle_discard_into_deck if player.needs_reshuffle?
+    unless player.empty_deck?
+      card = player.player_cards.deck.first
+      card.update_attribute :state, 'discard'
+      @log_updater.discard(player, [card], 'deck')
     end
   end
 

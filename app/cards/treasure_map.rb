@@ -17,7 +17,7 @@ module TreasureMap
   def play(game)
     if trash_treasure_maps(game)
       4.times do
-        give_card_to_self(game, 'gold', 'deck')
+        give_card_to_player(game, game.current_player, 'gold', 'deck')
       end
     end
   end

@@ -28,6 +28,10 @@ class Card < ActiveRecord::Base
     type.include?(:action)
   end
 
+  def attack_card?
+    type.include?(:attack)
+  end
+
   def duration_card?
     type.include?(:duration)
   end
@@ -60,19 +64,9 @@ class Card < ActiveRecord::Base
     card_gainer.gain_card(destination)
   end
 
-  def give_card_to_players(game, card_name, destination)
+  def give_card_to_player(game, player, card_name, destination)
     game_card = find_game_card(game, card_name)
-
-    game.game_players.each do |player|
-      unless player.id == game.current_player.id
-        CardGainer.new(game, player, game_card.id).gain_card(destination)
-      end
-    end
-  end
-
-  def give_card_to_self(game, card_name, destination)
-    game_card = find_game_card(game, card_name)
-    CardGainer.new(game, game.current_player, game_card.id).gain_card(destination)
+    CardGainer.new(game, player, game_card.id).gain_card(destination)
   end
 
   def find_game_card(game, card_name)

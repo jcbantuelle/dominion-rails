@@ -17,7 +17,9 @@ module Witch
   def play(game)
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(2)
+  end
 
-    give_card_to_players(game, 'curse', 'discard')
+  def attack(game, player)
+    give_card_to_player(game, player, 'curse', 'discard')
   end
 end

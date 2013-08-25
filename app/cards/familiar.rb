@@ -21,7 +21,9 @@ module Familiar
 
     game.current_turn.add_actions(1)
     @log_updater.get_from_card(game.current_player, '+1 action')
+  end
 
-    give_card_to_players(game, 'curse', 'discard')
+  def attack(game, player)
+    give_card_to_player(game, player, 'curse', 'discard')
   end
 end

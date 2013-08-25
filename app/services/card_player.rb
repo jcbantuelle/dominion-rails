@@ -8,6 +8,7 @@ class CardPlayer
   def play_card
     move_from_hand_to_play
     play
+    attack
   end
 
   def valid_play?
@@ -35,6 +36,16 @@ class CardPlayer
     play_action if @card.action_card?
     @card.play_log(@game.current_player, @game)
     @card.play(@game)
+  end
+
+  def attack
+    if @card.attack_card?
+      @game.game_players.each do |player|
+        unless player.id == @game.current_player.id
+          @card.attack(@game, player)
+        end
+      end
+    end
   end
 
   def buy_phase
