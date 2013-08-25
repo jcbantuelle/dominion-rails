@@ -28,6 +28,10 @@ module ApplicationHelper
     '&nbsp;&nbsp;'.html_safe if INDENTED_ACTIONS.include?(action)
   end
 
+  def conjugate_to_be(game_player, player)
+    same_player?(game_player, player) ? 'are' : 'is'
+  end
+
   def card_destination(destination)
     message = destination == 'deck' ? 'on ' : 'in '
     message += destination

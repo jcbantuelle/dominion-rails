@@ -41,7 +41,7 @@ class CardPlayer
   def attack
     if @card.attack_card?
       @game.game_players.each do |player|
-        unless player.id == @game.current_player.id
+        unless not_attackable?(player)
           @card.attack(@game, player)
         end
       end
@@ -58,6 +58,24 @@ class CardPlayer
 
   def has_card?
     @game.current_player.hand.where(card_id: @card.id).count > 0
+  end
+
+  def not_attackable?(player)
+    myself?(player) || immune_to_attack?(player)
+  end
+
+  def myself?(player)
+    player.id == @game.current_player.id
+  end
+
+  def immune_to_attack?(player)
+    immune = false
+    if player.turns[0].lighthouse
+      immune = true
+      lighthouse = Card.by_name 'lighthouse'
+      LogUpdater.new(@game).immune_to_attack(player, lighthouse.card_html)
+    end
+    immune
   end
 
 end

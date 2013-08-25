@@ -72,6 +72,14 @@ class LogUpdater
     send_message('trash_cards', locals)
   end
 
+  def immune_to_attack(player, source)
+    locals = {
+      target_player: player,
+      source: source
+    }
+    send_message('immune_to_attack', locals)
+  end
+
   private
 
   def send_message(template, custom_locals = {})

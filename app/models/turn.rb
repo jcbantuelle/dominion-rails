@@ -44,6 +44,10 @@ class Turn < ActiveRecord::Base
     update_attribute :tacticians, tacticians - 1
   end
 
+  def add_lighthouse
+    update_attribute :lighthouse, true
+  end
+
   def add_global_discount
     update_attribute :global_discount, global_discount + 1
   end
