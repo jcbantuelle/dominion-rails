@@ -8,6 +8,10 @@ class Turn < ActiveRecord::Base
     update_attribute :phase, 'buy'
   end
 
+  def buy_phase?
+    phase == 'buy'
+  end
+
   def play_action
     update_attribute :actions, actions - 1
   end
