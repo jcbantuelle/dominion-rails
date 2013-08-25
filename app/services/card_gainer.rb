@@ -40,6 +40,8 @@ class CardGainer
 
     prepare_top_of_deck if destination == 'deck'
     PlayerCard.create @new_card_attributes
+
+    @card.card.gain_event(@game, @player) if @card.card.respond_to?(:gain_event)
   end
 
   def enough_buys?
