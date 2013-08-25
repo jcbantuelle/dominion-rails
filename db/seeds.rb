@@ -35,8 +35,8 @@ cards = %w(great_hall duke harem coppersmith conspirator shanty_town bridge)
 create_cards(cards, true, false, false, 'intrigue')
 
 # Seaside
-cards = %w(cutpurse bazaar sea_hag treasure_map fishing_village caravan)
-# lighthouse merchant_ship outpost tactician wharf
+cards = %w(cutpurse bazaar sea_hag treasure_map fishing_village caravan merchant_ship)
+# lighthouse outpost tactician wharf
 # embargo haven native_village pearl_diver ambassador lookout smugglers warehouse island navigator pirate_ship salvager explorer ghost_ship treasury
 create_cards(cards, true, false, false, 'seaside')
 #
