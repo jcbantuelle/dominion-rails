@@ -7,7 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil)
-  Card.create(cards.map{|c| {name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set} })
+  cards.each do |c|
+    Card.where({name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set}).first_or_create
+  end
 end
 
 # Treasure Cards

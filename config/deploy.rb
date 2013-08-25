@@ -36,7 +36,7 @@ end
 
 desc 'Seed Database with Implemented Cards'
 task :seed_cards do
-  run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake seed_cards"
+  run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:seed"
 end
 
 namespace :puma do
