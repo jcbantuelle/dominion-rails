@@ -30,6 +30,14 @@ class PlayerCard < ActiveRecord::Base
     type_class.include? 'duration'
   end
 
+  def victory?
+    type_class.include? 'victory'
+  end
+
+  def curse?
+    type_class.include? 'curse'
+  end
+
   def point_card?
     card.respond_to? :value
   end
