@@ -46,8 +46,8 @@ cards = %w(vineyard familiar philosophers_stone)
 create_cards(cards, true, false, false, 'alchemy')
 #
 # Prosperity
-cards = %w(monument workers_village venture bank grand_market quarry)
-# talisman city hoard peddler
+cards = %w(monument workers_village venture bank grand_market quarry city)
+# talisman hoard peddler
 # loan trade_route watchtower bishop contraband counting_house mint mountebank rabble royal_seal vault goons expand forge kings_court
 create_cards(cards, true, false, false, 'prosperity')
 #
