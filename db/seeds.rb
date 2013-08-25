@@ -51,8 +51,8 @@ cards = %w(monument workers_village venture bank grand_market quarry city peddle
 create_cards(cards, true, false, false, 'prosperity')
 #
 # Cornucopia
-cards = %w(hunting_party fairgrounds menagerie)
-# fortune_teller farming_village harvest
+cards = %w(hunting_party fairgrounds menagerie harvest)
+# fortune_teller farming_village
 # hamlet horse_traders remake tournament young_witch horn_of_plenty jester
 # bag_of_gold diadem followers princess trusty_steed
  create_cards(cards, true, false, false, 'cornucopia')
