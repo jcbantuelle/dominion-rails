@@ -36,6 +36,14 @@ class Turn < ActiveRecord::Base
     update_attribute :coppersmith, coppersmith + 1
   end
 
+  def add_tactician
+    update_attribute :tacticians, tacticians + 1
+  end
+
+  def remove_tactician
+    update_attribute :tacticians, tacticians - 1
+  end
+
   def add_global_discount
     update_attribute :global_discount, global_discount + 1
   end
