@@ -3,7 +3,7 @@ module Curse
   def starting_count(game)
     case game.player_count
     when 1
-      0
+      10
     when 2
       10
     when 3
