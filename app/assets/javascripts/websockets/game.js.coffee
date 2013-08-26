@@ -13,6 +13,16 @@ $ ->
     event.preventDefault()
     socket.send(JSON.stringify(action: 'buy_card', card_id: $(this).attr('data-card-id')))
 
+  # Chat Window
+  $chat_form = $("form#chat")
+  $chat_form.on "submit", (event) ->
+    event.preventDefault()
+    $input = $chat_form.find("input#message")
+    message = $input.val()
+    socket.send(JSON.stringify(action: 'chat', message: message))
+    $input.val("")
+  $chat_output = $("#game-chat")
+
   $hand = $('#hand')
   $hand.on "click", ".hand-card", (event) ->
     event.preventDefault()
@@ -32,6 +42,8 @@ $ ->
       game.log_message(response)
     else if response.action == 'end_game'
       game.end_game(response)
+    else if response.action == 'chat'
+      game.chat(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -106,6 +118,11 @@ $ ->
 
   window.game.refresh_end_game = (response)->
     $('#finished-game').html(HandlebarsTemplates['game/end_game'](response))
+
+  # Chat Window
+  window.game.chat = (response) ->
+    $chat_output.append(response.message + "\n")
+    $chat_output.scrollTop($chat_output[0].scrollHeight)
 
   # Tooltip Refresh
   window.game.refresh_tooltips = ->
