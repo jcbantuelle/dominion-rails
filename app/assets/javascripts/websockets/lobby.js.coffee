@@ -13,6 +13,16 @@ $ ->
     else
       socket.send(JSON.stringify(action: 'propose_game', player_ids: player_ids))
 
+  # Chat Window
+  $chat_form = $("form#chat")
+  $chat_form.on "submit", (event) ->
+    event.preventDefault()
+    $input = $chat_form.find("input#message")
+    message = $input.val()
+    socket.send(JSON.stringify(action: 'chat', message: message))
+    $input.val("")
+  $chat_output = $("#lobby-chat")
+
   $proposal = $("#proposal")
   # Accept Game Proposal
   $proposal.on "click", "#accept", (event) ->
@@ -45,6 +55,8 @@ $ ->
       lobby.accept_received(response)
     else if response.action == 'accepted_game'
       window.location.replace "http://#{window.location.host}/game/#{response.game_id}"
+    else if response.action == 'chat'
+      lobby.chat(response)
 
   # Refresh Lobby
   window.lobby.refresh = (response) ->
@@ -72,6 +84,11 @@ $ ->
   # Render Player In Game Error
   window.lobby.player_in_game_error = (response) ->
     $('#proposal').html(HandlebarsTemplates['lobby/player_in_game_error'](response))
+
+  # Chat Window
+  window.lobby.chat = (response) ->
+    $chat_output.append(response.message + "\n")
+    $chat_output.scrollTop($chat_output[0].scrollHeight)
 
   checkbox_value = (checkbox) ->
     $(checkbox).val()

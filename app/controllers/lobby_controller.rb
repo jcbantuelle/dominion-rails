@@ -23,4 +23,15 @@ class LobbyController < ApplicationController
     end
   end
 
+  def chat(data)
+    ApplicationController.lobby.each do |player_id, socket|
+      message = "<strong>#{current_player.username}:</strong> #{data['message']}"
+      json = {
+        action: 'chat',
+        message: message
+      }
+      socket.send_data json.to_json
+    end
+  end
+
 end

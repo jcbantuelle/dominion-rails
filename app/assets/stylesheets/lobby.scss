@@ -65,3 +65,8 @@ $player_margin: 25px;
 .treasure.victory {
   @include gradient($treasure, $victory);
 }
+
+#lobby-chat {
+  height: 300px;
+  overflow: auto;
+}

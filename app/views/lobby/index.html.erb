@@ -5,6 +5,12 @@
   <button id="propose-game" class="btn btn-primary" type="submit" value="Start Game">Propose Game</button>
 </form>
 
+<pre id="lobby-chat"></pre>
+
+<form id="chat" action="">
+  <input id="message">
+</form>
+
 <%= javascript_include_tag "websockets/lobby", "data-turbolinks-track" => true %>
 
 <% if @active_game.present? %>
