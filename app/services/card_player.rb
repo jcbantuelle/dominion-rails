@@ -18,11 +18,11 @@ class CardPlayer
   private
 
   def valid_action?
-    @card.action_card? && @game.current_turn.phase == 'action' && @game.current_turn.actions > 0
+    @card.action_card? && @game.current_turn.action_phase? && @game.current_turn.actions > 0
   end
 
   def valid_treasure?
-    @card.treasure_card?
+    @card.treasure_card? && (@game.current_turn.action_phase? || @game.current_turn.treasure_phase?)
   end
 
   def move_from_hand_to_play
@@ -32,7 +32,7 @@ class CardPlayer
   end
 
   def play
-    buy_phase if @card.treasure_card?
+    treasure_phase if @card.treasure_card?
     play_action if @card.action_card?
     @card.play_log(@game.current_player, @game)
     @card.play(@game)
@@ -48,8 +48,8 @@ class CardPlayer
     end
   end
 
-  def buy_phase
-    @game.current_turn.buy_phase
+  def treasure_phase
+    @game.current_turn.treasure_phase
   end
 
   def play_action

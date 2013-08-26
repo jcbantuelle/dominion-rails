@@ -4,12 +4,24 @@ class Turn < ActiveRecord::Base
 
   scope :ordered, ->{ order 'turn DESC' }
 
+  def action_phase?
+    phase == 'action'
+  end
+
   def buy_phase
     update_attribute :phase, 'buy'
   end
 
   def buy_phase?
     phase == 'buy'
+  end
+
+  def treasure_phase
+    update_attribute :phase, 'treasure'
+  end
+
+  def treasure_phase?
+    phase == 'treasure'
   end
 
   def play_action

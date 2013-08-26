@@ -6,7 +6,7 @@ module Peddler
 
   def cost(game)
     coin = 8
-    coin -= (game.current_turn.played_actions * 2) if game.current_turn.present? && game.current_turn.buy_phase?
+    coin -= (game.current_turn.played_actions * 2) if game.current_turn.present? && (game.current_turn.treasure_phase? || game.current_turn.buy_phase?)
     coin = 0 if coin < 0
     {
       coin: coin
