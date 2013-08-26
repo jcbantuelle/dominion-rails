@@ -1,8 +1,10 @@
 module Websockets::Game::TurnActions
 
   def end_turn(data)
-    TurnEnder.new(@game).end_turn
-    send_end_turn_data
+    if can_play?
+      TurnEnder.new(@game).end_turn
+      send_end_turn_data
+    end
   end
 
   def play_card(data)
