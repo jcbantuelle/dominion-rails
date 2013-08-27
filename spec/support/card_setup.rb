@@ -1,4 +1,4 @@
-shared_context 'card setup' do
+shared_context 'play card' do
 
   before(:each) do
     @card = Card.create name: card_name
