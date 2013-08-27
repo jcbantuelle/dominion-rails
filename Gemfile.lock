@@ -150,10 +150,6 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    simplecov (0.7.1)
-      multi_json (~> 1.0)
-      simplecov-html (~> 0.7.1)
-    simplecov-html (0.7.1)
     slop (3.4.6)
     sprockets (2.10.0)
       hike (~> 1.2)
@@ -215,7 +211,6 @@ DEPENDENCIES
   rspec-rails (~> 2.0)
   rvm-capistrano
   sass-rails (~> 4.0.0)
-  simplecov
   therubyracer
   tubesock
   turbolinks

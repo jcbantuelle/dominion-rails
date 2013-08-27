@@ -4,15 +4,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'
-require 'simplecov'
-
-SimpleCov.start do
-  add_filter 'spec'
-
-  add_group 'Cards', 'app/cards'
-  add_group 'Models', 'app/models'
-  add_group 'Services', 'app/services'
-end
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
