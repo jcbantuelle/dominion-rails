@@ -40,3 +40,11 @@ shared_context 'gain card' do
   end
 
 end
+
+shared_context 'victory card' do
+
+  before(:each) do
+    c = Card.create name: card_name
+    @card = Card.find(c.id)
+  end
+end
