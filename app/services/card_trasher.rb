@@ -7,9 +7,9 @@ class CardTrasher
   end
 
   def trash(source=nil)
-    @cards.each do |game_card|
-      GameTrash.create game: @game, card: game_card.card
-      game_card.destroy
+    @cards.each do |player_card|
+      GameTrash.create game: @game, card: player_card.card
+      player_card.destroy
     end
     LogUpdater.new(@player.game).trash(@player, @cards, source)
   end
