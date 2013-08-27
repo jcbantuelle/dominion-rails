@@ -1,0 +1,19 @@
+require 'spec_helper'
+
+describe 'Laboratory' do
+  let(:card_name) { 'laboratory' }
+
+  include_context 'play card'
+
+  describe '#play' do
+    it 'updates the game state' do
+      2.times do
+        PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
+      end
+      @subject.play_card
+      @turn.reload
+      expect(@turn.actions).to eq(1)
+      expect(@game_player.hand.count).to eq(2)
+    end
+  end
+end
