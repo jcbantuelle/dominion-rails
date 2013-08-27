@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Woodcutter' do
   let(:card_name) { 'woodcutter' }
 
-  include_context "play card"
+  include_context 'play card'
 
   describe '#play' do
     it 'updates the game state' do
