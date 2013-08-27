@@ -42,9 +42,13 @@ gem 'tubesock'
 gem 'capistrano'
 gem 'rvm-capistrano'
 
+# Console
+gem 'pry-rails'
+gem 'pry-nav'
+gem 'pry-stack_explorer'
+
 group :development do
   # Debugging Tools
-  gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
 end

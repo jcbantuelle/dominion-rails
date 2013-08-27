@@ -98,8 +98,13 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-nav (0.2.3)
+      pry (~> 0.9.10)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    pry-stack_explorer (0.4.9.1)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     puma (2.4.0)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
@@ -178,7 +183,9 @@ DEPENDENCIES
   jquery-rails
   less-rails
   mysql2
+  pry-nav
   pry-rails
+  pry-stack_explorer
   puma
   rails (= 4.0.0)
   rvm-capistrano
