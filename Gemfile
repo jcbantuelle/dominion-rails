@@ -53,4 +53,12 @@ group :development do
   gem 'binding_of_caller'
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+end
 
+group :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'simplecov'
+end
