@@ -48,3 +48,25 @@ shared_context 'victory card' do
     @card = Card.find(c.id)
   end
 end
+
+shared_context 'duration' do
+
+  before(:each) do
+    @card = Card.create name: card_name
+    @game_player = GamePlayer.create
+    @turn = Turn.create game_player: @game_player, turn: 1
+    @game = Game.create turn_id: @turn.id
+    @game_player.update game: @game
+    PlayerCard.create game_player: @game_player, card: @card, state: 'duration'
+
+    log_updater = double 'log_updater'
+    log_updater.stub(:get_from_card)
+    @card.log_updater = log_updater
+
+    LogUpdater.any_instance.stub(:draw)
+    LogUpdater.any_instance.stub(:end_turn)
+
+    @subject = TurnChanger.new @game
+  end
+
+end
