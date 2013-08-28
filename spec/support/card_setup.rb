@@ -65,6 +65,7 @@ shared_context 'duration' do
 
     LogUpdater.any_instance.stub(:draw)
     LogUpdater.any_instance.stub(:end_turn)
+    LogUpdater.any_instance.stub(:get_from_card)
 
     @subject = TurnChanger.new @game
   end
