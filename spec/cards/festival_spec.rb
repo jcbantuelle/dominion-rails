@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Festival' do
   let(:card_name) { 'festival' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'gives +$2, +1 buy, +2 actions' do
       @subject.play_card
       @turn.reload

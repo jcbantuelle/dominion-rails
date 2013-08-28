@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Silver' do
   let(:card_name) { 'silver' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'gives +$2' do
       @subject.play_card
       @turn.reload

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Workers Village' do
   let(:card_name) { 'workers_village' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'gives +1 card, +2 actions, +1 buy' do
       PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
       @subject.play_card

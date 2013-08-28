@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Bank' do
   let(:card_name) { 'bank' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'adds $1 per treasure in play' do
       2.times do
         PlayerCard.create game_player: @game_player, card: @card, state: 'play'

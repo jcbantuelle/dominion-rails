@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Quarry' do
   let(:card_name) { 'quarry' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'
-
     it 'gives +$1 and reduces action card costs by $2' do
       @subject.play_card
       @turn.reload

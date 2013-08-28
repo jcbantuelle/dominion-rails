@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe 'Caravan' do
+
   let(:card_name) { 'caravan' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'
@@ -19,9 +21,11 @@ describe 'Caravan' do
     include_context 'duration'
 
     it 'gives +1 card' do
-      PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
+      6.times do
+        PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
+      end
       @subject.next_turn
-      expect(@game_player.hand.count).to eq(1)
+      expect(@game_player.hand.count).to eq(6)
     end
   end
 

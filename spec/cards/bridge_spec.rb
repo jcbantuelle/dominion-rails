@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Bridge' do
   let(:card_name) { 'bridge' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'gives +$1, +1 buy, and reduces card costs by $1' do
       @subject.play_card
       @turn.reload

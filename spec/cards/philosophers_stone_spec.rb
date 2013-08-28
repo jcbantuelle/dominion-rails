@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Philosophers Stone' do
   let(:card_name) { 'philosophers_stone' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'

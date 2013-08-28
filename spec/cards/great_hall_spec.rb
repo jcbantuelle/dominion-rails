@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Great Hall' do
   let(:card_name) { 'great_hall' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'

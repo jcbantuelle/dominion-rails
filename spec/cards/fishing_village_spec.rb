@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Fishing Village' do
   let(:card_name) { 'fishing_village' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'

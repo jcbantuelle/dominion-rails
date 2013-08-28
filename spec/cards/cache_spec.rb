@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Cache' do
   let(:card_name) { 'cache' }
+  include_context 'setup'
 
   describe '#play' do
     include_context 'play card'

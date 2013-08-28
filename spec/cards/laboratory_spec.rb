@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Laboratory' do
   let(:card_name) { 'laboratory' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+    include_context 'play card'
     it 'gives +2 cards, +1 action' do
       2.times do
         PlayerCard.create game_player: @game_player, card: @card, state: 'deck'

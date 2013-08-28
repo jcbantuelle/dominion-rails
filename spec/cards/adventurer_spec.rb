@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe 'Adventurer' do
   let(:card_name) { 'adventurer' }
-
-  include_context 'play card'
+  include_context 'setup'
 
   describe '#play' do
+
+    include_context 'play card'
 
     before(:each) do
       5.times do |i|
