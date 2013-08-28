@@ -6,7 +6,7 @@ describe 'Cache' do
   describe '#play' do
     include_context 'play card'
 
-    it 'updates the game state' do
+    it 'gives +$3' do
       @subject.play_card
       @turn.reload
       expect(@turn.phase).to eq('treasure')

@@ -6,7 +6,7 @@ describe 'Coppersmith' do
   include_context 'play card'
 
   describe '#play' do
-    it 'updates the game state' do
+    it 'makes copper worth +$1 extra' do
       @subject.play_card
       @turn.reload
       expect(@turn.coppersmith).to eq(1)

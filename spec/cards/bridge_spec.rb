@@ -6,7 +6,7 @@ describe 'Bridge' do
   include_context 'play card'
 
   describe '#play' do
-    it 'updates the game state' do
+    it 'gives +$1, +1 buy, and reduces card costs by $1' do
       @subject.play_card
       @turn.reload
       expect(@turn.coins).to eq(1)

@@ -6,7 +6,7 @@ describe 'Monument' do
   include_context 'play card'
 
   describe '#play' do
-    it 'updates the game state' do
+    it 'gives +$2, +1 victory token' do
       @subject.play_card
       @turn.reload
       @game_player.reload

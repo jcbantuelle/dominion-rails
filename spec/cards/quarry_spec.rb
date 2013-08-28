@@ -6,7 +6,7 @@ describe 'Quarry' do
   describe '#play' do
     include_context 'play card'
 
-    it 'updates the game state' do
+    it 'gives +$1 and reduces action card costs by $2' do
       @subject.play_card
       @turn.reload
       expect(@turn.phase).to eq('treasure')

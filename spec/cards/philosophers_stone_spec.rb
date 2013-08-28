@@ -6,7 +6,7 @@ describe 'Philosophers Stone' do
   describe '#play' do
     include_context 'play card'
 
-    it 'updates the game state' do
+    it 'gives +$1 per 5 cards in deck and discard' do
       8.times do
         PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
         PlayerCard.create game_player: @game_player, card: @card, state: 'discard'

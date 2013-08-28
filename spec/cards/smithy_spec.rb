@@ -6,7 +6,7 @@ describe 'Smithy' do
   include_context 'play card'
 
   describe '#play' do
-    it 'updates the game state' do
+    it 'gives +3 cards' do
       3.times do
         PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
       end

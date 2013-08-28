@@ -6,7 +6,7 @@ describe 'Great Hall' do
   describe '#play' do
     include_context 'play card'
 
-    it 'updates the game state' do
+    it 'gives +1 card, +1 action' do
       PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
       @subject.play_card
       @turn.reload
