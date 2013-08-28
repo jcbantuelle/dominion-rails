@@ -21,7 +21,7 @@ describe 'Caravan' do
     include_context 'duration'
 
     it 'gives +1 card' do
-      6.times do
+      7.times do
         PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
       end
       @subject.next_turn
