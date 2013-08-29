@@ -70,7 +70,7 @@ class CardPlayer
 
   def immune_to_attack?(player)
     immune = false
-    if player.turns[0].lighthouse
+    if player.turns.present? && player.turns[0].lighthouse
       immune = true
       lighthouse = Card.by_name 'lighthouse'
       LogUpdater.new(@game).immune_to_attack(player, lighthouse.card_html)
