@@ -76,7 +76,7 @@ class GameCreator
   end
 
   def prosperity_game?
-    @prosperity_game ||= @game.cards_by_set('prosperity').count > random_number
+    @prosperity_game ||= @game.cards_by_set('prosperity').count >= random_number
   end
 
   def random_number
