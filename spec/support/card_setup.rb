@@ -8,6 +8,7 @@ shared_context 'setup' do
 
     LogUpdater.any_instance.stub(:put)
     LogUpdater.any_instance.stub(:draw)
+    LogUpdater.any_instance.stub(:trash)
     LogUpdater.any_instance.stub(:reveal)
     LogUpdater.any_instance.stub(:discard)
     LogUpdater.any_instance.stub(:end_turn)
