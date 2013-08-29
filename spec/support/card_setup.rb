@@ -13,6 +13,7 @@ shared_context 'setup' do
     LogUpdater.any_instance.stub(:discard)
     LogUpdater.any_instance.stub(:end_turn)
     LogUpdater.any_instance.stub(:card_action)
+    LogUpdater.any_instance.stub(:outpost_turn)
     LogUpdater.any_instance.stub(:get_from_card)
   end
 end
