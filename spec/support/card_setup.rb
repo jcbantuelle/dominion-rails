@@ -15,6 +15,7 @@ shared_context 'setup' do
     LogUpdater.any_instance.stub(:card_action)
     LogUpdater.any_instance.stub(:outpost_turn)
     LogUpdater.any_instance.stub(:get_from_card)
+    LogUpdater.any_instance.stub(:immune_to_attack)
   end
 end
 
@@ -53,5 +54,12 @@ shared_context 'other players' do
     2.times do |i|
       @other_players << GamePlayer.create(game: @game, turn_order: i+2)
     end
+  end
+end
+
+shared_context 'reaction' do
+  before(:each) do
+    PlayerCard.create game_player: @game_player, card: reaction_card_trigger, state: 'hand'
+    @reaction_card_player = CardPlayer.new @game, reaction_card_trigger.id
   end
 end
