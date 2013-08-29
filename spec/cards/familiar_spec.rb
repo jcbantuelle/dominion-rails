@@ -13,7 +13,7 @@ describe 'Familiar' do
     end
 
     it 'gives +1 card, +1 action' do
-      PlayerCard.create game_player: @game_player, card: @card, state: 'hand'
+      PlayerCard.create game_player: @game_player, card: @card, state: 'deck'
       @subject.play_card
       @turn.reload
       expect(@turn.actions).to eq(1)
