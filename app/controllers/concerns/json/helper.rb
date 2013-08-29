@@ -31,4 +31,11 @@ module Json::Helper
     }
   end
 
+  def chat_json(player, message)
+    json = {
+      action: 'chat',
+      message: "<strong>#{player.username}:</strong> #{message}"
+    }.to_json
+  end
+
 end
