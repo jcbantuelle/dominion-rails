@@ -28,23 +28,13 @@ module FortuneTeller
 
   private
 
-  def reveal_cards(game, player)
-    player.deck.each do |card|
-      @revealed << card
-      if valid_card?(card)
-        @valid_card = card
-        break
-      else
-        card.update_attribute :state, 'revealed'
-      end
+  def process_revealed_card(card)
+    if valid_card?(card)
+      @valid_card = card
+    else
+      card.update_attribute :state, 'revealed'
     end
-
-    continue_revealing(game, player) unless reveal_finished?(game, player)
-  end
-
-  def continue_revealing(game, player)
-    player.shuffle_discard_into_deck
-    reveal_cards(game, player)
+    valid_card?(card)
   end
 
   def discard_revealed(game, player)

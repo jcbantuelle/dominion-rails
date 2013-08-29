@@ -26,27 +26,17 @@ module Venture
 
   def reveal(game)
     @revealed = []
-    reveal_cards(game)
+    reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
   end
 
-  def reveal_cards(game)
-    game.current_player.deck.each do |card|
-      @revealed << card
-      if card.treasure?
-        @treasure = card
-        break
-      else
-        card.update_attribute :state, 'revealed'
-      end
+  def process_revealed_card(card)
+    if card.treasure?
+      @treasure = card
+    else
+      card.update_attribute :state, 'revealed'
     end
-
-    continue_revealing(game) unless reveal_finished?(game)
-  end
-
-  def continue_revealing(game)
-    game.current_player.shuffle_discard_into_deck
-    reveal_cards(game)
+    card.treasure?
   end
 
   def discard_revealed(game)
@@ -54,7 +44,7 @@ module Venture
     @log_updater.put(game.current_player, [@treasure], 'play')
   end
 
-  def reveal_finished?(game)
+  def reveal_finished?(game, player)
     @treasure.present? || game.current_player.discard.count == 0
   end
 

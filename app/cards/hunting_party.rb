@@ -28,7 +28,7 @@ module HuntingParty
   def reveal(game)
     @revealed = []
     reveal_hand(game)
-    reveal_cards(game)
+    reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
     discard_revealed(game)
   end
@@ -39,24 +39,14 @@ module HuntingParty
     @log_updater.reveal(game.current_player, @hand, 'hand')
   end
 
-  def reveal_cards(game)
-    game.current_player.deck.each do |card|
-      @revealed << card
-      if unique_card?(card)
-        @unique_card = card
-        @unique_card.update_attribute :state, 'hand'
-        break
-      else
-        card.update_attribute :state, 'revealed'
-      end
+  def process_revealed_card(card)
+    if unique_card?(card)
+      @unique_card = card
+      @unique_card.update_attribute :state, 'hand'
+    else
+      card.update_attribute :state, 'revealed'
     end
-
-    continue_revealing(game) unless reveal_finished?(game)
-  end
-
-  def continue_revealing(game)
-    game.current_player.shuffle_discard_into_deck
-    reveal_cards(game)
+    unique_card?(card)
   end
 
   def discard_revealed(game)
@@ -64,7 +54,7 @@ module HuntingParty
     @log_updater.put(game.current_player, [@unique_card], 'hand')
   end
 
-  def reveal_finished?(game)
+  def reveal_finished?(game, player)
     @unique_card.present? || game.current_player.discard.count == 0
   end
 

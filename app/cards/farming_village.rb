@@ -25,29 +25,19 @@ module FarmingVillage
 
   def reveal(game)
     @revealed = []
-    reveal_cards(game)
+    reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
     discard_revealed(game)
   end
 
-  def reveal_cards(game)
-    game.current_player.deck.each do |card|
-      @revealed << card
-      if valid_card?(card)
-        @valid_card = card
-        @valid_card.update_attribute :state, 'hand'
-        break
-      else
-        card.update_attribute :state, 'revealed'
-      end
+  def process_revealed_card(card)
+    if valid_card?(card)
+      @valid_card = card
+      @valid_card.update_attribute :state, 'hand'
+    else
+      card.update_attribute :state, 'revealed'
     end
-
-    continue_revealing(game) unless reveal_finished?(game)
-  end
-
-  def continue_revealing(game)
-    game.current_player.shuffle_discard_into_deck
-    reveal_cards(game)
+    valid_card?(card)
   end
 
   def discard_revealed(game)
@@ -55,7 +45,7 @@ module FarmingVillage
     @log_updater.put(game.current_player, [@valid_card], 'hand')
   end
 
-  def reveal_finished?(game)
+  def reveal_finished?(game, player)
     @valid_card.present? || game.current_player.discard.count == 0
   end
 

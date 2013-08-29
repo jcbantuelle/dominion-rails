@@ -26,31 +26,21 @@ module Harvest
 
   def reveal(game)
     @revealed = []
-    reveal_cards(game)
+    reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
     discard_revealed(game)
   end
 
-  def reveal_cards(game)
-    game.current_player.deck.each do |card|
-      @revealed << card
-      card.update_attribute :state, 'revealed'
-      break if @revealed.count == 4
-    end
-
-    continue_revealing(game) unless reveal_finished?(game)
-  end
-
-  def continue_revealing(game)
-    game.current_player.shuffle_discard_into_deck
-    reveal_cards(game)
+  def process_revealed_card(card)
+    card.update_attribute :state, 'revealed'
+    @revealed.count == 4
   end
 
   def discard_revealed(game)
     game.current_player.discard_revealed
   end
 
-  def reveal_finished?(game)
+  def reveal_finished?(game, player)
     @revealed.count == 4 || game.current_player.discard.count == 0
   end
 

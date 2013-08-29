@@ -85,4 +85,19 @@ class Card < ActiveRecord::Base
     game.current_turn.add_buys(1)
   end
 
+  def reveal_cards(game, player)
+    player.deck.each do |card|
+      @revealed << card
+      done = process_revealed_card(card)
+      break if done
+    end
+
+    continue_revealing(game, player) unless reveal_finished?(game, player)
+  end
+
+  def continue_revealing(game, player)
+    player.shuffle_discard_into_deck
+    reveal_cards(game, player)
+  end
+
 end
