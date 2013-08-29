@@ -60,3 +60,7 @@ create_cards(cards, true, false, false, 'cornucopia')
 cards = %w(crossroads nomad_camp silk_road cache highway)
 # duchess fools_gold develop oasis oracle scheme tunnel jack_of_all_trades noble_brigand spice_merchant trader cartographer embassy haggler ill_gotten_gains inn mandarin margrave stables border_village farmland
 create_cards(cards, true, false, false, 'hinterlands')
+
+# Dark Ages
+cards = %w(poor_house)
+create_cards(cards, true, false, false, 'dark_ages')
