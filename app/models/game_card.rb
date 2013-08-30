@@ -4,7 +4,7 @@ class GameCard < ActiveRecord::Base
 
   scope :by_card_id, ->(card_id) { where card_id: card_id }
   scope :by_game_id_and_card_name, ->(game_id, card_name) { joins(:card).where('cards.name = ? AND game_id = ?', card_name, game_id) }
-  scope :empty_piles, -> { where remaining: 0 }
+  scope :empty_piles, -> { where(remaining: 0).joins(:card).where.not('cards.name = ?', 'spoils') }
 
   def kingdom?
     card.kingdom?
@@ -36,6 +36,10 @@ class GameCard < ActiveRecord::Base
 
   def cost(game)
     card.cost(game)
+  end
+
+  def add_to_pile(count)
+    update remaining: (remaining + count)
   end
 
   def json(game)
