@@ -13,7 +13,7 @@ def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil)
 end
 
 # Treasure Cards
-cards = %w(copper silver gold potion platinum)
+cards = %w(copper silver gold potion platinum spoils)
 create_cards(cards, false, true, false)
 
 # Victory Cards
@@ -62,5 +62,5 @@ cards = %w(crossroads nomad_camp silk_road cache highway)
 create_cards(cards, true, false, false, 'hinterlands')
 
 # Dark Ages
-cards = %w(poor_house vagrant sage spoils)
+cards = %w(poor_house vagrant sage)
 create_cards(cards, true, false, false, 'dark_ages')

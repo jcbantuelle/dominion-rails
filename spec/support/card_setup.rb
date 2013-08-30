@@ -15,6 +15,7 @@ shared_context 'setup' do
     LogUpdater.any_instance.stub(:card_action)
     LogUpdater.any_instance.stub(:outpost_turn)
     LogUpdater.any_instance.stub(:get_from_card)
+    LogUpdater.any_instance.stub(:return_to_supply)
     LogUpdater.any_instance.stub(:immune_to_attack)
   end
 end

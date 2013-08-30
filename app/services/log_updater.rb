@@ -88,6 +88,14 @@ class LogUpdater
     send_message('immune_to_attack', locals)
   end
 
+  def return_to_supply(player, cards)
+    locals = {
+      target_player: player,
+      cards: cards
+    }
+    send_message('return_to_supply', locals)
+  end
+
   private
 
   def send_message(template, custom_locals = {})

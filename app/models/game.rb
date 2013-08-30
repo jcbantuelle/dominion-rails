@@ -63,6 +63,11 @@ class Game < ActiveRecord::Base
     }.count > 0
   end
 
+  def has_spoils?
+    spoils_cards = %w(bandit_camp)
+    game_cards.select{ |card| spoils_cards.include?(card.name) }.count > 0
+  end
+
   def cards_by_set(set)
     game_cards.select{ |card| card.belongs_to_set?(set) }
   end

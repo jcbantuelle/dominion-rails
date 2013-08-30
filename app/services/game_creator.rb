@@ -64,7 +64,7 @@ class GameCreator
     cards = %w[copper silver gold]
     cards << 'potion' if @game.has_potions?
     cards << 'platinum' if prosperity_game?
-    cards << 'spoils' if has_spoils?
+    cards << 'spoils' if @game.has_spoils?
     Card.card_name(cards)
   end
 
@@ -82,11 +82,6 @@ class GameCreator
 
   def random_number
     @random_number ||= (rand 10) + 1
-  end
-
-  def has_spoils?
-    spoils_cards = %w(bandit_camp)
-    @game.cards.map(&:name).select{|name| spoils_cards.include?(name)}.count > 0
   end
 
 end
