@@ -35,7 +35,7 @@ class GameCard < ActiveRecord::Base
   end
 
   def cost(game)
-    CardCostCalculater.new(game, card).cost
+    card.cost(game)
   end
 
   def json(game)

@@ -50,4 +50,8 @@ class PlayerCard < ActiveRecord::Base
     update_attribute(:state, 'discard')
   end
 
+  def cost(game)
+    card.cost(game)
+  end
+
 end
