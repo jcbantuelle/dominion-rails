@@ -17,7 +17,7 @@ module Json::Helper
   end
 
   def sort_cards(game, cards)
-    cards.sort{ |a, b| b.cost(game)[:coin] <=> a.cost(game)[:coin] }
+    cards.sort{ |a, b| b.calculated_cost(game)[:coin] <=> a.calculated_cost(game)[:coin] }
   end
 
   def grouped_cards(cards)

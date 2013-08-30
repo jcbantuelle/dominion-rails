@@ -34,8 +34,8 @@ class GameCard < ActiveRecord::Base
     card.name
   end
 
-  def cost(game)
-    card.cost(game)
+  def calculated_cost(game)
+    card.calculated_cost(game)
   end
 
   def add_to_pile(count)
@@ -43,12 +43,13 @@ class GameCard < ActiveRecord::Base
   end
 
   def json(game)
+    card_cost = calculated_cost(game)
     {
       id: id,
       name: name,
       type_class: type_class,
-      coin_cost: cost(game)[:coin],
-      potion_cost: cost(game)[:potion],
+      coin_cost: card_cost[:coin],
+      potion_cost: card_cost[:potion],
       remaining: remaining,
       title: name.titleize
     }

@@ -100,7 +100,7 @@ class Card < ActiveRecord::Base
     reveal_cards(game, player)
   end
 
-  def cost(game)
+  def calculated_cost(game)
     CardCostCalculater.new(game, self).cost
   end
 
