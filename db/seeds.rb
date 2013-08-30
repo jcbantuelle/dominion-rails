@@ -62,5 +62,5 @@ cards = %w(crossroads nomad_camp silk_road cache highway)
 create_cards(cards, true, false, false, 'hinterlands')
 
 # Dark Ages
-cards = %w(poor_house vagrant sage)
+cards = %w(poor_house vagrant sage bandit_camp)
 create_cards(cards, true, false, false, 'dark_ages')
