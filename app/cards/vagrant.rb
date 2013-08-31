@@ -24,12 +24,13 @@ module Vagrant
     @revealed = []
     reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
+    @log_updater.put(@card.game_player, [@card], 'hand', false) if @card
   end
 
   def process_revealed_card(card)
     if card.curse? || card.victory?
       card.update_attribute :state, 'hand'
-      @log_updater.put(card.game_player, [card], 'hand', false)
+      @card = card
     end
     true
   end
