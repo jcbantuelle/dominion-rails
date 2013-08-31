@@ -27,6 +27,11 @@ module Websockets::Game::TurnActions
     end
   end
 
+  def action_response(data)
+    action = TurnAction.find data['action_id']
+    action.update finished: true, response: data['response']
+  end
+
   private
 
   def can_play?

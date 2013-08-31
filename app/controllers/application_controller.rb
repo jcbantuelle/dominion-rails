@@ -33,7 +33,6 @@ protected
   end
 
   def process_message(data)
-    data = JSON.parse data
     send(data['action'], data) if respond_to?(data['action'])
   end
 

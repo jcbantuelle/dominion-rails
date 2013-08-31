@@ -3,6 +3,7 @@ class GamePlayer < ActiveRecord::Base
   belongs_to :player
   has_many :player_cards, ->{ ordered }, dependent: :destroy
   has_many :turns, ->{ ordered }
+  has_many :turn_actions
 
   scope :ordered, ->{ order 'turn_order' }
   scope :timed_out, ->{ where accepted: false }

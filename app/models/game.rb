@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
   has_many :game_trashes, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
   has_many :turns, ->{ ordered }, dependent: :destroy
+  has_many :turn_actions, dependent: :destroy
   belongs_to :current_turn, class_name: 'Turn', foreign_key: 'turn_id'
   belongs_to :proposer, class_name: 'Player', foreign_key: 'proposer_id'
 

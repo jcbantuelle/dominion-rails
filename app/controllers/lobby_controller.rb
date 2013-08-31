@@ -17,6 +17,7 @@ class LobbyController < ApplicationController
         refresh_lobby
       end
       tubesock.onmessage do |data|
+        data = JSON.parse data
         process_message(data)
       end
       ActiveRecord::Base.clear_active_connections!
