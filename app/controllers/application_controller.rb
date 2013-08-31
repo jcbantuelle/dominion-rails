@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_filter :set_thread_exception_reporting
   before_filter :unset_lobby_status
   before_filter :keep_player_active
   before_filter :clear_finished_games
@@ -34,6 +35,10 @@ protected
 
   def process_message(data)
     send(data['action'], data) if respond_to?(data['action'])
+  end
+
+  def set_thread_exception_reporting
+    Thread.abort_on_exception = true
   end
 
 end
