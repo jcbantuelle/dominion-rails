@@ -15,7 +15,7 @@ module Chapel
   end
 
   def play(game)
-    action = send_choose_cards_prompt(game, game.current_player, 'Choose up to 4 cards to trash:', 4)
+    action = send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose up to 4 cards to trash:', 4)
     process_player_response(game, action)
   end
 

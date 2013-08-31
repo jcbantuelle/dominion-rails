@@ -24,7 +24,7 @@ module Cellar
   private
 
   def prompt_player_response(game)
-    action = send_choose_cards_prompt(game, game.current_player, 'Choose any number of cards to discard:')
+    action = send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose any number of cards to discard:')
     process_player_response(game, action)
   end
 
