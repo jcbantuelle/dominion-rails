@@ -106,4 +106,17 @@ class Card < ActiveRecord::Base
     CardCostCalculater.new(game, self).cost
   end
 
+  def wait_for_response(action)
+    while !action.finished? do
+      sleep(1)
+      action = TurnAction.find_uncached action.id
+    end
+    action
+  end
+
+  def update_player_hand(game, player)
+    hand_json = update_hand_json(game, player)
+    WebsocketDataSender.send_game_data(player, game, hand_json)
+  end
+
 end

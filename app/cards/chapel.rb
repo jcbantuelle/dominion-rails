@@ -20,18 +20,24 @@ module Chapel
 
     WebsocketDataSender.send_game_data(game.current_player.player, game, action.sent_json)
 
-    Thread.new {
-      while !action.finished? do
-        sleep(1)
-        action.reload
-      end
-      trashed_cards = PlayerCard.where(id: action.response.split)
-      CardTrasher.new(trashed_cards).trash('hand')
-      action.destroy
+    process_player_response(game, action)
+  end
 
-      hand_json = update_hand_json(game, game.current_player.player)
-      WebsocketDataSender.send_game_data(game.current_player.player, game, hand_json)
+  private
+
+  def process_player_response(game, action)
+    Thread.new {
+      action = wait_for_response(action)
+      trash_cards(action)
+      action.destroy
+      update_player_hand(game, game.current_player.player)
       ActiveRecord::Base.clear_active_connections!
     }
   end
+
+  def trash_cards(action)
+    trashed_cards = PlayerCard.where(id: action.response.split)
+    CardTrasher.new(trashed_cards).trash('hand')
+  end
+
 end
