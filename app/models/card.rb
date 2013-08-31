@@ -106,12 +106,10 @@ class Card < ActiveRecord::Base
     CardCostCalculater.new(game, self).cost
   end
 
-  def wait_for_response(action)
-    while !action.finished? do
+  def wait_for_response(game)
+    while game.turn_actions(true).unfinished?.count > 0 do
       sleep(1)
-      action = TurnAction.find_uncached action.id
     end
-    action
   end
 
   def update_player_hand(game, player)

@@ -30,7 +30,8 @@ module Cellar
 
   def process_player_response(game, action)
     Thread.new {
-      action = wait_for_response(action)
+      wait_for_response(game)
+      action = TurnAction.find_uncached action.id
       discard_cards(game, action)
       action.destroy
       update_player_hand(game, game.current_player.player)
