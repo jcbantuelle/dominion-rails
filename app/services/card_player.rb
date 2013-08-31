@@ -39,13 +39,15 @@ class CardPlayer
   end
 
   def attack
-    if @card.attack_card?
-      @game.game_players.each do |player|
-        unless not_attackable?(player)
-          @card.attack(@game, player)
-        end
-      end
-    end
+    @card.attack(@game, attacked_players) if @card.attack_card?
+  end
+
+  def attacked_players
+    turn = @game.current_player.turn_order - 1
+    players = @game.game_players
+    turn_ordered_players = players.slice(turn..players.size) + players.slice(0, turn)
+
+    turn_ordered_players.reject{ |player| not_attackable?(player) }
   end
 
   def treasure_phase

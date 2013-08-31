@@ -18,8 +18,8 @@ module Bureaucrat
     give_card_to_player(game, game.current_player, 'silver', 'deck')
   end
 
-  def attack(game, player)
-    unless player.id == game.current_player.id
+  def attack(game, players)
+    players.each do |player|
       @victory_cards = player.hand.select(&:victory?)
       if @victory_cards.empty?
         @log_updater.reveal(player, player.hand, 'hand')

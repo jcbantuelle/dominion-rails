@@ -17,9 +17,11 @@ module SeaHag
   def play(game)
   end
 
-  def attack(game, player)
-    discard_top_card(game, player)
-    give_card_to_player(game, player, 'curse', 'deck')
+  def attack(game, players)
+    players.each do |player|
+      discard_top_card(game, player)
+      give_card_to_player(game, player, 'curse', 'deck')
+    end
   end
 
   def discard_top_card(game, player)

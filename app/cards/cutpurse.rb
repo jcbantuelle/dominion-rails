@@ -19,8 +19,8 @@ module Cutpurse
     @log_updater.get_from_card(game.current_player, '+$2')
   end
 
-  def attack(game, player)
-    unless player.id == game.current_player.id
+  def attack(game, players)
+    players.each do |player|
       copper = player.find_card_in_hand('copper')
       if copper.nil?
         @log_updater.reveal(player, player.hand, 'hand')

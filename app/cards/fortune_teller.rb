@@ -19,11 +19,13 @@ module FortuneTeller
     @log_updater.get_from_card(game.current_player, '+$2')
   end
 
-  def attack(game, player)
-    @revealed = []
-    reveal_cards(game, player)
-    @log_updater.reveal(player, @revealed, 'deck')
-    discard_revealed(game, player)
+  def attack(game, players)
+    players.each do |player|
+      @revealed = []
+      reveal_cards(game, player)
+      @log_updater.reveal(player, @revealed, 'deck')
+      discard_revealed(game, player)
+    end
   end
 
   private

@@ -23,7 +23,9 @@ module Familiar
     @log_updater.get_from_card(game.current_player, '+1 action')
   end
 
-  def attack(game, player)
-    give_card_to_player(game, player, 'curse', 'discard')
+  def attack(game, players)
+    players.each do |player|
+      give_card_to_player(game, player, 'curse', 'discard')
+    end
   end
 end
