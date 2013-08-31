@@ -14,8 +14,46 @@ module Bureaucrat
     [:action, :attack]
   end
 
-  def play
-    # Gain a Silver on top of deck
-    # Each Other Player reveals a victory card from hand and puts on top of deck (or reveals hand with no victory cards)
+  def play(game)
+    give_card_to_player(game, game.current_player, 'silver', 'deck')
+  end
+
+  def attack(game, player)
+    unless player.id == game.current_player.id
+      @victory_cards = player.hand.select(&:victory?)
+      if @victory_cards.empty?
+        @log_updater.reveal(player, player.hand, 'hand')
+      else
+        put_victory_card_on_deck(game, player)
+      end
+    end
+  end
+
+  private
+
+  def put_victory_card_on_deck(game, game_player)
+    if @victory_cards.count == 1
+      reveal_card(game, game_player, @victory_card.first)
+    else
+      action = send_choose_cards_prompt(game, game_player, @victory_cards, 'Choose a victory card to place on deck:', 1)
+      process_player_response(game, game_player, action)
+    end
+  end
+
+  def process_player_response(game, game_player, action)
+    Thread.new {
+      wait_for_response(game)
+      action = TurnAction.find_uncached action.id
+      returned_card = PlayerCard.find action.response
+      reveal_card(game, game_player, returned_card)
+      action.destroy
+      ActiveRecord::Base.clear_active_connections!
+    }
+  end
+
+  def reveal_card(game, game_player, card)
+    @log_updater.reveal(game_player, [card], 'hand')
+    put_card_on_deck(game, game_player, card)
+    update_player_hand(game, game_player.player)
   end
 end

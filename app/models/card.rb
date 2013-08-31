@@ -75,6 +75,12 @@ class Card < ActiveRecord::Base
     CardGainer.new(game, player, game_card.id).gain_card(destination)
   end
 
+  def put_card_on_deck(game, player, card)
+    player.deck.update_all ['card_order = card_order + 1']
+    card.update state: 'deck', card_order: 1
+    LogUpdater.new(game).put(player, [card], 'deck', false)
+  end
+
   def find_game_card(game, card_name)
     card = Card.by_name card_name
     game.game_cards.by_card_id(card.id).first
