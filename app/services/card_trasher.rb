@@ -1,8 +1,8 @@
 class CardTrasher
 
-  def initialize(cards)
+  def initialize(player, cards)
     @cards = cards
-    @player = @cards.first.game_player
+    @player = player
     @game = @player.game
   end
 

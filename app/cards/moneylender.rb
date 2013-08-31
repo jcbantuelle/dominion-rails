@@ -23,7 +23,7 @@ module Moneylender
 
   def trash_copper(game)
     copper = game.current_player.find_card_in_hand('copper')
-    CardTrasher.new([copper]).trash('hand') unless copper.nil?
+    CardTrasher.new(game.current_player, [copper]).trash('hand') unless copper.nil?
     copper.present?
   end
 end

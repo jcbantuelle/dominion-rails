@@ -28,16 +28,16 @@ module Chapel
   def process_player_response(game, action)
     Thread.new {
       action = wait_for_response(action)
-      trash_cards(action)
+      trash_cards(game, action)
       action.destroy
       update_player_hand(game, game.current_player.player)
       ActiveRecord::Base.clear_active_connections!
     }
   end
 
-  def trash_cards(action)
+  def trash_cards(game, action)
     trashed_cards = PlayerCard.where(id: action.response.split)
-    CardTrasher.new(trashed_cards).trash('hand')
+    CardTrasher.new(game.current_player, trashed_cards).trash('hand')
   end
 
 end
