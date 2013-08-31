@@ -33,22 +33,16 @@ module Bureaucrat
 
   def put_victory_card_on_deck(game, game_player)
     if @victory_cards.count == 1
-      reveal_card(game, game_player, @victory_card.first)
+      reveal_card(game, game_player, @victory_cards.first)
     else
       action = send_choose_cards_prompt(game, game_player, @victory_cards, 'Choose a victory card to place on deck:', 1)
       process_player_response(game, game_player, action)
     end
   end
 
-  def process_player_response(game, game_player, action)
-    Thread.new {
-      wait_for_response(game)
-      action = TurnAction.find_uncached action.id
-      returned_card = PlayerCard.find action.response
-      reveal_card(game, game_player, returned_card)
-      action.destroy
-      ActiveRecord::Base.clear_active_connections!
-    }
+  def process_action(game, game_player, action)
+    card = PlayerCard.find action.response
+    reveal_card(game, game_player, card)
   end
 
   def reveal_card(game, game_player, card)

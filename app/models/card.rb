@@ -113,7 +113,7 @@ class Card < ActiveRecord::Base
   end
 
   def wait_for_response(game)
-    while game.turn_actions(true).unfinished?.count > 0 do
+    while Game.unfinished_actions(game.id).count > 0 do
       sleep(1)
     end
   end
@@ -129,6 +129,16 @@ class Card < ActiveRecord::Base
 
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
     action
+  end
+
+  def process_player_response(game, game_player, action)
+    Thread.new {
+      wait_for_response(game)
+      action = TurnAction.find_uncached action.id
+      process_action(game, game_player, action)
+      action.destroy
+      ActiveRecord::Base.clear_active_connections!
+    }
   end
 
 end

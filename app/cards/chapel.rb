@@ -16,25 +16,15 @@ module Chapel
 
   def play(game)
     action = send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose up to 4 cards to trash:', 4)
-    process_player_response(game, action)
+    process_player_response(game, game.current_player, action)
   end
 
   private
 
-  def process_player_response(game, action)
-    Thread.new {
-      wait_for_response(game)
-      action = TurnAction.find_uncached action.id
-      trash_cards(game, action)
-      action.destroy
-      update_player_hand(game, game.current_player.player)
-      ActiveRecord::Base.clear_active_connections!
-    }
-  end
-
-  def trash_cards(game, action)
+  def process_action(game, game_player, action)
     trashed_cards = PlayerCard.where(id: action.response.split)
-    CardTrasher.new(game.current_player, trashed_cards).trash('hand')
+    CardTrasher.new(game_player, trashed_cards).trash('hand')
+    update_player_hand(game, game_player.player)
   end
 
 end

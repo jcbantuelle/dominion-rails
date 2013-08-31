@@ -25,25 +25,15 @@ module Cellar
 
   def prompt_player_response(game)
     action = send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose any number of cards to discard:')
-    process_player_response(game, action)
+    process_player_response(game, game.current_player, action)
   end
 
-  def process_player_response(game, action)
-    Thread.new {
-      wait_for_response(game)
-      action = TurnAction.find_uncached action.id
-      discard_cards(game, action)
-      action.destroy
-      update_player_hand(game, game.current_player.player)
-      ActiveRecord::Base.clear_active_connections!
-    }
-  end
-
-  def discard_cards(game, action)
+  def discard_cards(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game.current_player, discarded_cards, 'hand')
     draw_cards(game, discarded_cards.count)
+    update_player_hand(game, game_player.player)
   end
 
   def draw_cards(game, draw_count)
