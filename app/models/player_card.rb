@@ -54,4 +54,13 @@ class PlayerCard < ActiveRecord::Base
     card.calculated_cost(game)
   end
 
+  def json
+    {
+      id: id,
+      name: name,
+      type_class: type_class,
+      title: name.titleize
+    }
+  end
+
 end

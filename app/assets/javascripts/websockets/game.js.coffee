@@ -44,6 +44,10 @@ $ ->
       game.end_game(response)
     else if response.action == 'chat'
       game.chat(response)
+    else if response.action == 'choose_cards'
+      game.choose_cards(response)
+    else if response.action == 'update_hand'
+      game.update_hand(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -86,11 +90,37 @@ $ ->
     game.refresh_hand(response)
     game.refresh_tooltips()
 
+  # Update Hand
+  window.game.update_hand = (response) ->
+    game.refresh_hand(response)
+    game.refresh_tooltips()
+
   # End Game
   window.game.end_game = (response) ->
     $('<div id="finished-game"></div>').insertBefore('#action-area');
     $('#hand, #action-area').remove()
     game.refresh_end_game(response)
+
+  # Choose Cards
+  window.game.choose_cards = (response) ->
+    $('#turn-actions').hide()
+    $('#action-response').html(HandlebarsTemplates['game/choose_cards'](response));
+    $response_form = $("form#response-form")
+
+    $checkboxes = $response_form.find('input')
+    $checkboxes.click ->
+      too_many_selected = $checkboxes.filter(':checked').length >= response.limit
+      $checkboxes.not(':checked').attr('disabled', too_many_selected)
+
+    $response_form.on "submit", (event) ->
+      event.preventDefault()
+      selected = new Array
+      checkboxes = $(this).find('input:checked').each ->
+        selected.push $(this).val()
+      action_response = selected.join(' ')
+      socket.send(JSON.stringify(action: 'action_response', response: action_response, action_id: response.action_id))
+      $('#action-response').empty()
+      $('#turn-actions').show()
 
   # Log Message
   window.game.log_message = (response) ->

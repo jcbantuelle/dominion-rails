@@ -118,3 +118,9 @@ body {
   height: 100px;
   overflow: auto;
 }
+
+#response-form label {
+  display: inline;
+  float: left;
+  margin-right: 5px;
+}

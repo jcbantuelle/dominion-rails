@@ -26,10 +26,26 @@ module Json::Game
     }.merge(game_content(game, player)).to_json
   end
 
+  def update_hand_json(game, player)
+    {
+      action: 'update_hand'
+    }.merge(game_content(game, player)).to_json
+  end
+
   def buy_card_json(game, player)
     {
       action: 'buy_card'
     }.merge(game_content(game, player)).to_json
+  end
+
+  def choose_cards_json(action, cards, limit, text)
+    {
+      cards: cards.map(&:json),
+      limit: limit,
+      action: 'choose_cards',
+      action_id: action.id,
+      text: text
+    }.to_json
   end
 
   private

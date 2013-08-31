@@ -1,5 +1,7 @@
 class Card < ActiveRecord::Base
 
+  include Json::Game
+
   scope :card_type, ->(card_type) { where({card_type => true}) }
   scope :card_name, ->(card_name) { where(name: card_name) }
   scope :end_game_cards, ->{ where(name: %w[province colony])}
