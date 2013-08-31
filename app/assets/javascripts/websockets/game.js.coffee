@@ -44,7 +44,7 @@ $ ->
     else if response.action == 'chat'
       game.chat(response)
     else if response.action == 'choose_cards'
-      game.choose_cards(response)
+      game.choose_options(response)
     else if response.action == 'update_hand'
       game.update_hand(response)
 
@@ -100,16 +100,17 @@ $ ->
     $('#hand, #action-area').remove()
     game.refresh_end_game(response)
 
-  # Choose Cards
-  window.game.choose_cards = (response) ->
+  # Choose Options
+  window.game.choose_options = (response) ->
     $('#turn-actions').hide()
-    $('#action-response').html(HandlebarsTemplates['game/choose_cards'](response));
+    $('#action-response').html(HandlebarsTemplates['game/'+response.action](response));
     $response_form = $("form#response-form")
 
     $checkboxes = $response_form.find('input')
-    $checkboxes.click ->
-      too_many_selected = $checkboxes.filter(':checked').length >= response.limit
-      $checkboxes.not(':checked').attr('disabled', too_many_selected)
+    if response.limit > 0
+      $checkboxes.click ->
+        too_many_selected = $checkboxes.filter(':checked').length >= response.limit
+        $checkboxes.not(':checked').attr('disabled', too_many_selected)
 
     $response_form.on "submit", (event) ->
       event.preventDefault()
