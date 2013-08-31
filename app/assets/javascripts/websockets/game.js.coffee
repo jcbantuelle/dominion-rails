@@ -4,7 +4,6 @@ $ ->
 
   $turn_actions = $('#turn-actions')
   $turn_actions.on "click", "#end-turn", (event) ->
-    $('#end-turn').hide()
     event.preventDefault()
     socket.send(JSON.stringify(action: 'end_turn'))
 
