@@ -2,3 +2,4 @@
 <%= player_name(target_player, player) %>
 <%= player_action(target_player, player, 'reveal') %>
 <%= show_cards(cards) %> from <%= source %>
+<%= " and #{player_action(target_player, player, 'discard')} them" if discard %>

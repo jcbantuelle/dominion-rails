@@ -35,11 +35,12 @@ class LogUpdater
     send_message('draw_cards', locals)
   end
 
-  def reveal(player, cards, source)
+  def reveal(player, cards, source, discard=false)
     locals = {
       target_player: player,
       cards: cards,
-      source: source
+      source: source,
+      discard: discard
     }
     send_message('reveal_cards', locals)
   end
