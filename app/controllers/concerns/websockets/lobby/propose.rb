@@ -53,7 +53,8 @@ module Websockets::Lobby::Propose
   def set_timeout(game)
     Thread.new {
       sleep(30)
-      send_timeout(game) if Game.exists?(game.id) && !game.reload.accepted?
+      game = Game.find_uncached game.id
+      send_timeout(game) if game.present? && !game.accepted?
       ActiveRecord::Base.clear_active_connections!
     }
   end
