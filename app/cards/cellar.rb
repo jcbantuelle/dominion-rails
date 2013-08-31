@@ -24,11 +24,7 @@ module Cellar
   private
 
   def prompt_player_response(game)
-    action = TurnAction.create game: game, game_player: game.current_player
-    action.update sent_json: choose_cards_json(action, game.current_player.hand, 0, 'Choose any number of cards to discard:')
-
-    WebsocketDataSender.send_game_data(game.current_player.player, game, action.sent_json)
-
+    action = send_choose_cards_prompt(game, game.current_player, 'Choose any number of cards to discard:')
     process_player_response(game, action)
   end
 
