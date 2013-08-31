@@ -75,7 +75,7 @@ class Game < ActiveRecord::Base
 
   def self.find_uncached(game_id)
     uncached do
-      find game_id
+      find(game_id) if exists?(game_id)
     end
   end
 
