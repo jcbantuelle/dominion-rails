@@ -31,7 +31,7 @@ class GameController < ApplicationController
   end
 
   def pending_response?(action)
-    action != 'action_response' && @game.turn_actions.count > 0
+    action != 'action_response' && action != 'chat' && @game.turn_actions.count > 0
   end
 
 end
