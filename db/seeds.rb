@@ -25,8 +25,8 @@ cards = %w(curse)
 create_cards(cards)
 
 # Base set
-cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer moneylender chapel cellar bureaucrat militia)
-# moat chancellor workshop feast remodel spy thief throne_room library mine
+cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer moneylender chapel cellar bureaucrat militia thief)
+# moat chancellor workshop feast remodel spy throne_room library mine
 create_cards(cards, true, false, false, 'base')
 
 # Intrigue
