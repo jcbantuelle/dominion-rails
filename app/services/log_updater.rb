@@ -72,11 +72,12 @@ class LogUpdater
     send_message('discard_cards', locals)
   end
 
-  def trash(player, cards, source)
+  def trash(player, cards, source, discard)
     locals = {
       target_player: player,
       cards: cards,
-      source: source
+      source: source,
+      discard: discard
     }
     send_message('trash_cards', locals)
   end
