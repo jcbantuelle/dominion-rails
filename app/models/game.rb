@@ -51,11 +51,17 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    ranked_players.select{ |player| player.score == ranked_players.first.score }.map(&:username).join(' & ')
+    top_score = ranked_players.first.score
+    fewest_turns = ranked_players.first.turn_count
+    winners = ranked_players.select{ |player| player.score == top_score && player.turn_count == fewest_turns }
+    winners.map(&:username).join(' & ')
   end
 
   def ranked_players
-    @ranked_players ||= game_players.sort{ |p1, p2| p2.score <=> p1.score }
+    @ranked_players ||= game_players.sort{ |p1, p2|
+      comp = p2.score <=> p1.score
+      comp.zero? ? (p1.turn_count <=> p2.turn_count) : comp
+    }
   end
 
   def has_potions?

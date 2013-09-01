@@ -50,6 +50,14 @@ class GamePlayer < ActiveRecord::Base
     point_cards.map(&:value).inject(:+) + victory_tokens
   end
 
+  def turn_count
+    current_turn = game.current_turn.turn
+    player_count = game.player_count
+    turns = current_turn / player_count
+    turns += 1 if current_turn % player_count >= turn_order
+    turns
+  end
+
   def add_victory_tokens(amount)
     update_attribute :victory_tokens, victory_tokens + amount
   end
