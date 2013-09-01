@@ -114,7 +114,7 @@ class Card < ActiveRecord::Base
 
   def wait_for_response(game)
     while Game.unfinished_actions(game.id).count > 0 do
-      sleep(1)
+      sleep(0.5)
     end
   end
 
@@ -142,12 +142,12 @@ class Card < ActiveRecord::Base
   def wait_for_card(card)
     unless card.play_thread.nil?
       while card.play_thread.alive? do
-        sleep(1)
+        sleep(0.5)
       end
     end
     unless card.attack_thread.nil?
       while card.attack_thread.alive? do
-        sleep(1)
+        sleep(0.5)
       end
     end
   end
