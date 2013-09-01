@@ -19,14 +19,17 @@ module Bureaucrat
   end
 
   def attack(game, players)
-    players.each do |player|
-      @victory_cards = player.hand.select(&:victory?)
-      if @victory_cards.empty?
-        @log_updater.reveal(player, player.hand, 'hand')
-      else
-        put_victory_card_on_deck(game, player)
+    Thread.new {
+      players.each do |player|
+        @victory_cards = player.hand.select(&:victory?)
+        if @victory_cards.empty?
+          @log_updater.reveal(player, player.hand, 'hand')
+        else
+          put_victory_card_on_deck(game, player)
+        end
       end
-    end
+      ActiveRecord::Base.clear_active_connections!
+    }
   end
 
   private

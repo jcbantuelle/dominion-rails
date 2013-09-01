@@ -20,16 +20,19 @@ module Militium
   end
 
   def attack(game, players)
-    players.each do |player|
-      hand = player.hand
-      if hand.count <= 3
-        @log_updater.custom_message(player, "#{hand.count} cards in hand", 'have')
-      else
-        discard_count = hand.count - 3
-        action = send_choose_cards_prompt(game, player, hand, "Choose #{discard_count} card(s) to discard:", discard_count, discard_count)
-        process_player_response(game, player, action)
+    Thread.new {
+      players.each do |player|
+        hand = player.hand
+        if hand.count <= 3
+          @log_updater.custom_message(player, "#{hand.count} cards in hand", 'have')
+        else
+          discard_count = hand.count - 3
+          action = send_choose_cards_prompt(game, player, hand, "Choose #{discard_count} card(s) to discard:", discard_count, discard_count)
+          process_player_response(game, player, action)
+        end
       end
-    end
+      ActiveRecord::Base.clear_active_connections!
+    }
   end
 
   private

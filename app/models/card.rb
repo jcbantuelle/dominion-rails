@@ -132,13 +132,11 @@ class Card < ActiveRecord::Base
   end
 
   def process_player_response(game, game_player, action)
-    Thread.new {
-      wait_for_response(game)
-      action = TurnAction.find_uncached action.id
-      process_action(game, game_player, action)
-      action.destroy
-      ActiveRecord::Base.clear_active_connections!
-    }
+    wait_for_response(game)
+    action = TurnAction.find_uncached action.id
+    process_action(game, game_player, action)
+    action.destroy
+    ActiveRecord::Base.clear_active_connections!
   end
 
 end
