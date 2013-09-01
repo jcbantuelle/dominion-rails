@@ -82,7 +82,7 @@ module Json::Game
   end
 
   def end_game_players(game)
-    game.game_players.map{ |player|
+    game.ranked_players.map{ |player|
       point_cards = grouped_cards(player.point_cards)
       json = {
         id: player.id,
