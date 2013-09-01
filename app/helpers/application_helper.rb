@@ -32,6 +32,15 @@ module ApplicationHelper
     same_player?(game_player, player) ? 'are' : 'is'
   end
 
+  def conjugate(game_player, player, action)
+    case action
+    when 'be'
+      same_player?(game_player, player) ? 'are' : 'is'
+    when 'have'
+      same_player?(game_player, player) ? 'have' : 'has'
+    end
+  end
+
   def card_destination(destination)
     message = destination == 'deck' ? 'on ' : 'in '
     message += destination
