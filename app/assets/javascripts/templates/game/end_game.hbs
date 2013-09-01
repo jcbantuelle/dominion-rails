@@ -2,9 +2,7 @@
 <br />
 <br />
 {{#each players}}
-  <strong>{{this.username}}</strong>:
-  <br />
-  {{this.score}} Points
+  <strong>{{this.username}}</strong>: &nbsp;&nbsp;{{this.score}} Points
   <br />
   {{#each cards}}
     {{count}} x {{{html}}}
@@ -12,5 +10,6 @@
   {{#if victory_tokens}}
     {{victory_tokens}} x &nabla;
   {{/if}}
+  <br />
   <br />
 {{/each}}
