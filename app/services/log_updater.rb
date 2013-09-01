@@ -107,6 +107,16 @@ class LogUpdater
     send_message('custom_message', locals)
   end
 
+  def gain(player, cards, source=nil, destination=nil)
+    locals = {
+      target_player: player,
+      cards: cards,
+      source: source,
+      destination: destination
+    }
+    send_message('gain_cards', locals)
+  end
+
   private
 
   def send_message(template, custom_locals = {})
