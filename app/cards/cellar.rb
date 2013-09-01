@@ -28,7 +28,7 @@ module Cellar
     process_player_response(game, game.current_player, action)
   end
 
-  def discard_cards(game, game_player, action)
+  def process_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
