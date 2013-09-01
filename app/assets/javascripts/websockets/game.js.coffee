@@ -107,9 +107,9 @@ $ ->
     $response_form = $("form#response-form")
 
     $checkboxes = $response_form.find('input')
-    if response.limit > 0
+    if response.maximum > 0
       $checkboxes.click ->
-        too_many_selected = $checkboxes.filter(':checked').length >= response.limit
+        too_many_selected = $checkboxes.filter(':checked').length >= response.maximum
         $checkboxes.not(':checked').attr('disabled', too_many_selected)
 
     $response_form.on "submit", (event) ->
@@ -117,10 +117,15 @@ $ ->
       selected = new Array
       checkboxes = $(this).find('input:checked').each ->
         selected.push $(this).val()
+      return false if game.outside_limits(selected.length, response)
       action_response = selected.join(' ')
       socket.send(JSON.stringify(action: 'action_response', response: action_response, action_id: response.action_id))
       $('#action-response').empty()
       $('#turn-actions').show()
+
+  # Outside Limits
+  window.game.outside_limits = (count, response) ->
+    (response.minimum > 0 and count < response.minimum) or (response.maximum > 0 and count > response.maximum)
 
   # Log Message
   window.game.log_message = (response) ->

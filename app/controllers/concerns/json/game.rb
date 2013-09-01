@@ -38,10 +38,11 @@ module Json::Game
     }.merge(game_content(game, player)).to_json
   end
 
-  def choose_cards_json(action, cards, limit, text)
+  def choose_cards_json(action, cards, maximum, minimum, text)
     {
       cards: cards.map(&:json),
-      limit: limit,
+      maximum: maximum,
+      minimum: minimum,
       action: 'choose_cards',
       action_id: action.id,
       text: text
