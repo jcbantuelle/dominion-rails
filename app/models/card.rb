@@ -123,8 +123,8 @@ class Card < ActiveRecord::Base
     WebsocketDataSender.send_game_data(player, game, hand_json)
   end
 
-  def send_choose_cards_prompt(game, game_player, cards, message, maximum=0, minimum=0)
-    action = TurnAction.create game: game, game_player: game_player
+  def send_choose_cards_prompt(game, game_player, cards, message, maximum=0, minimum=0, action=nil)
+    action = TurnAction.create game: game, game_player: game_player, action: action
     action.update sent_json: choose_cards_json(action, cards, maximum, minimum, message)
 
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
