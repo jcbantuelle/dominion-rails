@@ -20,7 +20,7 @@ module Militium
   end
 
   def attack(game, players)
-    Thread.new {
+    @attack_thread = Thread.new {
       players.each do |player|
         hand = player.hand
         if hand.count <= 3

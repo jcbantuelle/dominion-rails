@@ -19,7 +19,7 @@ module Bureaucrat
   end
 
   def attack(game, players)
-    Thread.new {
+    @attack_thread = Thread.new {
       players.each do |player|
         @victory_cards = player.hand.select(&:victory?)
         if @victory_cards.empty?

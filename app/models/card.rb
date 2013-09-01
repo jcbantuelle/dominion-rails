@@ -8,7 +8,7 @@ class Card < ActiveRecord::Base
 
   after_find :load_card_module
 
-  attr_accessor :log_updater
+  attr_accessor :log_updater, :play_thread, :attack_thread
 
   def self.by_name(card_name)
     card_name(card_name).first
@@ -137,6 +137,19 @@ class Card < ActiveRecord::Base
     process_action(game, game_player, action)
     action.destroy
     ActiveRecord::Base.clear_active_connections!
+  end
+
+  def wait_for_card(card)
+    unless card.play_thread.nil?
+      while card.play_thread.alive? do
+        sleep(1)
+      end
+    end
+    unless card.attack_thread.nil?
+      while card.attack_thread.alive? do
+        sleep(1)
+      end
+    end
   end
 
 end

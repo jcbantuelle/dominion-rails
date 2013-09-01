@@ -18,7 +18,7 @@ module Thief
   end
 
   def attack(game, players)
-    Thread.new {
+    @attack_thread = Thread.new {
       @trashed = []
       players.each do |player|
         reveal(game, player)

@@ -11,6 +11,7 @@ class CardPlayer
     move_from_hand_to_play unless @clone
     play
     attack
+    @card
   end
 
   def valid_play?

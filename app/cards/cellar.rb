@@ -18,7 +18,7 @@ module Cellar
     game.current_turn.add_actions(1)
     @log_updater.get_from_card(game.current_player, '+1 action')
 
-    Thread.new {
+    @play_thread = Thread.new {
       prompt_player_response(game)
       ActiveRecord::Base.clear_active_connections!
     }
