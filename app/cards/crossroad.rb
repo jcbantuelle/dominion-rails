@@ -14,7 +14,7 @@ module Crossroad
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_crossroad
     reveal_hand(game)
 

@@ -14,7 +14,7 @@ module Silver
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(2)
   end
 

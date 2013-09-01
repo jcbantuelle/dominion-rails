@@ -14,7 +14,7 @@ module Moneylender
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     if trash_copper(game)
       game.current_turn.add_coins(3)
       @log_updater.get_from_card(game.current_player, '+$3')

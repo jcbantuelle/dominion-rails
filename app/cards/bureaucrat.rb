@@ -14,7 +14,7 @@ module Bureaucrat
     [:action, :attack]
   end
 
-  def play(game)
+  def play(game, clone=false)
     give_card_to_player(game, game.current_player, 'silver', 'deck')
   end
 

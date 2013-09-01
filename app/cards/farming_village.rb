@@ -14,7 +14,7 @@ module FarmingVillage
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_actions(2)
     @log_updater.get_from_card(game.current_player, '+2 action')
 

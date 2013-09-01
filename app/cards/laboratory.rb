@@ -14,7 +14,7 @@ module Laboratory
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_actions(1)
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(2)

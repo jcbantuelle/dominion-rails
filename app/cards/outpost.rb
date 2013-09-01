@@ -14,7 +14,7 @@ module Outpost
     [:action, :duration]
   end
 
-  def play(game)
+  def play(game, clone=false)
   end
 
   def duration(game)

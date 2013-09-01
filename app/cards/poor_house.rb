@@ -14,7 +14,7 @@ module PoorHouse
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     coins = reveal_hand(game)
     coins = 0 if coins < 0
     game.current_turn.add_coins(coins)

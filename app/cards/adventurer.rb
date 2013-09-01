@@ -14,7 +14,7 @@ module Adventurer
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     reveal(game)
     discard_revealed(game)
   end

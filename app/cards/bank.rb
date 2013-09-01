@@ -14,7 +14,7 @@ module Bank
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     coins = treasures_in_play(game)
     game.current_turn.add_coins(coins)
     @log_updater.get_from_card(game.current_player, "+$#{coins}")

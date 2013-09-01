@@ -14,7 +14,7 @@ module Tactician
     [:action, :duration]
   end
 
-  def play(game)
+  def play(game, clone=false)
     hand = game.current_player.hand
     if hand.count > 0
       hand.each do |card|

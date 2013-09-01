@@ -14,7 +14,7 @@ module Bazaar
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(1)
     game.current_turn.add_actions(2)

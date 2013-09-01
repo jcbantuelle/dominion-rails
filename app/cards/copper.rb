@@ -14,7 +14,7 @@ module Copper
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     coppersmith = game.current_turn.coppersmith
     game.current_turn.add_coins(1 + coppersmith)
     @log_updater.get_from_card(game.current_player, "+$#{coppersmith} from Coppersmith") if coppersmith > 0

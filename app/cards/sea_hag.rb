@@ -14,7 +14,7 @@ module SeaHag
     [:action, :attack]
   end
 
-  def play(game)
+  def play(game, clone=false)
   end
 
   def attack(game, players)

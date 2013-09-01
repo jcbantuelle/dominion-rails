@@ -15,7 +15,7 @@ module Familiar
     [:action, :attack]
   end
 
-  def play(game)
+  def play(game, clone=false)
     @card_drawer = CardDrawer.new(game.current_player)
     @card_drawer.draw(1)
 

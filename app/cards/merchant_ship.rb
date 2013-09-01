@@ -14,7 +14,7 @@ module MerchantShip
     [:action, :duration]
   end
 
-  def play(game)
+  def play(game, clone=false)
     action(game, false)
   end
 

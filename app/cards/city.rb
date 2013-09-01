@@ -14,7 +14,7 @@ module City
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_actions(2)
     @message = '+2 actions'
     @cards = 1

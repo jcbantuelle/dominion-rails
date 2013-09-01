@@ -14,7 +14,7 @@ module TreasureMap
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     if trash_treasure_maps(game)
       4.times do
         give_card_to_player(game, game.current_player, 'gold', 'deck')

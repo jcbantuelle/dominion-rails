@@ -14,7 +14,7 @@ module Conspirator
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(2)
     get_message = '+$2'
     actions_in_play = game.current_turn.played_actions

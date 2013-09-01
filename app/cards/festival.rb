@@ -14,7 +14,7 @@ module Festival
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(2)
     game.current_turn.add_buys(1)
     game.current_turn.add_actions(2)

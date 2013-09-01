@@ -18,7 +18,7 @@ module Spoil
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(3)
     game.current_player.find_card_in_play('spoils').destroy
     game.game_cards.by_card_id(id).first.add_to_pile(1)

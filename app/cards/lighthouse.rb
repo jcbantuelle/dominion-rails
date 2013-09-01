@@ -14,10 +14,10 @@ module Lighthouse
     [:action, :duration]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_actions(1)
     game.current_turn.add_coins(1)
-    game.current_turn.add_lighthouse
+    game.current_turn.add_lighthouse unless clone
     @log_updater.get_from_card(game.current_player, '+1 action and +$1')
   end
 

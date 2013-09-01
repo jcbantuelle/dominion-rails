@@ -14,7 +14,7 @@ module BanditCamp
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     CardDrawer.new(game.current_player).draw(1)
     game.current_turn.add_actions(2)
 

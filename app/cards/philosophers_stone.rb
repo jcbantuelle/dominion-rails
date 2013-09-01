@@ -15,7 +15,7 @@ module PhilosophersStone
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     card_count = deck_count(game)
     coins = card_count / 5
     game.current_turn.add_coins(coins)

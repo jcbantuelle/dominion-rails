@@ -14,7 +14,7 @@ module Militium
     [:action, :attack]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(2)
     @log_updater.get_from_card(game.current_player, '+$2')
   end

@@ -14,7 +14,7 @@ module Hoard
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(2)
     game.current_turn.add_hoard
   end

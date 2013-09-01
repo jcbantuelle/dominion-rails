@@ -14,7 +14,7 @@ module Coppersmith
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coppersmith
   end
 

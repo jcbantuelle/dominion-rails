@@ -14,7 +14,7 @@ module Quarry
     [:treasure]
   end
 
-  def play(game)
+  def play(game, clone=false)
     game.current_turn.add_coins(1)
     game.current_turn.add_action_discount(2)
   end

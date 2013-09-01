@@ -14,7 +14,7 @@ module Harvest
     [:action]
   end
 
-  def play(game)
+  def play(game, clone=false)
     reveal(game)
 
     unique_reveals = @revealed.map(&:name).uniq.count

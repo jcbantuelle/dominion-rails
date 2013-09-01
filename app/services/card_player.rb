@@ -1,12 +1,14 @@
 class CardPlayer
 
-  def initialize(game, card_id)
+  def initialize(game, card_id, free_action=false, clone=false)
     @game = game
     @card = Card.find card_id
+    @free_action = free_action
+    @clone = clone
   end
 
   def play_card
-    move_from_hand_to_play
+    move_from_hand_to_play unless @clone
     play
     attack
   end
@@ -33,9 +35,9 @@ class CardPlayer
 
   def play
     treasure_phase if @card.treasure_card?
-    play_action if @card.action_card?
+    play_action if @card.action_card? && !@free_action
     @card.play_log(@game.current_player, @game)
-    @card.play(@game)
+    @card.play(@game, @clone)
   end
 
   def attack
