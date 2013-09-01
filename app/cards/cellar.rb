@@ -31,7 +31,7 @@ module Cellar
   def discard_cards(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
-    LogUpdater.new(game).discard(game.current_player, discarded_cards, 'hand')
+    LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
     draw_cards(game, discarded_cards.count)
     update_player_hand(game, game_player.player)
   end
