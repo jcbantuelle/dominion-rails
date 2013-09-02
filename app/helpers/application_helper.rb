@@ -38,6 +38,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'are' : 'is'
     when 'have'
       same_player?(game_player, player) ? 'have' : 'has'
+    when 'put'
+      same_player?(game_player, player) ? 'put' : 'puts'
     end
   end
 
