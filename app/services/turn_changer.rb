@@ -2,6 +2,7 @@ class TurnChanger
 
   def initialize(game)
     @game = game
+    @game.current_turn(true)
   end
 
   def first_turn

@@ -2,6 +2,7 @@ class CardGainer
 
   def initialize(game, player, card_id)
     @game = game
+    @game.current_turn(true)
     @player = player
     @card = @game.game_cards.find card_id
   end

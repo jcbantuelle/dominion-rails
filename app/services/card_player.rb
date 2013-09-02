@@ -2,6 +2,7 @@ class CardPlayer
 
   def initialize(game, card_id, free_action=false, clone=false)
     @game = game
+    @game.current_turn(true)
     @card = Card.find card_id
     @free_action = free_action
     @clone = clone
@@ -74,11 +75,36 @@ class CardPlayer
   end
 
   def immune_to_attack?(player)
-    immune = false
-    if player.turns.present? && player.turns[0].lighthouse
-      immune = true
+    has_lighthouse?(player) || has_moat?(player)
+  end
+
+  def has_lighthouse?(player)
+    immune = player.turns.present? && player.turns[0].lighthouse
+    if immune
       lighthouse = Card.by_name 'lighthouse'
       LogUpdater.new(@game).immune_to_attack(player, lighthouse.card_html)
+    end
+    immune
+  end
+
+  def has_moat?(player)
+    immune = false
+    moat = player.hand.select{ |card| card.name == 'moat' }.first
+    if moat
+      TurnActionHandler.wait_for_card(@card)
+      options = [
+        { text: 'Yes', value: 'yes' },
+        { text: 'No', value: 'no' }
+      ]
+      action = TurnActionHandler.send_choose_text_prompt(@game, player, options, 'Reveal <span class="reaction">Moat</span>?'.html_safe, 1, 1)
+      TurnActionHandler.wait_for_response(@game)
+      action = TurnAction.find_uncached action.id
+      if action.response == 'yes'
+        immune = true
+        LogUpdater.new(@game).reveal(player, [moat], 'hand')
+        LogUpdater.new(@game).immune_to_attack(player, moat.card.card_html)
+      end
+      action.destroy
     end
     immune
   end

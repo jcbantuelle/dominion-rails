@@ -2,6 +2,7 @@ class TurnEnder
 
   def initialize(game)
     @game = game
+    @game.current_turn(true)
   end
 
   def end_turn

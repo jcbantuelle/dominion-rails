@@ -9,11 +9,14 @@ module Websockets::Game::TurnActions
 
   def play_card(data)
     if can_play?
-      player = CardPlayer.new @game, data['card_id']
-      if player.valid_play?
-        player.play_card
-        send_card_action_data('play')
-      end
+      Thread.new {
+        player = CardPlayer.new @game, data['card_id']
+        if player.valid_play?
+          player.play_card
+          send_card_action_data('play')
+        end
+        ActiveRecord::Base.clear_active_connections!
+      }
     end
   end
 
