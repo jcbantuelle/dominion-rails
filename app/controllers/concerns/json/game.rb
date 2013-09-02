@@ -49,6 +49,17 @@ module Json::Game
     }.to_json
   end
 
+  def choose_text_json(action, text_options, maximum, minimum, text)
+    {
+      text_options: text_options,
+      maximum: maximum,
+      minimum: minimum,
+      action: 'choose_text',
+      action_id: action.id,
+      text: text
+    }.to_json
+  end
+
   private
 
   def game_content(game, player)

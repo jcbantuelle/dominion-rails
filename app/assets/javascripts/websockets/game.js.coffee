@@ -45,6 +45,8 @@ $ ->
       game.chat(response)
     else if response.action == 'choose_cards'
       game.choose_options(response)
+    else if response.action == 'choose_text'
+      game.choose_options(response)
     else if response.action == 'update_hand'
       game.update_hand(response)
 

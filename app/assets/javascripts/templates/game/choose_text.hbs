@@ -1,0 +1,12 @@
+<br />
+{{{text}}}
+<form id="response-form">
+  {{#each text_options}}
+    <label for="option_{{value}}" class="checkbox">
+      <input type="checkbox" id="option_{{value}}" value="{{value}}" />
+      {{text}}
+    </label>
+  {{/each}}
+  <br class="clear" />
+  <button type="submit" class="btn btn-primary btn-mini">Choose</button>
+</form>
