@@ -79,6 +79,10 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.belongs_to_set?(set) }
   end
 
+  def cards_costing_less_than(amount)
+    game_cards.select{ |card| card.costs_less_than?(amount) }
+  end
+
   def self.find_uncached(game_id)
     uncached do
       find(game_id) if exists?(game_id)

@@ -38,6 +38,10 @@ class GameCard < ActiveRecord::Base
     card.calculated_cost(game)
   end
 
+  def costs_less_than?(amount)
+    calculated_cost(game)[:potion].nil? && calculated_cost(game)[:coin] < amount
+  end
+
   def add_to_pile(count)
     update remaining: (remaining + count)
   end
