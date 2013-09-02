@@ -29,6 +29,7 @@ module Workshop
 
   def process_action(game, game_player, action)
     CardGainer.new(game, game_player, action.response).gain_card('discard')
+    game.reload
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 end
