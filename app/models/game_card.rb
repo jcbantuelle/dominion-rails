@@ -34,8 +34,8 @@ class GameCard < ActiveRecord::Base
     card.name
   end
 
-  def calculated_cost(game)
-    card.calculated_cost(game)
+  def calculated_cost(game_record)
+    card.calculated_cost(game_record)
   end
 
   def costs_less_than?(amount)
