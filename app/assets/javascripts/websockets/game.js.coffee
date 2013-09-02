@@ -47,8 +47,6 @@ $ ->
       game.choose_options(response)
     else if response.action == 'choose_text'
       game.choose_options(response)
-    else if response.action == 'update_hand'
-      game.update_hand(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -88,11 +86,6 @@ $ ->
     game.refresh_turn_status(response)
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
-    game.refresh_hand(response)
-    game.refresh_tooltips()
-
-  # Update Hand
-  window.game.update_hand = (response) ->
     game.refresh_hand(response)
     game.refresh_tooltips()
 

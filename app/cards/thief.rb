@@ -77,7 +77,7 @@ module Thief
   def process_trash_action(game, game_player, action)
     trashed_card = PlayerCard.find action.response
     @trashed += CardTrasher.new(game_player, [trashed_card]).trash(nil, true)
-    TurnActionHandler.update_player_hand(game, game_player.player)
+    TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 
   def process_gain_action(game, game_player, action)

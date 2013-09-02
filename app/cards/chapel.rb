@@ -25,7 +25,7 @@ module Chapel
   def process_action(game, game_player, action)
     trashed_cards = PlayerCard.where(id: action.response.split)
     CardTrasher.new(game_player, trashed_cards).trash('hand')
-    TurnActionHandler.update_player_hand(game, game_player.player)
+    TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 
 end

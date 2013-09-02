@@ -26,12 +26,6 @@ module Json::Game
     }.merge(game_content(game, player)).to_json
   end
 
-  def update_hand_json(game, player)
-    {
-      action: 'update_hand'
-    }.merge(game_content(game, player)).to_json
-  end
-
   def buy_card_json(game, player)
     {
       action: 'buy_card'

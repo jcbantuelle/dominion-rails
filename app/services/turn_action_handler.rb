@@ -26,8 +26,8 @@ class TurnActionHandler
     ActiveRecord::Base.clear_active_connections!
   end
 
-  def self.update_player_hand(game, player)
-    hand_json = update_hand_json(game, player)
+  def self.refresh_game_area(game, player)
+    hand_json = refresh_game_json(game, player)
     WebsocketDataSender.send_game_data(player, game, hand_json)
   end
 

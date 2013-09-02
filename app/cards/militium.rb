@@ -39,7 +39,7 @@ module Militium
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
-    TurnActionHandler.update_player_hand(game, game_player.player)
+    TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 
 end

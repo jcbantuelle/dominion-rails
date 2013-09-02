@@ -51,6 +51,6 @@ module Bureaucrat
   def reveal_card(game, game_player, card)
     @log_updater.reveal(game_player, [card], 'hand')
     put_card_on_deck(game, game_player, card)
-    TurnActionHandler.update_player_hand(game, game_player.player)
+    TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 end
