@@ -96,7 +96,7 @@ class CardPlayer
         { text: 'Yes', value: 'yes' },
         { text: 'No', value: 'no' }
       ]
-      action = TurnActionHandler.send_choose_text_prompt(@game, player, options, 'Reveal <span class="reaction">Moat</span>?'.html_safe, 1, 1)
+      action = TurnActionHandler.send_choose_text_prompt(@game, player, options, "Reveal #{moat.card.card_html}?".html_safe, 1, 1)
       TurnActionHandler.wait_for_response(@game)
       action = TurnAction.find_uncached action.id
       if action.response == 'yes'
