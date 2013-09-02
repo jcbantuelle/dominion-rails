@@ -39,7 +39,7 @@ module Mine
 
   def gain_treasure(game)
     available_cards = game.cards_costing_less_than(@trashed_treasure_cost+4).select{ |game_card|
-      game_card.treasure_card? && game_card.available?
+      game_card.treasure_card? && game_card.available? && game_card.supply?
     }
     if available_cards.count == 0
       @log_updater.custom_message(nil, 'But there are no available treasures to gain')

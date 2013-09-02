@@ -4,7 +4,7 @@ class GameCard < ActiveRecord::Base
 
   scope :by_card_id, ->(card_id) { where card_id: card_id }
   scope :by_game_id_and_card_name, ->(game_id, card_name) { joins(:card).where('cards.name = ? AND game_id = ?', card_name, game_id) }
-  scope :empty_piles, -> { where(remaining: 0).joins(:card).where.not('cards.name = ?', 'spoils') }
+  scope :empty_piles, -> { where(remaining: 0).joins(:card).where('cards.supply = ?', true) }
 
   def kingdom?
     card.kingdom?
@@ -16,6 +16,10 @@ class GameCard < ActiveRecord::Base
 
   def treasure?
     card.treasure?
+  end
+
+  def supply?
+    card.supply?
   end
 
   def treasure_card?

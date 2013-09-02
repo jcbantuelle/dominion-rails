@@ -16,7 +16,7 @@ module Workshop
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      available_cards = game.cards_costing_less_than(5).select(&:available?)
+      available_cards = game.cards_costing_less_than(5).select(&:available?).select(&:supply?)
       if available_cards.count == 0
         @log_updater.custom_message(nil, 'But there are no available cards to gain')
       else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130901152104) do
+ActiveRecord::Schema.define(version: 20130902213534) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20130901152104) do
     t.boolean  "victory"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "supply",     default: true
   end
 
   create_table "game_cards", force: true do |t|
