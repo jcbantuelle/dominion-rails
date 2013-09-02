@@ -14,11 +14,8 @@ module Moat
     [:action, :reaction]
   end
 
-  def play
-    # +2 Cards
+  def play(game, clone=false)
+    CardDrawer.new(game.current_player).draw(2)
   end
 
-  def reaction
-    # Unaffected by Attack
-  end
 end
