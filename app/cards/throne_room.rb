@@ -28,7 +28,7 @@ module ThroneRoom
     if actions.count == 0
       @log_updater.custom_message(game.current_player, 'no actions to play', 'have')
     elsif actions.count == 1
-      play_card_twice(game, actions.first)
+      play_card_multiple_times(game, actions.first, 2)
     else
       action = send_choose_cards_prompt(game, game.current_player, actions, 'Choose an action to play twice:', 1, 1)
       process_player_response(game, game.current_player, action)
@@ -36,17 +36,7 @@ module ThroneRoom
   end
 
   def process_action(game, game_player, action)
-    play_card_twice(game, PlayerCard.find(action.response))
-  end
-
-  def play_card_twice(game, card)
-    first_card = CardPlayer.new(game, card.card_id, true, false).play_card
-    wait_for_card(first_card)
-    second_card = CardPlayer.new(game, card.card_id, true, true).play_card
-    wait_for_card(second_card)
-    game.players.each do |player|
-      WebsocketDataSender.send_game_data player, game, play_card_json(game, player)
-    end
+    play_card_multiple_times(game, PlayerCard.find(action.response), 2)
   end
 
 end

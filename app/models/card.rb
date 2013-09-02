@@ -152,4 +152,18 @@ class Card < ActiveRecord::Base
     end
   end
 
+  def play_card_multiple_times(game, card, count)
+    count.times do |i|
+      play_card(game, card.card_id, i > 0)
+    end
+    game.players.each do |player|
+      WebsocketDataSender.send_game_data player, game, play_card_json(game, player)
+    end
+  end
+
+  def play_card(game, card_id, clone)
+    card = CardPlayer.new(game, card_id, true, clone).play_card
+    wait_for_card(card)
+  end
+
 end
