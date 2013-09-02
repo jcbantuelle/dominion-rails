@@ -11,6 +11,7 @@ class CardPlayer
   def play_card
     move_from_hand_to_play unless @clone
     play
+    TurnActionHandler.wait_for_card(@card)
     attack
     @card
   end
