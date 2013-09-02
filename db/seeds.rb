@@ -1,15 +1,19 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil)
+def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil, supply=true)
   cards.each do |c|
-    Card.where({name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set}).first_or_create
+    Card.where({name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set, supply: supply}).first_or_create
   end
 end
 
 # Treasure Cards
-cards = %w(copper silver gold potion platinum spoils)
+cards = %w(copper silver gold potion platinum)
 create_cards(cards, false, true, false)
+
+# Spoils
+cards = %w(spoils)
+create_cards(cards, false, true, false, nil, false)
 
 # Victory Cards
 cards = %w(estate duchy province colony)
@@ -20,8 +24,8 @@ cards = %w(curse)
 create_cards(cards)
 
 # Base set
-cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer moneylender chapel cellar bureaucrat militia thief throne_room moat chancellor library workshop feast mine)
-# remodel spy
+cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer moneylender chapel cellar bureaucrat militia thief throne_room moat chancellor library workshop feast mine remodel)
+# spy
 create_cards(cards, true, false, false, 'base')
 
 # Intrigue
