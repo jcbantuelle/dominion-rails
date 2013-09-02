@@ -27,21 +27,19 @@ module Militium
           @log_updater.custom_message(player, "#{hand.count} cards in hand", 'have')
         else
           discard_count = hand.count - 3
-          action = send_choose_cards_prompt(game, player, hand, "Choose #{discard_count} card(s) to discard:", discard_count, discard_count)
-          process_player_response(game, player, action)
+          action = TurnActionHandler.send_choose_cards_prompt(game, player, hand, "Choose #{discard_count} card(s) to discard:", discard_count, discard_count)
+          TurnActionHandler.process_player_response(game, player, action, self)
         end
       end
       ActiveRecord::Base.clear_active_connections!
     }
   end
 
-  private
-
   def process_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
-    update_player_hand(game, game_player.player)
+    TurnActionHandler.update_player_hand(game, game_player.player)
   end
 
 end

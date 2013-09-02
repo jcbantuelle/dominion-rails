@@ -32,25 +32,25 @@ module Bureaucrat
     }
   end
 
+  def process_action(game, game_player, action)
+    card = PlayerCard.find action.response
+    reveal_card(game, game_player, card)
+  end
+
   private
 
   def put_victory_card_on_deck(game, game_player)
     if @victory_cards.count == 1
       reveal_card(game, game_player, @victory_cards.first)
     else
-      action = send_choose_cards_prompt(game, game_player, @victory_cards, 'Choose a victory card to place on deck:', 1)
-      process_player_response(game, game_player, action)
+      action = TurnActionHandler.send_choose_cards_prompt(game, game_player, @victory_cards, 'Choose a victory card to place on deck:', 1)
+      TurnActionHandler.process_player_response(game, game_player, action, self)
     end
-  end
-
-  def process_action(game, game_player, action)
-    card = PlayerCard.find action.response
-    reveal_card(game, game_player, card)
   end
 
   def reveal_card(game, game_player, card)
     @log_updater.reveal(game_player, [card], 'hand')
     put_card_on_deck(game, game_player, card)
-    update_player_hand(game, game_player.player)
+    TurnActionHandler.update_player_hand(game, game_player.player)
   end
 end

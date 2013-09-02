@@ -21,6 +21,10 @@ module ThroneRoom
     }
   end
 
+  def process_action(game, game_player, action)
+    play_card_multiple_times(game, PlayerCard.find(action.response), 2)
+  end
+
   private
 
   def prompt_player_response(game)
@@ -30,13 +34,9 @@ module ThroneRoom
     elsif actions.count == 1
       play_card_multiple_times(game, actions.first, 2)
     else
-      action = send_choose_cards_prompt(game, game.current_player, actions, 'Choose an action to play twice:', 1, 1)
-      process_player_response(game, game.current_player, action)
+      action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, actions, 'Choose an action to play twice:', 1, 1)
+      TurnActionHandler.process_player_response(game, game.current_player, action, self)
     end
-  end
-
-  def process_action(game, game_player, action)
-    play_card_multiple_times(game, PlayerCard.find(action.response), 2)
   end
 
 end

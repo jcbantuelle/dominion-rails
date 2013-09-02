@@ -23,11 +23,19 @@ module Thief
       players.each do |player|
         reveal(game, player)
         trash_treasure(game, player)
-        wait_for_response(game)
+        TurnActionHandler.wait_for_response(game)
       end
       gain_trashed_treasures(game) unless @trashed.empty?
       ActiveRecord::Base.clear_active_connections!
     }
+  end
+
+  def process_action(game, game_player, action)
+    if action.action == 'trash'
+      process_trash_action(game, game_player, action)
+    else
+      process_gain_action(game, game_player, action)
+    end
   end
 
   private
@@ -55,29 +63,21 @@ module Thief
       if treasures.count == 1
         @trashed += CardTrasher.new(player, treasures).trash(nil, true)
       else
-        action = send_choose_cards_prompt(game, game.current_player, treasures, "Choose which of #{player.username}'s treasures to trash:", 1, 1, 'trash')
-        process_player_response(game, player, action)
+        action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, treasures, "Choose which of #{player.username}'s treasures to trash:", 1, 1, 'trash')
+        TurnActionHandler.process_player_response(game, player, action, self)
       end
     end
   end
 
   def gain_trashed_treasures(game)
-    action = send_choose_cards_prompt(game, game.current_player, @trashed, 'Choose which treasures you want to gain:', 0, 0, 'gain')
-    process_player_response(game, game.current_player, action)
-  end
-
-  def process_action(game, game_player, action)
-    if action.action == 'trash'
-      process_trash_action(game, game_player, action)
-    else
-      process_gain_action(game, game_player, action)
-    end
+    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, @trashed, 'Choose which treasures you want to gain:', 0, 0, 'gain')
+    TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
   def process_trash_action(game, game_player, action)
     trashed_card = PlayerCard.find action.response
     @trashed += CardTrasher.new(game_player, [trashed_card]).trash(nil, true)
-    update_player_hand(game, game_player.player)
+    TurnActionHandler.update_player_hand(game, game_player.player)
   end
 
   def process_gain_action(game, game_player, action)

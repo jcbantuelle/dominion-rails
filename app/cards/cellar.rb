@@ -24,19 +24,19 @@ module Cellar
     }
   end
 
-  private
-
-  def prompt_player_response(game)
-    action = send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose any number of cards to discard:')
-    process_player_response(game, game.current_player, action)
-  end
-
   def process_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
     draw_cards(game, discarded_cards.count)
-    update_player_hand(game, game_player.player)
+    TurnActionHandler.update_player_hand(game, game_player.player)
+  end
+
+  private
+
+  def prompt_player_response(game)
+    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose any number of cards to discard:')
+    TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
   def draw_cards(game, draw_count)
