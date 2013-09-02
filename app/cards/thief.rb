@@ -43,6 +43,7 @@ module Thief
   def reveal(game, player)
     @revealed = []
     reveal_cards(game, player)
+    player.discard_revealed
   end
 
   def process_revealed_card(card)
