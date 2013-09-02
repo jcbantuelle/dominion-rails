@@ -87,7 +87,7 @@ class Game < ActiveRecord::Base
 
   def self.unfinished_actions(game_id)
     uncached do
-      find(game_id).turn_actions.unfinished?
+      find(game_id).turn_actions.unfinished?.count
     end
   end
 
