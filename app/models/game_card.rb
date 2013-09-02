@@ -42,7 +42,7 @@ class GameCard < ActiveRecord::Base
     update remaining: (remaining + count)
   end
 
-  def json(game)
+  def json
     card_cost = calculated_cost(game)
     {
       id: id,

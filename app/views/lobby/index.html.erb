@@ -18,7 +18,7 @@
     $(function(){
       lobby.propose(<%= {
           players: @active_game.players,
-          cards: @active_game.kingdom_cards.collect{ |card| card.json(@active_game) },
+          cards: @active_game.kingdom_cards.collect(&:json),
           proposer: @active_game.proposer,
           is_proposer: current_player.id == @active_game.proposer.id,
           game_id: @active_game.id
