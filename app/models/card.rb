@@ -113,9 +113,7 @@ class Card < ActiveRecord::Base
   def play_card_multiple_times(game, card, count)
     count.times do |i|
       play_card(game, card.card_id, i > 0)
-    end
-    game.players.each do |player|
-      WebsocketDataSender.send_game_data player, game, play_card_json(game, player)
+      TurnActionHandler.refresh_game_area(game, game_player.player)
     end
   end
 
