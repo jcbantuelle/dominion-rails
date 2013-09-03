@@ -110,7 +110,7 @@ class Card < ActiveRecord::Base
     CardCostCalculater.new(game, self).cost
   end
 
-  def play_card_multiple_times(game, card, count)
+  def play_card_multiple_times(game, game_player, card, count)
     count.times do |i|
       play_card(game, card.card_id, i > 0)
       TurnActionHandler.refresh_game_area(game, game_player.player)
