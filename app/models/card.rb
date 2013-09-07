@@ -6,7 +6,7 @@ class Card < ActiveRecord::Base
 
   after_find :load_card_module
 
-  attr_accessor :log_updater, :play_thread, :attack_thread
+  attr_accessor :log_updater, :play_thread, :attack_thread, :reaction_thread
 
   def self.by_name(card_name)
     card_name(card_name).first

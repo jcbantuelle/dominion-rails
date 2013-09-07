@@ -1,5 +1,7 @@
 class CardPlayer
 
+  ATTACK_REACTION_CARDS = %w(secret_chamber)
+
   def initialize(game, card_id, free_action=false, clone=false)
     @game = game
     @game.current_turn(true)
@@ -44,7 +46,9 @@ class CardPlayer
   end
 
   def attack
-    @card.attack(@game, attacked_players) if @card.attack_card?
+    if @card.attack_card?
+      @card.attack(@game, attacked_players)
+    end
   end
 
   def attacked_players
@@ -52,7 +56,24 @@ class CardPlayer
     players = @game.game_players
     turn_ordered_players = players.slice(turn..players.size) + players.slice(0, turn)
 
+    attack_reactions(turn_ordered_players)
+
     turn_ordered_players.reject{ |player| not_attackable?(player) }
+  end
+
+  def attack_reactions(players)
+    players.each do |player|
+      unless myself?(player)
+        reaction_cards = []
+        ATTACK_REACTION_CARDS.each do |reaction_card_name|
+          reaction_cards += player.find_cards_in_hand(reaction_card_name)
+        end
+        reaction_cards.each do |reaction_card|
+          reaction_card.card.reaction(@game, player)
+          TurnActionHandler.wait_for_card(reaction_card.card)
+        end
+      end
+    end
   end
 
   def treasure_phase

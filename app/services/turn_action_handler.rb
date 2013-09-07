@@ -50,6 +50,11 @@ class TurnActionHandler
         sleep(0.5)
       end
     end
+    unless card.reaction_thread.nil?
+      while card.reaction_thread.alive? do
+        sleep(0.5)
+      end
+    end
   end
 
   def self.wait_for_response(game)
