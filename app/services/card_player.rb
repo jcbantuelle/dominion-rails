@@ -52,12 +52,8 @@ class CardPlayer
   end
 
   def attacked_players
-    turn = @game.current_player.turn_order - 1
-    players = @game.game_players
-    turn_ordered_players = players.slice(turn..players.size) + players.slice(0, turn)
-
+    turn_ordered_players = @game.turn_ordered_players
     attack_reactions(turn_ordered_players)
-
     turn_ordered_players.reject{ |player| not_attackable?(player) }
   end
 

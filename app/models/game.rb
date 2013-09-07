@@ -83,6 +83,17 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.costs_less_than?(amount) }
   end
 
+  def turn_ordered_players
+    turn = current_player.turn_order - 1
+    game_players.slice(turn..players.size) + game_players.slice(0, turn)
+  end
+
+  def player_to_left(player)
+    next_player = player.turn_order + 1
+    next_player = 1 if next_player > player_count
+    game_players[next_player - 1]
+  end
+
   def self.find_uncached(game_id)
     uncached do
       find(game_id) if exists?(game_id)
