@@ -42,6 +42,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'put' : 'puts'
     when 'set'
       same_player?(game_player, player) ? 'set' : 'sets'
+    when 'get'
+      same_player?(game_player, player) ? 'get' : 'gets'
     end
   end
 
