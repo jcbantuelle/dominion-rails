@@ -47,6 +47,8 @@ $ ->
       game.choose_options(response)
     else if response.action == 'choose_text'
       game.choose_options(response)
+    else if response.action == 'order_cards'
+      game.choose_card_order(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
@@ -114,6 +116,23 @@ $ ->
         selected.push $(this).val()
       return false if game.outside_limits(selected.length, response)
       action_response = selected.join(' ')
+      socket.send(JSON.stringify(action: 'action_response', response: action_response, action_id: response.action_id))
+      $('#action-response').empty()
+      $('#turn-actions').show()
+
+  # Choose Card Order
+  window.game.choose_card_order = (response) ->
+    $('#turn-actions').hide()
+    $('#action-response').html(HandlebarsTemplates['game/order_cards'](response));
+    $response_form = $("form#response-form")
+    $response_form.sortable()
+
+    $response_form.on "submit", (event) ->
+      event.preventDefault()
+      card_ids = new Array
+      $(this).find('input').each ->
+        card_ids.push $(this).val()
+      action_response = card_ids.join(' ')
       socket.send(JSON.stringify(action: 'action_response', response: action_response, action_id: response.action_id))
       $('#action-response').empty()
       $('#turn-actions').show()

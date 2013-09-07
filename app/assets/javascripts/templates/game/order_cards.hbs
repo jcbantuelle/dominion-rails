@@ -1,0 +1,12 @@
+<br />
+{{text}}
+<form id="response-form">
+  {{#each cards}}
+    <span class="{{type_class}} ordered">
+      {{title}}
+      <input type="hidden" value="{{id}}" />
+    </span>
+  {{/each}}
+  <br class="clear" />
+  <button type="submit" class="btn btn-primary btn-mini">Choose</button>
+</form>

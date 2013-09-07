@@ -18,6 +18,14 @@ class TurnActionHandler
     action
   end
 
+  def self.send_order_cards_prompt(game, game_player, cards, message, action_type)
+    action = TurnAction.create game: game, game_player: game_player, action: action_type
+    action.update sent_json: choose_card_order_json(action, cards, message)
+
+    WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
+    action
+  end
+
   def self.process_player_response(game, game_player, action, source)
     TurnActionHandler.wait_for_response(game)
     action = TurnAction.find_uncached action.id

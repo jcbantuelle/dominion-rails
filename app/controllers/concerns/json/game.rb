@@ -54,6 +54,15 @@ module Json::Game
     }.to_json
   end
 
+  def choose_card_order_json(action, cards, text)
+    {
+      cards: cards.map(&:json),
+      action: 'order_cards',
+      action_id: action.id,
+      text: text
+    }.to_json
+  end
+
   private
 
   def game_content(game, player)
