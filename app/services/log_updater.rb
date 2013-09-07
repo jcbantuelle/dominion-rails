@@ -45,12 +45,13 @@ class LogUpdater
     send_message('reveal_cards', locals)
   end
 
-  def put(player, cards, destination, discard=true)
+  def put(player, cards, destination, discard=true, announce=true)
     locals = {
       target_player: player,
       cards: cards,
       destination: destination,
-      discard: discard
+      discard: discard,
+      announce: announce
     }
     send_message('put_cards', locals)
   end

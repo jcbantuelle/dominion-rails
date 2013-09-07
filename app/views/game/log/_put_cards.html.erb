@@ -1,7 +1,13 @@
 &nbsp;&nbsp;
 <%= player_name(target_player, player) %>
 <%= player_action(target_player, player, 'put') %>
-<%= show_cards(cards) %>
+<%=
+  if announce || same_player?(target_player, player)
+    show_cards(cards)
+  else
+    "#{cards.count} card(s)"
+  end
+%>
 <%= card_destination(destination) %>
 <% if discard %>
   and <%= player_action(target_player, player, 'discard') %> the rest
