@@ -63,8 +63,12 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def find_card_in_hand(name)
+    find_cards_in_hand(name).first
+  end
+
+  def find_cards_in_hand(name)
     card = Card.by_name name
-    hand.select{ |c| c.card_id == card.id }.first
+    hand.select{ |c| c.card_id == card.id }
   end
 
   def find_card_in_play(name)
