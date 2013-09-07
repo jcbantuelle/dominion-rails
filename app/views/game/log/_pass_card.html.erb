@@ -1,0 +1,9 @@
+&nbsp;&nbsp;
+<%= player_name(receiver, player) %>
+<%= player_action(receiver, player, 'get') %>
+<% if same_player?(receiver, player) %>
+  <%= show_cards([card]) %>
+<% else %>
+  a card
+<% end %>
+from <%= sender.username %>

@@ -118,6 +118,15 @@ class LogUpdater
     send_message('gain_cards', locals)
   end
 
+  def pass(sender, receiver, card)
+    locals = {
+      sender: sender,
+      receiver: receiver,
+      card: card
+    }
+    send_message('pass_card', locals)
+  end
+
   private
 
   def send_message(template, custom_locals = {})
