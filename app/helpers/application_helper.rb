@@ -48,6 +48,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'gain' : 'gains'
     when 'name'
       same_player?(game_player, player) ? 'name' : 'names'
+    when 'choose'
+      same_player?(game_player, player) ? 'choose' : 'chooses'
     end
   end
 
