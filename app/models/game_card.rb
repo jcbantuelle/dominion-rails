@@ -46,8 +46,9 @@ class GameCard < ActiveRecord::Base
     card.calculated_cost(game_record)
   end
 
-  def costs_less_than?(amount)
-    calculated_cost(game)[:potion].nil? && calculated_cost(game)[:coin] < amount
+  def costs_less_than?(coin, potion)
+    card_cost = calculated_cost(game)
+    (card_cost[:potion].nil? || card_cost[:potion] <= potion) && card_cost[:coin] < coin
   end
 
   def costs_same_as?(cost)

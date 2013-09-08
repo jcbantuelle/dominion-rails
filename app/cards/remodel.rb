@@ -29,7 +29,7 @@ module Remodel
     if hand.count == 0
       @log_updater.custom_message(nil, 'But there are no cards to trash')
     elsif hand.count == 1
-      @trashed_card_cost = hand.first.calculated_cost(game)[:coin]
+      @trashed_card_cost = hand.first.calculated_cost(game)
       CardTrasher.new(game.current_player, hand).trash('hand')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, hand, 'Choose a card to trash:', 1, 1, 'trash')
@@ -38,7 +38,7 @@ module Remodel
   end
 
   def gain_card(game)
-    available_cards = game.cards_costing_less_than(@trashed_card_cost+3).select(&:supply?)
+    available_cards = game.cards_costing_less_than(@trashed_card_cost[:coin]+3, @trashed_card_cost[:potion])
     if available_cards.count == 0
       @log_updater.custom_message(nil, 'But there are no available cards to gain')
     elsif available_cards.count == 1

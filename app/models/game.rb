@@ -79,12 +79,12 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.belongs_to_set?(set) }
   end
 
-  def cards_costing_less_than(amount)
-    game_cards.select{ |card| card.costs_less_than?(amount) }
+  def cards_costing_less_than(coin, potion=0)
+    game_cards.select{ |card| card.costs_less_than?(coin, potion) && card.available? && card.supply? }
   end
 
   def cards_equal_to(cost)
-    game_cards.select{ |card| card.costs_same_as?(cost) && card.available? }
+    game_cards.select{ |card| card.costs_same_as?(cost) && card.available? && card.supply? }
   end
 
   def turn_ordered_players
