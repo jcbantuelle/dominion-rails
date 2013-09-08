@@ -46,6 +46,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'get' : 'gets'
     when 'gain'
       same_player?(game_player, player) ? 'gain' : 'gains'
+    when 'name'
+      same_player?(game_player, player) ? 'name' : 'names'
     end
   end
 
