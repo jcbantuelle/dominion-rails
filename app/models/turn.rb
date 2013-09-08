@@ -52,6 +52,10 @@ class Turn < ActiveRecord::Base
     update_attribute :coppersmith, coppersmith + 1
   end
 
+  def add_minion
+    update_attribute :minions, minions + 1
+  end
+
   def add_tactician
     update_attribute :tacticians, tacticians + 1
   end
@@ -66,6 +70,10 @@ class Turn < ActiveRecord::Base
 
   def remove_tactician
     update_attribute :tacticians, tacticians - 1
+  end
+
+  def remove_minion
+    update_attribute :minions, minions - 1
   end
 
   def add_lighthouse
