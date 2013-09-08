@@ -18,7 +18,7 @@ class TurnActionHandler
     action
   end
 
-  def self.send_order_cards_prompt(game, game_player, cards, message, action_type)
+  def self.send_order_cards_prompt(game, game_player, cards, message, action_type=nil)
     action = TurnAction.create game: game, game_player: game_player, action: action_type
     action.update sent_json: choose_card_order_json(action, cards, message)
 
