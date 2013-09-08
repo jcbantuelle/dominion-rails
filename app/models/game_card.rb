@@ -50,6 +50,11 @@ class GameCard < ActiveRecord::Base
     calculated_cost(game)[:potion].nil? && calculated_cost(game)[:coin] < amount
   end
 
+  def costs_same_as?(cost)
+    card_cost = calculated_cost(game)
+    card_cost[:potion] == cost[:potion] && card_cost[:coin] == cost[:coin]
+  end
+
   def add_to_pile(count)
     update remaining: (remaining + count)
   end

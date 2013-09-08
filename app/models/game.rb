@@ -83,6 +83,10 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.costs_less_than?(amount) }
   end
 
+  def cards_equal_to(cost)
+    game_cards.select{ |card| card.costs_same_as?(cost) && card.available? }
+  end
+
   def turn_ordered_players
     turn = current_player.turn_order - 1
     game_players.slice(turn..players.size) + game_players.slice(0, turn)
