@@ -107,7 +107,7 @@ class CardPlayer
 
   def has_moat?(player)
     immune = false
-    moat = player.hand.select{ |card| card.name == 'moat' }.first
+    moat = player.find_card_in_hand('moat')
     if moat
       TurnActionHandler.wait_for_card(@card)
       options = [
