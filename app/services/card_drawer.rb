@@ -7,9 +7,9 @@ class CardDrawer
     @drawn_cards = []
   end
 
-  def draw(count, update_log = true)
+  def draw(count, update_log = true, card=nil)
     move_to_hand(count)
-    LogUpdater.new(@player.game).draw(@drawn_cards, @player) if update_log
+    LogUpdater.new(@player.game).draw(@drawn_cards, @player, card) if update_log
   end
 
   def draw_duration(count, card)
