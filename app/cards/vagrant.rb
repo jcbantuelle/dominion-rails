@@ -28,7 +28,7 @@ module Vagrant
   end
 
   def process_revealed_card(card)
-    if card.curse? || card.victory?
+    if card.curse? || card.victory? || card.shelter? || card.ruins?
       card.update_attribute :state, 'hand'
       @card = card
     end

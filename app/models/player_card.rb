@@ -38,6 +38,14 @@ class PlayerCard < ActiveRecord::Base
     type_class.include? 'curse'
   end
 
+  def ruins?
+    type_class.include? 'ruins'
+  end
+
+  def shelter?
+    type_class.include? 'shelter'
+  end
+
   def point_card?
     card.respond_to? :value
   end
