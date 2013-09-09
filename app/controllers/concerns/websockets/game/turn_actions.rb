@@ -22,11 +22,14 @@ module Websockets::Game::TurnActions
 
   def buy_card(data)
     if can_play?
-      gainer = CardGainer.new @game, @game.current_player, data['card_id']
-      if gainer.valid_buy?
-        gainer.buy_card
-        send_card_action_data('buy')
-      end
+      Thread.new {
+        gainer = CardGainer.new @game, @game.current_player, data['card_id']
+        if gainer.valid_buy?
+          gainer.buy_card
+          send_card_action_data('buy')
+        end
+        ActiveRecord::Base.clear_active_connections!
+      }
     end
   end
 
