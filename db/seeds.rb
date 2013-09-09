@@ -11,6 +11,10 @@ end
 cards = %w(copper silver gold potion platinum)
 create_cards(cards, false, true, false)
 
+# Shelters
+cards = %w(hovel necropolis overgrown_estate)
+create_cards(cards, false, false, false, nil, false)
+
 # Spoils
 cards = %w(spoils)
 create_cards(cards, false, true, false, nil, false)

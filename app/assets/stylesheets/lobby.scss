@@ -4,6 +4,7 @@ $reaction: lightblue;
 $treasure: gold;
 $curse: violet;
 $duration: orange;
+$shelter: red;
 $busy: grey;
 $player_margin: 25px;
 
@@ -64,6 +65,18 @@ $player_margin: 25px;
 
 .treasure.victory {
   @include gradient($treasure, $victory);
+}
+
+.shelter.reaction {
+  @include gradient($shelter, $reaction);
+}
+
+.action.shelter {
+  @include gradient($action, $shelter);
+}
+
+.shelter.victory {
+  @include gradient($shelter, $victory);
 }
 
 #lobby-chat {

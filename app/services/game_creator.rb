@@ -73,7 +73,14 @@ class GameCreator
   end
 
   def starting_deck
-    ([Card.by_name('estate')]*3) + ([Card.by_name('copper')]*7)
+    deck = [Card.by_name('copper')]*7
+    if dark_ages_game?
+      deck << Card.by_name('hovel')
+      deck << Card.by_name('necropolis')
+      deck << Card.by_name('overgrown_estate')
+    else
+      deck += ([Card.by_name('estate')]*3)
+    end
   end
 
   def prosperity_game?
@@ -82,6 +89,10 @@ class GameCreator
 
   def random_number
     @random_number ||= (rand 10) + 1
+  end
+
+  def dark_ages_game?
+    @game.cards_by_set('dark_ages').count >= (rand(10)+1)
   end
 
 end
