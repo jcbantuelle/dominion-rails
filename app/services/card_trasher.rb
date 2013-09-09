@@ -14,7 +14,7 @@ class CardTrasher
     end
     LogUpdater.new(@player.game).trash(@player, @cards, source, discard)
     @cards.each do |player_card|
-      player_card.card.trash_reaction(@game) if player_card.card.respond_to?(:trash_reaction)
+      player_card.card.trash_reaction(@game, @player) if player_card.card.respond_to?(:trash_reaction)
     end
     trashed_cards
   end

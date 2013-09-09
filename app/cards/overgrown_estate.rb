@@ -18,8 +18,8 @@ module OvergrownEstate
     card_html
   end
 
-  def trash_reaction(game)
-    CardDrawer.new(game.current_player).draw(1, true, self)
+  def trash_reaction(game, player)
+    CardDrawer.new(player).draw(1, true, self)
   end
 
 end
