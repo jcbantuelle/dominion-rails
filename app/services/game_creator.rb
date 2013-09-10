@@ -73,6 +73,7 @@ class GameCreator
   def miscellaneous_cards
     cards = [Card.by_name('curse')]
     cards << Card.by_name('ruins') if ruins_game?
+    cards
   end
 
   def starting_deck
