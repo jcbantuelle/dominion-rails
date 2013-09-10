@@ -30,7 +30,9 @@ class GameCreator
   def add_game_cards
     %w[kingdom victory treasure miscellaneous].each do |card_type|
       send("#{card_type}_cards").each do |card|
-        GameCard.create(game_id: @game.id, card_id: card.id, remaining: card.starting_count(@game))
+        starting_count = card.starting_count(@game)
+        game_card = GameCard.create(game_id: @game.id, card_id: card.id, remaining: starting_count)
+        add_ruins(game_card, starting_count) if card.name == 'ruins'
       end
     end
   end
@@ -69,7 +71,8 @@ class GameCreator
   end
 
   def miscellaneous_cards
-    [Card.by_name('curse')]
+    cards = [Card.by_name('curse')]
+    cards << Card.by_name('ruins') if ruins_game?
   end
 
   def starting_deck
@@ -83,6 +86,16 @@ class GameCreator
     end
   end
 
+  def add_ruins(ruins_card, starting_count)
+    ruins = []
+    %w(abandoned_mine ruined_library ruined_market ruined_village survivors).each do |card_name|
+      ruins += ([Card.by_name(card_name)] * 10)
+    end
+    ruins.shuffle.take(starting_count).each do |ruin, index|
+      MixedGameCard.create(game_card: ruins_card, card: ruin, card_order: index, card_type: 'ruins')
+    end
+  end
+
   def prosperity_game?
     @prosperity_game ||= @game.cards_by_set('prosperity').count >= random_number
   end
@@ -93,6 +106,10 @@ class GameCreator
 
   def dark_ages_game?
     @game.cards_by_set('dark_ages').count >= (rand(10)+1)
+  end
+
+  def ruins_game?
+    @ruins_game ||= @game.game_cards.select{ |game_card| game_card.card.looter_card? }.count > 0
   end
 
 end

@@ -9,7 +9,7 @@ module Json::Helper
   end
 
   def common_cards(game)
-    game_cards(game, 'victory') + game_cards(game, 'treasure') + [game.curse_card.json]
+    game_cards(game, 'victory') + game_cards(game, 'treasure') + game.miscellaneous_cards.collect(&:json)
   end
 
   def game_cards(game, type)

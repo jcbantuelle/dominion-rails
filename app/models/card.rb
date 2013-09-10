@@ -40,6 +40,10 @@ class Card < ActiveRecord::Base
     type.include?(:duration)
   end
 
+  def looter_card?
+    type.include?(:looter)
+  end
+
   def type_class
     type.map(&:to_s).join(' ')
   end

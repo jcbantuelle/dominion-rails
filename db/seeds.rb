@@ -19,6 +19,10 @@ create_cards(cards, false, false, false, nil, false)
 cards = %w(spoils)
 create_cards(cards, false, true, false, nil, false)
 
+# Ruins
+cards = %w(ruins abandoned_mine ruined_library ruined_market ruined_village survivors)
+create_cards(cards)
+
 # Victory Cards
 cards = %w(estate duchy province colony)
 create_cards(cards, false, false, true)

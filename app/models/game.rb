@@ -26,8 +26,9 @@ class Game < ActiveRecord::Base
     game_cards.select{ |card| card.treasure? }
   end
 
-  def curse_card
-    game_cards.select{ |card| card.name == 'curse' }.first
+  def miscellaneous_cards
+    cards = game_cards.select{ |card| card.name == 'curse' }
+    cards += game_cards.select{ |card| card.name == 'ruins' }
   end
 
   def accepted?

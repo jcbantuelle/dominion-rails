@@ -5,6 +5,7 @@ $treasure: gold;
 $curse: violet;
 $duration: orange;
 $shelter: red;
+$ruin: burlywood;
 $busy: grey;
 $player_margin: 25px;
 
@@ -57,6 +58,10 @@ $player_margin: 25px;
 
 .curse {
   background-color: $curse;
+}
+
+.ruin {
+  background-color: $ruin;
 }
 
 .action.victory {
