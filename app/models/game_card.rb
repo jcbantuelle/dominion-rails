@@ -1,6 +1,7 @@
 class GameCard < ActiveRecord::Base
   belongs_to :game
   belongs_to :card
+  has_many :mixed_game_cards, ->{ ordered }, dependent: :destroy
 
   scope :by_card_id, ->(card_id) { where card_id: card_id }
   scope :by_game_id_and_card_name, ->(game_id, card_name) { joins(:card).where('cards.name = ? AND game_id = ?', card_name, game_id) }
@@ -43,7 +44,12 @@ class GameCard < ActiveRecord::Base
   end
 
   def calculated_cost(game_record)
-    card.calculated_cost(game_record)
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first.card
+      top_card.calculated_cost(game_record)
+    else
+      card.calculated_cost(game_record)
+    end
   end
 
   def costs_less_than?(coin, potion)
@@ -61,15 +67,40 @@ class GameCard < ActiveRecord::Base
   end
 
   def json
-    card_cost = calculated_cost(game)
-    {
-      id: id,
-      name: name,
-      type_class: type_class,
-      coin_cost: card_cost[:coin],
-      potion_cost: card_cost[:potion],
-      remaining: remaining,
-      title: name.titleize
-    }
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      if top_card.nil?
+        card_cost = {
+          coin: 0,
+          potion: 0
+        }
+        card_name = 'placeholder'
+        card_type_class = ''
+      else
+        card_cost = top_card.calculated_cost(game)
+        card_name = top_card.name
+        card_type_class = top_card.type_class
+      end
+      {
+        id: id,
+        name: card_name,
+        type_class: card_type_class,
+        coin_cost: card_cost[:coin],
+        potion_cost: card_cost[:potion],
+        remaining: remaining,
+        title: name.titleize
+      }
+    else
+      card_cost = calculated_cost(game)
+      {
+        id: id,
+        name: name,
+        type_class: type_class,
+        coin_cost: card_cost[:coin],
+        potion_cost: card_cost[:potion],
+        remaining: remaining,
+        title: name.titleize
+      }
+    end
   end
 end
