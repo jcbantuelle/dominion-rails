@@ -1,0 +1,10 @@
+&nbsp;&nbsp;
+<%= player_name(target_player, player) %>
+<%= player_action(target_player, player, 'look') %>
+at
+<% if same_player?(target_player, player) %>
+  <%= show_cards(cards) %>
+<% else %>
+  <%= cards.count %> card<%= 's' unless cards.count == 1 %>
+<% end %>
+<%= "from #{source}" %>
