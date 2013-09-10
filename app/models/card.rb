@@ -69,8 +69,7 @@ class Card < ActiveRecord::Base
   end
 
   def give_card_to_player(game, player, card_name, destination)
-    game_card = find_game_card(game, card_name)
-    CardGainer.new(game, player, game_card.id).gain_card(destination)
+    CardGainer.new(game, player, card_name).gain_card(destination)
   end
 
   def put_card_on_deck(game, player, card, announce=true)

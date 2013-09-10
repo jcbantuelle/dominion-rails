@@ -23,7 +23,8 @@ module Websockets::Game::TurnActions
   def buy_card(data)
     if can_play?
       Thread.new {
-        gainer = CardGainer.new @game, @game.current_player, data['card_id']
+        card = GameCard.find(data['card_id'])
+        gainer = CardGainer.new @game, @game.current_player, card.name
         if gainer.valid_buy?
           gainer.buy_card
           send_card_action_data('buy')

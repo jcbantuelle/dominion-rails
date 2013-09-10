@@ -18,8 +18,7 @@ module Rat
     CardDrawer.new(game.current_player).draw(1)
     game.current_turn.add_actions(1)
     @log_updater.get_from_card(game.current_player, '+1 action')
-    rats = GameCard.by_game_id_and_card_name(game.id, 'rats').first
-    CardGainer.new(game, game.current_player, rats.id).gain_card('discard')
+    CardGainer.new(game, game.current_player, 'rats').gain_card('discard')
 
     available_cards = game.current_player.hand.select{ |card| card.name != 'rats' }
     if available_cards.count == 0

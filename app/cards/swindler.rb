@@ -41,7 +41,7 @@ module Swindler
     if equal_cost_cards.count == 0
       LogUpdater.new(game).custom_message(player, 'nothing because there are no same cost cards available', 'gains')
     elsif equal_cost_cards.count == 1
-      CardGainer.new(game, game_player, equal_cost_cards.first.id).gain_card('discard')
+      CardGainer.new(game, game_player, equal_cost_cards.first.name).gain_card('discard')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, equal_cost_cards, "Choose a card for #{game_player.username} to gain:", 1, 1)
       TurnActionHandler.process_player_response(game, game_player, action, self)
@@ -50,7 +50,7 @@ module Swindler
 
   def process_action(game, game_player, action)
     card = GameCard.find action.response
-    CardGainer.new(game, game_player, card.id).gain_card('discard')
+    CardGainer.new(game, game_player, card.name).gain_card('discard')
   end
 
   private

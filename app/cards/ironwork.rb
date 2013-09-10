@@ -29,7 +29,7 @@ module Ironwork
 
   def process_action(game, game_player, action)
     chosen_card = GameCard.find action.response
-    CardGainer.new(game, game_player, action.response).gain_card('discard')
+    CardGainer.new(game, game_player, chosen_card.name).gain_card('discard')
     gain = []
     if chosen_card.card.action_card?
       game.current_turn.add_actions(1)

@@ -31,7 +31,7 @@ shared_context 'gain card' do
   before(:each) do
     PlayerCard.create game_player: @game_player, card: @card, state: 'hand'
     @game_card = GameCard.create game: @game, card: @card, remaining: 10
-    @subject = CardGainer.new @game, @game_player, @game_card.id
+    @subject = CardGainer.new @game, @game_player, @game_card.name
   end
 end
 

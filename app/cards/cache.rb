@@ -19,8 +19,7 @@ module Cache
   end
 
   def gain_event(game, player)
-    copper = GameCard.by_game_id_and_card_name(game.id, 'copper').first
-    card_gainer = CardGainer.new game, player, copper.id
+    card_gainer = CardGainer.new game, player, 'copper'
     2.times do
       card_gainer.gain_card('discard')
     end

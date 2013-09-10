@@ -2,29 +2,30 @@ class CardGainer
 
   BUY_REACTION_CARDS = %w(hovel)
 
-  def initialize(game, player, card_id)
+  def initialize(game, player, card_name)
     @game = game
     @game.current_turn(true)
     @player = player
-    @card = @game.game_cards.find card_id
+    @game_card = GameCard.find(GameCard.by_game_id_and_card_name(@game.id, card_name).first.id)
+    @top_card = @game_card.name == 'ruins' || @game_card.name == 'knights' ? @game_card.mixed_game_cards.first : @game_card
   end
 
   def buy_card
-    LogUpdater.new(@game).card_action(@player, @card, 'buy')
+    LogUpdater.new(@game).card_action(@player, @top_card, 'buy')
     add_to_deck('discard')
-    @game.current_turn.buy_card @card.calculated_cost(@game)
+    @game.current_turn.buy_card @top_card.calculated_cost(@game)
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
     buy_reactions
   end
 
   def valid_buy?
-    enough_buys? && affordable? && @card.available? && allowed_to_buy?
+    enough_buys? && affordable? && @game_card.available? && allowed_to_buy?
   end
 
   def gain_card(destination)
     if valid_gain?
-      LogUpdater.new(@game).card_action(@player, @card, 'gain', destination)
+      LogUpdater.new(@game).card_action(@player, @top_card, 'gain', destination)
       add_to_deck(destination)
     end
   end
@@ -32,20 +33,21 @@ class CardGainer
   private
 
   def add_to_deck(destination)
-    @card.update_attribute :remaining, @card.remaining - 1
+    @game_card.update_attribute :remaining, @game_card.remaining - 1
+    @top_card.destroy if @top_card.name != @game_card.name
 
-    destination = @card.card.gain_destination(@game, @player) if @card.card.respond_to?(:gain_destination)
+    destination = @top_card.card.gain_destination(@game, @player) if @top_card.card.respond_to?(:gain_destination)
 
     @new_card_attributes = {
       game_player_id: @player.id,
-      card_id: @card.card_id,
+      card_id: @top_card.card_id,
       state: destination
     }
 
     prepare_top_of_deck if destination == 'deck'
     PlayerCard.create @new_card_attributes
 
-    @card.card.gain_event(@game, @player) if @card.card.respond_to?(:gain_event)
+    @top_card.card.gain_event(@game, @player) if @top_card.card.respond_to?(:gain_event)
   end
 
   def enough_buys?
@@ -57,7 +59,7 @@ class CardGainer
   end
 
   def valid_gain?
-    @card.available?
+    @game_card.available?
   end
 
   def prepare_top_of_deck
@@ -66,36 +68,35 @@ class CardGainer
   end
 
   def enough_coins?
-    @game.current_turn.coins >= @card.calculated_cost(@game)[:coin]
+    @game.current_turn.coins >= @top_card.calculated_cost(@game)[:coin]
   end
 
   def enough_potions?
-    @card.calculated_cost(@game)[:potion].nil? || @game.current_turn.potions >= @card.calculated_cost(@game)[:potion]
+    @top_card.calculated_cost(@game)[:potion].nil? || @game.current_turn.potions >= @top_card.calculated_cost(@game)[:potion]
   end
 
   def allowed_to_buy?
-    !@card.card.respond_to?(:allowed?) || @card.card.allowed?(@game)
+    !@top_card.card.respond_to?(:allowed?) || @top_card.card.allowed?(@game)
   end
 
   def valid_hoard_gain?
-    @card.card.victory_card?
+    @top_card.card.victory_card?
   end
 
   def process_hoard
-    gold = GameCard.by_game_id_and_card_name(@game.id, 'gold').first
-    card_gainer = CardGainer.new @game, @game.current_player, gold.id
+    card_gainer = CardGainer.new @game, @game.current_player, 'gold'
     @game.current_turn.hoards.times do
       card_gainer.gain_card('discard')
     end
   end
 
   def valid_talisman_gain?
-    card_cost = @card.calculated_cost(@game)
-    !@card.card.victory_card? && card_cost[:coin] <= 4 && card_cost[:potion].nil?
+    card_cost = @top_card.calculated_cost(@game)
+    !@top_card.card.victory_card? && card_cost[:coin] <= 4 && card_cost[:potion].nil?
   end
 
   def process_talisman
-    card_gainer = CardGainer.new @game, @game.current_player, @card.id
+    card_gainer = CardGainer.new @game, @game.current_player, @top_card.name
     @game.current_turn.talismans.times do
       card_gainer.gain_card('discard')
     end
@@ -107,7 +108,7 @@ class CardGainer
       reaction_cards += @game.current_player.find_cards_in_hand(reaction_card_name)
     end
     reaction_cards.each do |reaction_card|
-      reaction_card.card.reaction(@game, @game.current_player, @card)
+      reaction_card.card.reaction(@game, @game.current_player, @top_card)
       TurnActionHandler.wait_for_card(reaction_card.card)
     end
   end

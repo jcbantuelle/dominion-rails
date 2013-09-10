@@ -43,13 +43,14 @@ module Upgrade
       if available_cards.count == 0
         @log_updater.custom_message(nil, 'But there are no available cards to gain')
       elsif available_cards.count == 1
-        CardGainer.new(game, game_player, available_cards.first.id).gain_card('discard')
+        CardGainer.new(game, game_player, available_cards.first.name).gain_card('discard')
       else
         action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1, 'gain')
         TurnActionHandler.process_player_response(game, game.current_player, action, self)
       end
     elsif action.action = 'gain'
-      CardGainer.new(game, game_player, action.response).gain_card('discard')
+      card = GameCard.find action.response
+      CardGainer.new(game, game_player, card.name).gain_card('discard')
     end
   end
 

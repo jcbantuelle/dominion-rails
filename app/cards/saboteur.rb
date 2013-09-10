@@ -15,6 +15,7 @@ module Saboteur
   end
 
   def play(game, clone=false)
+    LogUpdater.new(game).custom_message(game.current_player, 'a douchebag for using Saboteur', 'be')
   end
 
   def attack(game, players)
@@ -33,7 +34,8 @@ module Saboteur
     if action.response.empty?
       LogUpdater.new(game).custom_message(game_player, 'not to gain a card', 'choose')
     else
-      CardGainer.new(game, game_player, action.response).gain_card('discard')
+      card = GameCard.find action.response
+      CardGainer.new(game, game_player, card.name).gain_card('discard')
     end
   end
 
@@ -45,7 +47,7 @@ module Saboteur
     if available_cards.count == 0
       LogUpdater.new(game).custom_message(player, 'nothing because there are no cards available', 'gains')
     elsif available_cards.count == 1
-      CardGainer.new(game, player, available_cards.first.id).gain_card('discard')
+      CardGainer.new(game, player, available_cards.first.name).gain_card('discard')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, player, available_cards, "You may choose a card to gain:", 1)
       TurnActionHandler.process_player_response(game, player, action, self)
