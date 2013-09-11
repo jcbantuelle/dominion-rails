@@ -72,7 +72,7 @@ class Game < ActiveRecord::Base
   end
 
   def has_spoils?
-    spoils_cards = %w(bandit_camp)
+    spoils_cards = %w(bandit_camp marauder pillage)
     game_cards.select{ |card| spoils_cards.include?(card.name) }.count > 0
   end
 
