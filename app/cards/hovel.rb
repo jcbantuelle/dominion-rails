@@ -13,13 +13,16 @@ module Hovel
   def reaction(game, game_player, card)
     if card.card.victory_card?
       @reaction_thread = Thread.new {
-        options = [
-          { text: 'Yes', value: 'yes' },
-          { text: 'No', value: 'no' }
-        ]
-        action = TurnActionHandler.send_choose_text_prompt(game, game_player, options, "Trash #{card_html}?".html_safe, 1, 1)
-        TurnActionHandler.process_player_response(game, game_player, action, self)
-        TurnActionHandler.refresh_game_area(game, game_player.player)
+        ActiveRecord::Base.connection_pool.with_connection do
+          options = [
+            { text: 'Yes', value: 'yes' },
+            { text: 'No', value: 'no' }
+          ]
+          action = TurnActionHandler.send_choose_text_prompt(game, game_player, options, "Trash #{card_html}?".html_safe, 1, 1)
+          TurnActionHandler.process_player_response(game, game_player, action, self)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, game_player.player)
+        end
       }
     end
   end

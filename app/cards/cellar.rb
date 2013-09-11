@@ -19,8 +19,9 @@ module Cellar
     @log_updater.get_from_card(game.current_player, '+1 action')
 
     @play_thread = Thread.new {
-      prompt_player_response(game)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        prompt_player_response(game)
+      end
     }
   end
 
@@ -29,6 +30,7 @@ module Cellar
     discarded_cards.update_all state: 'discard'
     LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
     draw_cards(game, discarded_cards.count)
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

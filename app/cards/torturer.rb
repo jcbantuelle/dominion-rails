@@ -20,11 +20,13 @@ module Torturer
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      players.each do |player|
-        choose_attack(game, player)
-        TurnActionHandler.refresh_game_area(game, player.player)
+      ActiveRecord::Base.connection_pool.with_connection do
+        players.each do |player|
+          choose_attack(game, player)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, player.player)
+        end
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 

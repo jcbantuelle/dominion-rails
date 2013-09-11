@@ -16,15 +16,16 @@ module Pawn
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      options = [
-        { text: '+1 card', value: 'card' },
-        { text: '+1 action', value: 'action' },
-        { text: '+1 buy', value: 'buy' },
-        { text: '+$1', value: 'coin' },
-      ]
-      action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose two:', 2, 2)
-      TurnActionHandler.process_player_response(game, game.current_player, action, self)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        options = [
+          { text: '+1 card', value: 'card' },
+          { text: '+1 action', value: 'action' },
+          { text: '+1 buy', value: 'buy' },
+          { text: '+$1', value: 'coin' },
+        ]
+        action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose two:', 2, 2)
+        TurnActionHandler.process_player_response(game, game.current_player, action, self)
+      end
     }
   end
 
@@ -45,6 +46,7 @@ module Pawn
       end
     end
     @log_updater.get_from_card(game.current_player, choices.join(' and '))
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

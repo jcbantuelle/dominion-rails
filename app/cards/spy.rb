@@ -20,24 +20,28 @@ module Spy
     @log_updater.get_from_card(game.current_player, '+1 action')
 
     @play_thread = Thread.new {
-      reveal(game, game.current_player)
-      @log_updater.reveal(game.current_player, @revealed, 'deck')
-      discard_card(game, game.current_player) unless @revealed.empty?
-      TurnActionHandler.refresh_game_area(game, game.current_player.player)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        reveal(game, game.current_player)
+        @log_updater.reveal(game.current_player, @revealed, 'deck')
+        discard_card(game, game.current_player) unless @revealed.empty?
+        ActiveRecord::Base.connection.clear_query_cache
+        TurnActionHandler.refresh_game_area(game, game.current_player.player)
+      end
     }
   end
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      players.each do |player|
-        reveal(game, player)
-        @log_updater.reveal(player, @revealed, 'deck')
-        discard_card(game, player) unless @revealed.empty?
-        TurnActionHandler.wait_for_response(game)
-        TurnActionHandler.refresh_game_area(game, player.player)
+      ActiveRecord::Base.connection_pool.with_connection do
+        players.each do |player|
+          reveal(game, player)
+          @log_updater.reveal(player, @revealed, 'deck')
+          discard_card(game, player) unless @revealed.empty?
+          TurnActionHandler.wait_for_response(game)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, player.player)
+        end
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 

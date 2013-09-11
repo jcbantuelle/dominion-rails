@@ -20,13 +20,14 @@ module Noble
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      options = [
-        { text: '+3 cards', value: 'card' },
-        { text: '+2 action', value: 'action' }
-      ]
-      action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1)
-      TurnActionHandler.process_player_response(game, game.current_player, action, self)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        options = [
+          { text: '+3 cards', value: 'card' },
+          { text: '+2 action', value: 'action' }
+        ]
+        action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1)
+        TurnActionHandler.process_player_response(game, game.current_player, action, self)
+      end
     }
   end
 
@@ -37,6 +38,7 @@ module Noble
       game.current_turn.add_actions(2)
       @log_updater.get_from_card(game.current_player, '+2 actions')
     end
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

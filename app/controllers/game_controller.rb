@@ -16,9 +16,12 @@ class GameController < ApplicationController
         refresh_game
       end
       tubesock.onmessage do |data|
-        @game = Game.find_uncached @game.id # Rails caches this even on reload :(
-        data = JSON.parse data
-        process_message data unless pending_response?(data['action'])
+        ActiveRecord::Base.connection_pool.with_connection do
+          ActiveRecord::Base.connection.clear_query_cache
+          @game = Game.find @game.id
+          data = JSON.parse data
+          process_message data unless pending_response?(data['action'])
+        end
       end
       ActiveRecord::Base.clear_active_connections!
     end

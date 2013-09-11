@@ -21,9 +21,11 @@ module WishingWell
 
     if game.current_player.deck.count > 0 || game.current_player.discard.count > 0
       @play_thread = Thread.new {
-        name_card(game)
-        TurnActionHandler.refresh_game_area(game, game.current_player.player)
-        ActiveRecord::Base.clear_active_connections!
+        ActiveRecord::Base.connection_pool.with_connection do
+          name_card(game)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, game.current_player.player)
+        end
       }
     else
       @log_updater.custom_message(game.current_player, 'no cards to reveal', 'has')

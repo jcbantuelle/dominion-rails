@@ -17,9 +17,10 @@ module Masquerade
   def play(game, clone=false)
     CardDrawer.new(game.current_player).draw(2)
     @play_thread = Thread.new {
-      pass_cards_left(game)
-      trash_card(game)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        pass_cards_left(game)
+        trash_card(game)
+      end
     }
   end
 
@@ -57,6 +58,7 @@ module Masquerade
     player_to_left = game.player_to_left(game_player)
     passed_card.update game_player_id: player_to_left.id
     LogUpdater.new(game).pass(game_player, player_to_left, passed_card)
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
     TurnActionHandler.refresh_game_area(game, player_to_left.player)
   end

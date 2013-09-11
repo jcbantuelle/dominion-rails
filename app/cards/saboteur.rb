@@ -20,13 +20,15 @@ module Saboteur
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      @trashed = []
-      players.each do |player|
-        reveal(game, player)
-        gain_replacement(game, player) unless @trashed.nil?
-        TurnActionHandler.refresh_game_area(game, player.player)
+      ActiveRecord::Base.connection_pool.with_connection do
+        @trashed = []
+        players.each do |player|
+          reveal(game, player)
+          gain_replacement(game, player) unless @trashed.nil?
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, player.player)
+        end
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 

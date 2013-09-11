@@ -23,9 +23,11 @@ module Baron
       CardGainer.new(game, game.current_player, 'estate').gain_card('discard')
     else
       @play_thread = Thread.new {
-        discard_estate(game, game.current_player)
-        TurnActionHandler.refresh_game_area(game, game.current_player.player)
-        ActiveRecord::Base.clear_active_connections!
+        ActiveRecord::Base.connection_pool.with_connection do
+          discard_estate(game, game.current_player)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, game.current_player.player)
+        end
       }
     end
   end

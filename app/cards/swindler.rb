@@ -21,17 +21,19 @@ module Swindler
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      players.each do |player|
-        reveal(game, player)
-        if @revealed.empty?
-          LogUpdater.new(game).custom_message(player, 'nothing to trash', 'have')
-        else
-          CardTrasher.new(player, @revealed).trash('deck')
-          choose_new_card(game, player)
+      ActiveRecord::Base.connection_pool.with_connection do
+        players.each do |player|
+          reveal(game, player)
+          if @revealed.empty?
+            LogUpdater.new(game).custom_message(player, 'nothing to trash', 'have')
+          else
+            CardTrasher.new(player, @revealed).trash('deck')
+            choose_new_card(game, player)
+          end
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, player.player)
         end
-        TurnActionHandler.refresh_game_area(game, player.player)
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 

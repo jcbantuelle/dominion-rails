@@ -19,14 +19,15 @@ module Thief
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      @trashed = []
-      players.each do |player|
-        reveal(game, player)
-        trash_treasure(game, player)
-        TurnActionHandler.wait_for_response(game)
+      ActiveRecord::Base.connection_pool.with_connection do
+        @trashed = []
+        players.each do |player|
+          reveal(game, player)
+          trash_treasure(game, player)
+          TurnActionHandler.wait_for_response(game)
+        end
+        gain_trashed_treasures(game) unless @trashed.empty?
       end
-      gain_trashed_treasures(game) unless @trashed.empty?
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 
@@ -78,6 +79,7 @@ module Thief
   def process_trash_action(game, game_player, action)
     trashed_card = PlayerCard.find action.response
     @trashed += CardTrasher.new(game_player, [trashed_card]).trash(nil, true)
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

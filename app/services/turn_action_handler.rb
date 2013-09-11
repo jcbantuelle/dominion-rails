@@ -31,7 +31,7 @@ class TurnActionHandler
     action = TurnAction.find_uncached action.id
     source.process_action(game, game_player, action)
     action.destroy
-    ActiveRecord::Base.clear_active_connections!
+    ActiveRecord::Base.connection.clear_query_cache
   end
 
   def self.refresh_game_area(game, player)

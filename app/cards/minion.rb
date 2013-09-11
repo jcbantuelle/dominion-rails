@@ -18,13 +18,14 @@ module Minion
     game.current_turn.add_actions(1)
     @log_updater.get_from_card(game.current_player, '+1 action')
     @play_thread = Thread.new {
-      options = [
-        { text: '+$2', value: 'coin' },
-        { text: 'Discard hand', value: 'discard' }
-      ]
-      action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1)
-      TurnActionHandler.process_player_response(game, game.current_player, action, self)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        options = [
+          { text: '+$2', value: 'coin' },
+          { text: 'Discard hand', value: 'discard' }
+        ]
+        action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1)
+        TurnActionHandler.process_player_response(game, game.current_player, action, self)
+      end
     }
   end
 
@@ -39,6 +40,7 @@ module Minion
       @log_updater.discard(game_player, hand)
       CardDrawer.new(game_player).draw(4)
     end
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

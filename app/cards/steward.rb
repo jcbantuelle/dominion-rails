@@ -16,14 +16,15 @@ module Steward
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      options = [
-        { text: '+2 cards', value: 'card' },
-        { text: '+$2', value: 'coin' },
-        { text: 'Trash 2 cards', value: 'trash' }
-      ]
-      action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1, 'pick')
-      TurnActionHandler.process_player_response(game, game.current_player, action, self)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        options = [
+          { text: '+2 cards', value: 'card' },
+          { text: '+$2', value: 'coin' },
+          { text: 'Trash 2 cards', value: 'trash' }
+        ]
+        action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose one:', 1, 1, 'pick')
+        TurnActionHandler.process_player_response(game, game.current_player, action, self)
+      end
     }
   end
 
@@ -33,6 +34,7 @@ module Steward
     elsif action.action == 'trash'
       trash_cards(game, game_player, action)
     end
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 

@@ -16,8 +16,9 @@ module KingsCourt
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      prompt_player_response(game)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        prompt_player_response(game)
+      end
     }
   end
 

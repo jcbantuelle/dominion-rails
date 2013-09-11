@@ -16,11 +16,12 @@ module Mine
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      trash_treasure(game)
-      gain_treasure(game) unless @trashed_treasure_cost.nil?
-      game.reload
-      TurnActionHandler.refresh_game_area(game, game.current_player.player)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        trash_treasure(game)
+        gain_treasure(game) unless @trashed_treasure_cost.nil?
+        ActiveRecord::Base.connection.clear_query_cache
+        TurnActionHandler.refresh_game_area(game, game.current_player.player)
+      end
     }
   end
 

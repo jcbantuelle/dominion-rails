@@ -16,11 +16,12 @@ module Remodel
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      trash_card(game)
-      gain_card(game) unless @trashed_card_cost.nil?
-      game.reload
-      TurnActionHandler.refresh_game_area(game, game.current_player.player)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        trash_card(game)
+        gain_card(game) unless @trashed_card_cost.nil?
+        ActiveRecord::Base.connection.clear_query_cache
+        TurnActionHandler.refresh_game_area(game, game.current_player.player)
+      end
     }
   end
 

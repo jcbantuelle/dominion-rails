@@ -20,8 +20,9 @@ module MiningVillage
     @log_updater.get_from_card(game.current_player, '+2 actions')
     unless clone
       @play_thread = Thread.new {
-        trash_card(game)
-        ActiveRecord::Base.clear_active_connections!
+        ActiveRecord::Base.connection_pool.with_connection do
+          trash_card(game)
+        end
       }
     end
   end
@@ -41,6 +42,7 @@ module MiningVillage
       CardTrasher.new(game.current_player, [mining_village]).trash
       game.current_turn.add_coins(2)
       @log_updater.get_from_card(game.current_player, '+$2')
+      ActiveRecord::Base.connection.clear_query_cache
       TurnActionHandler.refresh_game_area(game, game_player.player)
     end
   end

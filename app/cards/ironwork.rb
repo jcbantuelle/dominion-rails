@@ -16,14 +16,15 @@ module Ironwork
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      available_cards = game.cards_costing_less_than(5)
-      if available_cards.count == 0
-        @log_updater.custom_message(nil, 'But there are no available cards to gain')
-      else
-        action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1)
-        TurnActionHandler.process_player_response(game, game.current_player, action, self)
+      ActiveRecord::Base.connection_pool.with_connection do
+        available_cards = game.cards_costing_less_than(5)
+        if available_cards.count == 0
+          @log_updater.custom_message(nil, 'But there are no available cards to gain')
+        else
+          action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1)
+          TurnActionHandler.process_player_response(game, game.current_player, action, self)
+        end
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 
@@ -43,7 +44,7 @@ module Ironwork
       CardDrawer.new(game.current_player).draw(1)
     end
     LogUpdater.new(game).get_from_card(game.current_player, gain.join(', ')) unless gain.empty?
-    game.reload
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 end

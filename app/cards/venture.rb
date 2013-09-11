@@ -50,7 +50,7 @@ module Venture
 
   def play_treasure(game)
     @treasure.update_attribute :state, 'play'
-    game.current_player.player_cards.reload
+    ActiveRecord::Base.connection.clear_query_cache
     played_card = @treasure.card
     played_card.log_updater = LogUpdater.new game
     played_card.play(game)

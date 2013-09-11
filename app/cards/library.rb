@@ -16,8 +16,9 @@ module Library
 
   def play(game, clone=false)
     @play_thread = Thread.new {
-      draw_cards(game) unless game.current_player.hand.count >= 7
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        draw_cards(game) unless game.current_player.hand.count >= 7
+      end
     }
   end
 
@@ -40,6 +41,7 @@ module Library
       TurnActionHandler.wait_for_response(game)
     end
     game.current_player.discard_revealed
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game.current_player.player)
   end
 

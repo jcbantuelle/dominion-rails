@@ -13,7 +13,9 @@ module Survivor
   def play(game, clone=false)
     reveal(game)
     @play_thread = Thread.new {
-      keep_or_discard(game)
+      ActiveRecord::Base.connection_pool.with_connection do
+        keep_or_discard(game)
+      end
     }
   end
 

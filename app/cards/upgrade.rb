@@ -24,10 +24,12 @@ module Upgrade
       @log_updater.custom_message(game.current_player, 'nothing to trash', 'have')
     else
       @play_thread = Thread.new {
-        action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, hand, 'Choose a card to trash:', 1, 1, 'trash')
-        TurnActionHandler.process_player_response(game, game.current_player, action, self)
-        TurnActionHandler.refresh_game_area(game, game.current_player.player)
-        ActiveRecord::Base.clear_active_connections!
+        ActiveRecord::Base.connection_pool.with_connection do
+          action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, hand, 'Choose a card to trash:', 1, 1, 'trash')
+          TurnActionHandler.process_player_response(game, game.current_player, action, self)
+          ActiveRecord::Base.connection.clear_query_cache
+          TurnActionHandler.refresh_game_area(game, game.current_player.player)
+        end
       }
     end
   end

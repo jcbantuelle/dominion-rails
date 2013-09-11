@@ -20,8 +20,9 @@ module Scout
     reveal(game)
     add_victory_cards_to_hand(game)
     @play_thread = Thread.new {
-      replace_remaining_cards(game)
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_pool.with_connection do
+        replace_remaining_cards(game)
+      end
     }
   end
 

@@ -20,15 +20,16 @@ module Bureaucrat
 
   def attack(game, players)
     @attack_thread = Thread.new {
-      players.each do |player|
-        @victory_cards = player.hand.select(&:victory?)
-        if @victory_cards.empty?
-          @log_updater.reveal(player, player.hand, 'hand')
-        else
-          put_victory_card_on_deck(game, player)
+      ActiveRecord::Base.connection_pool.with_connection do
+        players.each do |player|
+          @victory_cards = player.hand.select(&:victory?)
+          if @victory_cards.empty?
+            @log_updater.reveal(player, player.hand, 'hand')
+          else
+            put_victory_card_on_deck(game, player)
+          end
         end
       end
-      ActiveRecord::Base.clear_active_connections!
     }
   end
 
@@ -51,6 +52,7 @@ module Bureaucrat
   def reveal_card(game, game_player, card)
     @log_updater.reveal(game_player, [card], 'hand')
     put_card_on_deck(game, game_player, card)
+    ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 end
