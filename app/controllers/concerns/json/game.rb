@@ -85,9 +85,21 @@ module Json::Game
   end
 
   def card_area(game)
+    cards = game.game_cards
+    turn = game.current_turn
+
+    kingdom_cards = sort_cards(game, turn, cards.select(&:kingdom?)).collect{ |card| card.json(game, turn) }
+
+    victory_cards = cards.select(&:victory?)
+    treasure_cards = cards.select(&:treasure?)
+    miscellaneous_cards = cards.select{ |card| %w(curse ruins).include?(card.card.name) }
+
+    common_cards = sort_cards(game, turn, victory_cards) + sort_cards(game, turn, treasure_cards) + sort_cards(game, turn, miscellaneous_cards)
+    common_cards = common_cards.collect{ |card| card.json(game, turn) }
+
     {
-      kingdom_cards: game_cards(game, 'kingdom'),
-      common_cards: common_cards(game)
+      kingdom_cards: kingdom_cards,
+      common_cards: common_cards
     }
   end
 
