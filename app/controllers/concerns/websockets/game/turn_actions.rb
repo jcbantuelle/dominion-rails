@@ -9,7 +9,6 @@ module Websockets::Game::TurnActions
 
   def play_card(data)
     if can_play?
-      wait_for_game_threads
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
           player = CardPlayer.new @game, data['card_id']
@@ -26,7 +25,6 @@ module Websockets::Game::TurnActions
 
   def buy_card(data)
     if can_play?
-      wait_for_game_threads
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
           card = GameCard.find(data['card_id'])
@@ -51,14 +49,6 @@ module Websockets::Game::TurnActions
 
   def can_play?
     @game.current_player.player_id == current_player.id
-  end
-
-  def wait_for_game_threads
-    unless ApplicationController.games[@game.id][:thread].nil?
-      while ApplicationController.games[@game.id][:thread].alive? do
-        sleep(0.5)
-      end
-    end
   end
 
   def send_card_action_data(action)

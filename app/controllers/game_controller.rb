@@ -20,7 +20,7 @@ class GameController < ApplicationController
           ActiveRecord::Base.connection.clear_query_cache
           @game = Game.find @game.id
           data = JSON.parse data
-          process_message data unless pending_response?(data['action'])
+          process_message data if accepted_message?(data['action'])
         end
       end
       ActiveRecord::Base.clear_active_connections!
@@ -33,8 +33,20 @@ class GameController < ApplicationController
     end
   end
 
-  def pending_response?(action)
-    action != 'action_response' && action != 'chat' && @game.turn_actions.count > 0
+  def accepted_message?(action)
+     allow_response?(action) && no_pending_threads?(action)
+   end
+
+  def allow_response?(action)
+    @game.turn_actions.count == 0 || action == 'action_response' || action == 'chat'
+  end
+
+  def no_pending_threads?(action)
+    no_pending_threads = true
+    if %w(action buy end_turn).include?(action) && ApplicationController.games[@game.id][:thread].present?
+      no_pending_threads = false if ApplicationController.games[@game.id][:thread].alive?
+    end
+    no_pending_threads
   end
 
 end
