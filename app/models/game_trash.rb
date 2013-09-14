@@ -10,6 +10,10 @@ class GameTrash < ActiveRecord::Base
     card.type_class
   end
 
+  def of_type(type)
+    type_class.include?(type)
+  end
+
   def json(game, turn)
     {
       id: id,
