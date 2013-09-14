@@ -27,6 +27,10 @@ class GameCard < ActiveRecord::Base
     card.treasure_card?
   end
 
+  def attack_card?
+    card.attack_card?
+  end
+
   def belongs_to_set?(set)
     card.belongs_to_set?(set)
   end
