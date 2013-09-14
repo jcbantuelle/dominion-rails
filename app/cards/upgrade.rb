@@ -37,7 +37,7 @@ module Upgrade
   def process_action(game, game_player, action)
     if action.action == 'trash'
       trashed_card = PlayerCard.find action.response
-      cost = trashed_card.calculated_cost(game)
+      cost = trashed_card.calculated_cost(game, game.current_turn)
 
       CardTrasher.new(game_player, [trashed_card]).trash('hand')
       available_cards = game.cards_equal_to({coin: cost[:coin]+1, potion: cost[:potion]})

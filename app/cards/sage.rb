@@ -50,7 +50,8 @@ module Sage
   end
 
   def valid_card?(card)
-    card.calculated_cost(card.game_player.game)[:coin] > 2
+    game = card.game_player.game
+    card.calculated_cost(game, game.current_turn)[:coin] > 2
   end
 
 end

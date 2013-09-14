@@ -30,7 +30,7 @@ module Mine
     if treasures.count == 0
       @log_updater.custom_message(nil, 'But there are no treasures to trash')
     elsif treasures.count == 1
-      @trashed_treasure_cost = treasures.first.calculated_cost(game)
+      @trashed_treasure_cost = treasures.first.calculated_cost(game, game.current_turn)
       CardTrasher.new(game.current_player, treasures).trash('hand')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, treasures, 'Choose a treasure to trash:', 1, 1, 'trash')
@@ -53,7 +53,7 @@ module Mine
   def process_action(game, game_player, action)
     if action.action == 'trash'
       treasure = PlayerCard.find action.response
-      @trashed_treasure_cost = treasure.calculated_cost(game)[:coin]
+      @trashed_treasure_cost = treasure.calculated_cost(game, game.current_turn)[:coin]
       CardTrasher.new(game.current_player, [treasure]).trash('hand')
     else
       card = GameCard.find(action.response)

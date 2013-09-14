@@ -44,7 +44,7 @@ module Saboteur
   private
 
   def gain_replacement(game, player)
-    card_cost = @trashed.calculated_cost(game)
+    card_cost = @trashed.calculated_cost(game, game.current_turn)
     available_cards = game.cards_costing_less_than(card_cost[:coin] - 1, card_cost[:potion])
     if available_cards.count == 0
       LogUpdater.new(game).custom_message(player, 'nothing because there are no cards available', 'gains')
@@ -66,7 +66,8 @@ module Saboteur
   end
 
   def process_revealed_card(card)
-    cost = card.calculated_cost(card.game_player.game)
+    game = card.game_player.game
+    cost = card.calculated_cost(game, game.current_turn)
     if cost[:coin] > 2
       @trashed = card
     else

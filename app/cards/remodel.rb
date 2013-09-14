@@ -30,7 +30,7 @@ module Remodel
     if hand.count == 0
       @log_updater.custom_message(nil, 'But there are no cards to trash')
     elsif hand.count == 1
-      @trashed_card_cost = hand.first.calculated_cost(game)
+      @trashed_card_cost = hand.first.calculated_cost(game, game.current_turn)
       CardTrasher.new(game.current_player, hand).trash('hand')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, hand, 'Choose a card to trash:', 1, 1, 'trash')
@@ -53,7 +53,7 @@ module Remodel
   def process_action(game, game_player, action)
     if action.action == 'trash'
       card = PlayerCard.find action.response
-      @trashed_card_cost = card.calculated_cost(game)[:coin]
+      @trashed_card_cost = card.calculated_cost(game, game.current_turn)[:coin]
       CardTrasher.new(game.current_player, [card]).trash('hand')
     else
       card = GameCard.find(action.response)
