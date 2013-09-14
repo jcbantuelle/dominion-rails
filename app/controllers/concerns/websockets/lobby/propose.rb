@@ -52,8 +52,8 @@ module Websockets::Lobby::Propose
 
   def set_timeout(game)
     Thread.new {
+      sleep(30)
       ActiveRecord::Base.connection_pool.with_connection do
-        sleep(30)
         game = Game.find_uncached game.id
         send_timeout(game) if game.present? && !game.accepted?
       end
