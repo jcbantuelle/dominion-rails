@@ -3,7 +3,7 @@ module Websockets::Lobby::Accept
   def accept_game(data)
     game = Game.find data['game_id']
     PlayerAccepter.accept(game, current_player)
-
+    game.reload
     if game.accepted?
       send_accepted_game(game)
     else
