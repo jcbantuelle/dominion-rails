@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   has_many :game_players, ->{ ordered }, dependent: :destroy
-  has_many :game_cards, dependent: :destroy
+  has_many :game_cards, ->{ includes(:card) }, dependent: :destroy
   has_many :game_trashes, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
   has_many :turns, ->{ ordered }, dependent: :destroy
@@ -15,20 +15,19 @@ class Game < ActiveRecord::Base
   end
 
   def kingdom_cards
-    game_cards.select{ |card| card.kingdom? }
+    game_cards.where('cards.kingdom = ?', true).references(:card)
   end
 
   def victory_cards
-    game_cards.select{ |card| card.victory? }
+    game_cards.where('cards.victory = ?', true).references(:card)
   end
 
   def treasure_cards
-    game_cards.select{ |card| card.treasure? }
+    game_cards.where('cards.treasure = ?', true).references(:card)
   end
 
   def miscellaneous_cards
-    cards = game_cards.select{ |card| card.name == 'curse' }
-    cards += game_cards.select{ |card| card.name == 'ruins' }
+    game_cards.where('cards.name IN (?)', %w(curse ruins)).references(:card)
   end
 
   def accepted?
