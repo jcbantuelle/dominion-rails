@@ -1,6 +1,6 @@
 class CardPlayer
 
-  ATTACK_REACTION_CARDS = %w(secret_chamber)
+  ATTACK_REACTION_CARDS = %w(secret_chamber beggar)
 
   def initialize(game, card_id, free_action=false, clone=false)
     @game = game
