@@ -1,7 +1,7 @@
 class GamePlayer < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
-  has_many :player_cards, ->{ ordered }, dependent: :destroy
+  has_many :player_cards, ->{ includes(:card).ordered }, dependent: :destroy
   has_many :turns, ->{ ordered }
   has_many :turn_actions
 

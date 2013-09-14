@@ -58,11 +58,11 @@ class PlayerCard < ActiveRecord::Base
     update_attribute(:state, 'discard')
   end
 
-  def calculated_cost(game)
-    card.calculated_cost(game)
+  def calculated_cost(game, turn)
+    card.calculated_cost(game, turn)
   end
 
-  def json
+  def json(game, turn)
     {
       id: id,
       name: name,

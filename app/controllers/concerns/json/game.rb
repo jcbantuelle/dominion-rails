@@ -32,9 +32,10 @@ module Json::Game
     }.merge(game_content(game, player)).to_json
   end
 
-  def choose_cards_json(action, cards, maximum, minimum, text)
+  def choose_cards_json(game, action, cards, maximum, minimum, text)
+    turn = game.current_turn
     {
-      cards: cards.map(&:json),
+      cards: cards.map{ |card| card.json(game, turn) },
       maximum: maximum,
       minimum: minimum,
       action: 'choose_cards',
@@ -54,9 +55,10 @@ module Json::Game
     }.to_json
   end
 
-  def choose_card_order_json(action, cards, text)
+  def choose_card_order_json(game, action, cards, text)
+    turn = game.turn
     {
-      cards: cards.map(&:json),
+      cards: cards.map{ |card| card.json(game, turn) },
       action: 'order_cards',
       action_id: action.id,
       text: text

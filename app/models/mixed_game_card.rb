@@ -36,17 +36,17 @@ class MixedGameCard < ActiveRecord::Base
     card.name
   end
 
-  def calculated_cost(game_record)
-    card.calculated_cost(game_record)
+  def calculated_cost(game_record, turn)
+    card.calculated_cost(game_record, turn)
   end
 
   def costs_less_than?(coin, potion)
-    card_cost = calculated_cost(game_card.game)
+    card_cost = calculated_cost(game_card.game, game_card.game.current_turn)
     (card_cost[:potion].nil? || card_cost[:potion] <= potion) && card_cost[:coin] < coin
   end
 
   def costs_same_as?(cost)
-    card_cost = calculated_cost(game_card.game)
+    card_cost = calculated_cost(game_card.game, game_card.game.current_turn)
     card_cost[:potion] == cost[:potion] && card_cost[:coin] == cost[:coin]
   end
 

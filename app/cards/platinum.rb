@@ -4,7 +4,7 @@ module Platinum
     12
   end
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 9
     }

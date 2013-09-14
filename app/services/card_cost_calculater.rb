@@ -1,8 +1,9 @@
 class CardCostCalculater
 
-  def initialize(game, card)
+  def initialize(game, card, turn)
     @game = game
     @card = card
+    @turn = turn
   end
 
   def cost
@@ -18,7 +19,7 @@ class CardCostCalculater
   private
 
   def base_cost
-    @base_cost ||= @card.cost @game
+    @base_cost ||= @card.cost @game, @turn
   end
 
   def base_coin
@@ -31,7 +32,7 @@ class CardCostCalculater
 
   def calculate_coin_discount
     discount = 0
-    unless @game.current_turn.nil?
+    unless @turn.nil?
       discount += global_discount
       discount += action_discount if @card.action_card?
     end
@@ -39,11 +40,11 @@ class CardCostCalculater
   end
 
   def global_discount
-    @game.current_turn.global_discount
+    @turn.global_discount
   end
 
   def action_discount
-    @game.current_turn.action_discount
+    @turn.action_discount
   end
 
 end

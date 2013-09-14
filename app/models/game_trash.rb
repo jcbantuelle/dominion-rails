@@ -10,7 +10,7 @@ class GameTrash < ActiveRecord::Base
     card.type_class
   end
 
-  def json
+  def json(game, turn)
     {
       id: id,
       name: name,

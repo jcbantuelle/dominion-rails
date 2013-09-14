@@ -47,22 +47,22 @@ class GameCard < ActiveRecord::Base
     card.name
   end
 
-  def calculated_cost(game_record)
+  def calculated_cost(game_record, turn)
     if name == 'ruins' || name == 'knights'
       top_card = mixed_game_cards.first.card
-      top_card.calculated_cost(game_record)
+      top_card.calculated_cost(game_record, turn)
     else
-      card.calculated_cost(game_record)
+      card.calculated_cost(game_record, turn)
     end
   end
 
   def costs_less_than?(coin, potion)
-    card_cost = calculated_cost(game)
+    card_cost = calculated_cost(game, game.current_turn)
     (card_cost[:potion].nil? || card_cost[:potion] <= potion) && card_cost[:coin] < coin
   end
 
   def costs_same_as?(cost)
-    card_cost = calculated_cost(game)
+    card_cost = calculated_cost(game, game.current_turn)
     card_cost[:potion] == cost[:potion] && card_cost[:coin] == cost[:coin]
   end
 
@@ -70,7 +70,7 @@ class GameCard < ActiveRecord::Base
     update remaining: (remaining + count)
   end
 
-  def json
+  def json(game_record, turn)
     if name == 'ruins' || name == 'knights'
       top_card = mixed_game_cards.first
       if top_card.nil?
@@ -81,7 +81,7 @@ class GameCard < ActiveRecord::Base
         card_name = 'placeholder'
         card_type_class = ''
       else
-        card_cost = top_card.calculated_cost(game)
+        card_cost = top_card.calculated_cost(game_record, turn)
         card_name = top_card.name
         card_type_class = top_card.type_class
       end
@@ -95,7 +95,7 @@ class GameCard < ActiveRecord::Base
         title: name.titleize
       }
     else
-      card_cost = calculated_cost(game)
+      card_cost = calculated_cost(game_record, turn)
       {
         id: id,
         name: name,

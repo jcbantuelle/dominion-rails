@@ -4,7 +4,7 @@ module Familiar
     10
   end
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 3,
       potion: 1

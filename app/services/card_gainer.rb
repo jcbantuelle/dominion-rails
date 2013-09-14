@@ -13,7 +13,7 @@ class CardGainer
   def buy_card
     LogUpdater.new(@game).card_action(@player, @top_card, 'buy')
     add_to_deck('discard')
-    @game.current_turn.buy_card @top_card.calculated_cost(@game)
+    @game.current_turn.buy_card @top_card.calculated_cost(@game, @game.current_turn)
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
     buy_reactions
@@ -68,11 +68,13 @@ class CardGainer
   end
 
   def enough_coins?
-    @game.current_turn.coins >= @top_card.calculated_cost(@game)[:coin]
+    turn = @game.current_turn
+    turn.coins >= @top_card.calculated_cost(@game, turn)[:coin]
   end
 
   def enough_potions?
-    @top_card.calculated_cost(@game)[:potion].nil? || @game.current_turn.potions >= @top_card.calculated_cost(@game)[:potion]
+    turn = @game.current_turn
+    @top_card.calculated_cost(@game, turn)[:potion].nil? || turn.potions >= @top_card.calculated_cost(@game, turn)[:potion]
   end
 
   def allowed_to_buy?
@@ -91,7 +93,7 @@ class CardGainer
   end
 
   def valid_talisman_gain?
-    card_cost = @top_card.calculated_cost(@game)
+    card_cost = @top_card.calculated_cost(@game, @game.current_turn)
     !@top_card.card.victory_card? && card_cost[:coin] <= 4 && card_cost[:potion].nil?
   end
 

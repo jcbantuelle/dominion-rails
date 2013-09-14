@@ -4,7 +4,7 @@ class TurnActionHandler
 
   def self.send_choose_cards_prompt(game, game_player, cards, message, maximum=0, minimum=0, action_type=nil)
     action = TurnAction.create game: game, game_player: game_player, action: action_type
-    action.update sent_json: choose_cards_json(action, cards, maximum, minimum, message)
+    action.update sent_json: choose_cards_json(game, action, cards, maximum, minimum, message)
 
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
     action

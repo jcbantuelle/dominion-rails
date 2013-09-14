@@ -1,6 +1,6 @@
 module AbandonedMine
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 0
     }

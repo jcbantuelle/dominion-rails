@@ -4,7 +4,7 @@ module Estate
     victory_card_count(game)
   end
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 2
     }

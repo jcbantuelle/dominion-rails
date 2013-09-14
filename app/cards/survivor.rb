@@ -1,6 +1,6 @@
 module Survivor
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 0
     }

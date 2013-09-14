@@ -109,8 +109,8 @@ class Card < ActiveRecord::Base
     reveal_cards(game, player)
   end
 
-  def calculated_cost(game)
-    CardCostCalculater.new(game, self).cost
+  def calculated_cost(game, turn)
+    CardCostCalculater.new(game, self, turn).cost
   end
 
   def play_card_multiple_times(game, game_player, card, count)

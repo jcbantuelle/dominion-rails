@@ -4,7 +4,7 @@ module Quarry
     10
   end
 
-  def cost(game)
+  def cost(game, turn)
     {
       coin: 4
     }
