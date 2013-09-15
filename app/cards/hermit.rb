@@ -47,7 +47,7 @@ module Hermit
     elsif available_cards.count == 1
       CardGainer.new(game, game.current_player, available_cards.first.name).gain_card('discard')
     else
-      action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1)
+      action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1, 'gain')
       TurnActionHandler.process_player_response(game, game.current_player, action, self)
     end
   end
