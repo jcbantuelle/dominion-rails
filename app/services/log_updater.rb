@@ -45,7 +45,7 @@ class LogUpdater
     send_message('reveal_cards', locals)
   end
 
-  def look(player, cards, source)
+  def look(player, cards, source=nil)
     locals = {
       target_player: player,
       cards: cards,

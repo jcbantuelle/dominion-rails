@@ -92,7 +92,7 @@ module Json::Game
 
     victory_cards = cards.select(&:victory?)
     treasure_cards = cards.select(&:treasure?)
-    miscellaneous_cards = cards.select{ |card| %w(curse ruins).include?(card.card.name) }
+    miscellaneous_cards = cards.select{ |card| %w(curse ruins madman).include?(card.card.name) }
 
     common_cards = sort_cards(game, turn, victory_cards) + sort_cards(game, turn, treasure_cards) + sort_cards(game, turn, miscellaneous_cards)
     common_cards = common_cards.collect{ |card| card.json(game, turn) }

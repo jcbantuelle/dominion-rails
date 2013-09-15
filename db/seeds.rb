@@ -11,8 +11,8 @@ end
 cards = %w(copper silver gold potion platinum)
 create_cards(cards, false, true, false)
 
-# Shelters
-cards = %w(hovel necropolis overgrown_estate)
+# Outside Supply
+cards = %w(hovel necropolis overgrown_estate madman)
 create_cards(cards, false, false, false, nil, false)
 
 # Spoils
@@ -67,5 +67,5 @@ cards = %w(crossroads nomad_camp silk_road cache highway)
 create_cards(cards, true, false, false, 'hinterlands')
 
 # Dark Ages
-cards = %w(poor_house vagrant sage bandit_camp rats death_cart marauder beggar squire forager)
+cards = %w(poor_house vagrant sage bandit_camp rats death_cart marauder beggar squire forager hermit)
 create_cards(cards, true, false, false, 'dark_ages')

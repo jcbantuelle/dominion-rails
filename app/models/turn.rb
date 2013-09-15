@@ -98,8 +98,12 @@ class Turn < ActiveRecord::Base
 
   def buy_card(cost)
     buy_phase
-    update_attribute :buys, buys - 1
-    update_attribute :coins, coins - cost[:coin]
-    update_attribute :potions, potions - cost[:potion] if cost[:potion].present?
+    turn_attributes = {
+      buys: (buys - 1),
+      coins: (coins - cost[:coin]),
+      bought_cards: (bought_cards + 1)
+    }
+    turn_attributes[:potions] = (potions - cost[:potion]) if cost[:potion].present?
+    update turn_attributes
   end
 end
