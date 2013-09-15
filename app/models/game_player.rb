@@ -47,7 +47,9 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def score
-    point_cards.map(&:value).inject(:+) + victory_tokens
+    values = point_cards.map(&:value)
+    card_score = values.empty? ? 0 : values.inject(:+)
+    card_score + victory_tokens
   end
 
   def turn_count
