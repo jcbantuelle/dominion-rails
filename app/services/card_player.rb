@@ -47,6 +47,12 @@ class CardPlayer
 
   def attack
     if @card.attack_card?
+      urchins_in_play = @game.current_player.find_cards_in_play('urchin')
+      if urchins_in_play.count > 1 || (urchins_in_play.count == 1 && @card.name != 'urchin')
+        urchins_in_play.slice(1..urchins_in_play.length).each do |urchin|
+          urchin.card.reaction(@game, @game.current_player)
+        end
+      end
       @card.attack(@game, attacked_players)
     end
   end

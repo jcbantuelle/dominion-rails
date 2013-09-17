@@ -74,6 +74,7 @@ class GameCreator
     cards = [Card.by_name('curse')]
     cards << Card.by_name('ruins') if ruins_game?
     cards << Card.by_name('madman') if hermit_game?
+    cards << Card.by_name('mercenary') if urchin_game?
     cards
   end
 
@@ -116,6 +117,10 @@ class GameCreator
 
   def hermit_game?
     @hermit_game ||= @game.game_cards.select{ |game_card| game_card.card.name == 'hermit' }.count > 0
+  end
+
+  def urchin_game?
+    @urchin_game ||= @game.game_cards.select{ |game_card| game_card.card.name == 'urchin' }.count > 0
   end
 
 end
