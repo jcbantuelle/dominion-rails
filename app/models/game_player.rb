@@ -74,8 +74,12 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def find_card_in_play(name)
+    find_cards_in_play(name).first
+  end
+
+  def find_cards_in_play(name)
     card = Card.by_name name
-    in_play.select{ |c| c.card_id == card.id }.first
+    in_play.select{ |c| c.card_id == card.id }
   end
 
   def empty_deck?
