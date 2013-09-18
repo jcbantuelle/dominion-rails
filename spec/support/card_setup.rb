@@ -42,6 +42,12 @@ shared_context 'victory card' do
   end
 end
 
+shared_context 'market square card' do
+  before(:each) do
+    Card.create name: 'market_square'
+  end
+end
+
 shared_context 'duration' do
   before(:each) do
     PlayerCard.create game_player: @game_player, card: @card, state: 'duration'

@@ -8,6 +8,7 @@ describe 'Moneylender' do
     include_context 'play card'
 
     context 'with copper in hand' do
+      include_context 'market square card'
 
       before(:each) do
         copper = Card.find(Card.create(name: 'copper'))
