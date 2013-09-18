@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Familiar' do
   let(:card_name) { 'familiar' }
   include_context 'setup'
+  include_context 'urchin card'
 
   describe '#play' do
     include_context 'play card'

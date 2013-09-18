@@ -28,6 +28,7 @@ describe 'Lighthouse' do
     let(:reaction_card_trigger) { Card.find(Card.create(name: 'witch').id) }
     include_context 'other players'
     include_context 'reaction'
+    include_context 'urchin card'
     it 'gives immunity to attacks' do
       curse = Card.find(Card.create(name: 'curse'))
       GameCard.create game: @game, card: curse, remaining: 10

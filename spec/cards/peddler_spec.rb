@@ -26,19 +26,19 @@ describe 'Peddler' do
     context 'during action phase' do
       it 'is not discounted' do
         @turn.update played_actions: 2
-        expect(@peddler.cost(@game)[:coin]).to eq(8)
+        expect(@peddler.cost(@game, @turn)[:coin]).to eq(8)
       end
     end
 
     context 'during treasure phase' do
       it 'is is discounted' do
         @turn.update played_actions: 2, phase: 'treasure'
-        expect(@peddler.cost(@game)[:coin]).to eq(4)
+        expect(@peddler.cost(@game, @turn)[:coin]).to eq(4)
       end
 
       it 'does not go below zero' do
         @turn.update played_actions: 5, phase: 'treasure'
-        expect(@peddler.cost(@game)[:coin]).to eq(0)
+        expect(@peddler.cost(@game, @turn)[:coin]).to eq(0)
       end
     end
   end

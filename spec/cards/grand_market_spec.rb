@@ -22,10 +22,8 @@ describe 'Grand Market' do
     include_context 'gain card'
 
     before(:each) do
-      grand_market = Card.create name: 'grand_market'
-      GameCard.create game: @game, card: grand_market, remaining: 10
       @copper = Card.create name: 'copper'
-      @turn.update coins: 6
+      @game.current_turn.update coins: 6
     end
 
     context 'with copper in play' do

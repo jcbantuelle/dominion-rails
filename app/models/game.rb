@@ -89,7 +89,7 @@ class Game < ActiveRecord::Base
 
   def turn_ordered_players
     turn = current_player.turn_order - 1
-    game_players.slice(turn..players.size) + game_players.slice(0, turn)
+    game_players.slice(turn..game_players.size) + game_players.slice(0, turn)
   end
 
   def player_to_left(player)

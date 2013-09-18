@@ -4,6 +4,10 @@ describe 'Spoils' do
   let(:card_name) { 'spoils' }
   include_context 'setup'
 
+  before(:each) {
+    @card.update supply: false
+  }
+
   describe '#play' do
     include_context 'play card'
     it 'gives +$3' do
