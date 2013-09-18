@@ -2,10 +2,13 @@ class Game < ActiveRecord::Base
   has_many :game_players, ->{ ordered }, dependent: :destroy
   has_many :game_cards, ->{ includes(:card) }, dependent: :destroy
   has_many :game_trashes, ->{ includes(:card) }, dependent: :destroy
+  has_many :players, foreign_key: 'current_game'
   has_many :turns, ->{ ordered }, dependent: :destroy
   has_many :turn_actions, dependent: :destroy
   belongs_to :current_turn, class_name: 'Turn', foreign_key: 'turn_id'
   belongs_to :proposer, class_name: 'Player', foreign_key: 'proposer_id'
+
+  before_destroy { |record| record.players.update_all(current_game: nil) }
 
   def player_count
     @player_count ||= game_players.count
