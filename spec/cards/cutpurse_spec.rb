@@ -14,6 +14,8 @@ describe 'Cutpurse' do
     end
 
     include_context 'other players'
+    include_context 'reaction cards'
+    include_context 'moat card'
 
     before(:each) do
       @copper = Card.find(Card.create(name: 'copper'))
