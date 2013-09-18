@@ -18,7 +18,7 @@ describe 'Crossroads' do
 
     context 'second crossroad played' do
       it 'gives no extra actions' do
-        @turn.update crossroads: 1
+        @game.current_turn.update crossroads: 1
         @subject.play_card
         @turn.reload
         expect(@turn.actions).to eq(0)
