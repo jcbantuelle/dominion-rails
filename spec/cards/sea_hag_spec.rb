@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Sea Hag' do
   let(:card_name) { 'sea_hag' }
   include_context 'setup'
+  include_context 'urchin card'
 
   describe '#play' do
     include_context 'play card'

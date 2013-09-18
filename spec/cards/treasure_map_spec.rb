@@ -8,6 +8,7 @@ describe 'Treasure Map' do
     include_context 'play card'
 
     context 'with another treasure map in hand' do
+      include_context 'market square card'
 
       it 'trashes both treasure maps and puts 4 gold on deck' do
         gold = Card.find(Card.create(name: 'gold'))

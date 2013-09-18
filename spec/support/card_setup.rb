@@ -42,6 +42,32 @@ shared_context 'victory card' do
   end
 end
 
+shared_context 'urchin card' do
+  before(:each) do
+    Card.create name: 'urchin'
+  end
+end
+
+shared_context 'market square card' do
+  before(:each) do
+    Card.create name: 'market_square'
+  end
+end
+
+shared_context 'moat card' do
+  before(:each) do
+    Card.create name: 'moat'
+  end
+end
+
+shared_context 'reaction cards' do
+  before(:each) do
+    CardPlayer::ATTACK_REACTION_CARDS.each do |reaction_card_name|
+      Card.create name: reaction_card_name
+    end
+  end
+end
+
 shared_context 'duration' do
   before(:each) do
     PlayerCard.create game_player: @game_player, card: @card, state: 'duration'
