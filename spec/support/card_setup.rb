@@ -42,6 +42,12 @@ shared_context 'victory card' do
   end
 end
 
+shared_context 'urchin card' do
+  before(:each) do
+    Card.create name: 'urchin'
+  end
+end
+
 shared_context 'market square card' do
   before(:each) do
     Card.create name: 'market_square'

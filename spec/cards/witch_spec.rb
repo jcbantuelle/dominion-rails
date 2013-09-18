@@ -3,6 +3,8 @@ require 'spec_helper'
 describe 'Witch' do
   let(:card_name) { 'witch' }
   include_context 'setup'
+  include_context 'urchin card'
+
 
   describe '#play' do
     include_context 'play card'
