@@ -9,34 +9,34 @@ module Websockets::Game::TurnActions
 
   def play_card(data)
     if can_play?
-      ApplicationController.games[@game.id][:thread] = Thread.new {
-        ActiveRecord::Base.connection_pool.with_connection do
-          player = CardPlayer.new @game, data['card_id']
-          if player.valid_play?
-            player.play_card
-            ActiveRecord::Base.connection.clear_query_cache
-            @game.reload
-            send_card_action_data('play')
-          end
+      play_card_action = with_active_record_connection {
+        player = CardPlayer.new @game, data['card_id']
+        if player.valid_play?
+          player.play_card
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
+          send_card_action_data('play')
         end
       }
+
+      execute_in_thread { play_card_action }
     end
   end
 
   def buy_card(data)
     if can_play?
-      ApplicationController.games[@game.id][:thread] = Thread.new {
-        ActiveRecord::Base.connection_pool.with_connection do
-          card = GameCard.find(data['card_id'])
-          gainer = CardGainer.new @game, @game.current_player, card.name
-          if gainer.valid_buy?
-            gainer.buy_card
-            ActiveRecord::Base.connection.clear_query_cache
-            @game.reload
-            send_card_action_data('buy')
-          end
+      buy_card = with_active_record_connection {
+        card = GameCard.find(data['card_id'])
+        gainer = CardGainer.new @game, @game.current_player, card.name
+        if gainer.valid_buy?
+          gainer.buy_card
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
+          send_card_action_data('buy')
         end
       }
+
+      execute_in_thread { buy_card }
     end
   end
 
@@ -46,6 +46,16 @@ module Websockets::Game::TurnActions
   end
 
   private
+
+  def with_active_record_connection
+    ActiveRecord::Base.connection_pool.with_connection do
+      yield
+    end
+  end
+
+  def execute_in_thread
+    ApplicationController.games[@game.id][:thread] = Thread.new { yield }
+  end
 
   def can_play?
     @game.current_player.player_id == current_player.id
