@@ -6,6 +6,9 @@ $ ->
   $turn_actions.on "click", "#end-turn", (event) ->
     event.preventDefault()
     socket.send(JSON.stringify(action: 'end_turn'))
+  $turn_actions.on "click", "#play-all-coin", (event) ->
+    event.preventDefault()
+    socket.send(JSON.stringify(action: 'play_all_coin'))
 
   $purchasable_cards = $('#kingdom-cards, #common-cards')
   $purchasable_cards.on "click", ".card", (event) ->

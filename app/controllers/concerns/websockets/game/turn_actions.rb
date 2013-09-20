@@ -7,20 +7,18 @@ module Websockets::Game::TurnActions
     end
   end
 
-  def play_card(data)
+  def play_all_coin(data)
     if can_play?
-      play_card_action = with_active_record_connection {
-        player = CardPlayer.new @game, data['card_id']
-        if player.valid_play?
-          player.play_card
-          ActiveRecord::Base.connection.clear_query_cache
-          @game.reload
-          send_card_action_data('play')
+      execute_in_thread {
+        @game.current_player.find_coin_in_hand.each do | coin_card |
+          _play_card({ 'card_id' => coin_card.card.id })
         end
       }
-
-      execute_in_thread { play_card_action }
     end
+  end
+
+  def play_card(data)
+      execute_in_thread { _play_card(data) } if can_play?
   end
 
   def buy_card(data)
@@ -59,6 +57,18 @@ module Websockets::Game::TurnActions
 
   def can_play?
     @game.current_player.player_id == current_player.id
+  end
+
+  def _play_card(data)
+    with_active_record_connection {
+      player = CardPlayer.new @game, data['card_id']
+      if player.valid_play?
+        player.play_card
+        ActiveRecord::Base.connection.clear_query_cache
+        @game.reload
+        send_card_action_data('play')
+      end
+    }
   end
 
   def send_card_action_data(action)
