@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917012948) do
+ActiveRecord::Schema.define(version: 20130921123327) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20130917012948) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
+    t.boolean  "band_of_misfits", default: false
   end
 
   add_index "player_cards", ["card_id"], name: "index_player_cards_on_card_id", using: :btree

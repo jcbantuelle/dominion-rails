@@ -2,10 +2,11 @@ class CardPlayer
 
   ATTACK_REACTION_CARDS = %w(secret_chamber beggar)
 
-  def initialize(game, card_id, free_action=false, clone=false)
+  def initialize(game, card_id, free_action=false, clone=false, player_card_id=nil)
     @game = game
     @game.current_turn(true)
     @card = Card.find card_id
+    @player_card_id = player_card_id
     @free_action = free_action
     @clone = clone
   end
@@ -34,7 +35,12 @@ class CardPlayer
 
   def move_from_hand_to_play
     new_state = @card.duration_card? ? 'duration' : 'play'
-    @game.current_player.hand.where(card_id: @card.id).first.update_attribute(:state, new_state)
+    if @player_card.nil?
+      card = @game.current_player.hand.where(card_id: @card.id).first
+    else
+      card = PlayerCard.find(@player_card_id)
+    end
+    card.update_attribute(:state, new_state)
     @game.current_turn.add_played_action if @card.action_card?
   end
 

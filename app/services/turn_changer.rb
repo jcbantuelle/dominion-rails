@@ -36,11 +36,12 @@ class TurnChanger
 
   def clean_up
     @game.current_player.in_play.each do |in_play_card|
-      in_play_card.card.discard_reaction(@game, @game.current_player) if in_play_card.card.respond_to?(:discard_reaction)
+      in_play_card.card.discard_reaction(@game, @game.current_player) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
     end
     @game.current_player.player_cards.where(state: %w[hand play]).update_all(state: 'discard')
     draw_count = @outpost ? 3 : 5
     CardDrawer.new(@game.current_player).draw(draw_count, false)
+    revert_band_of_misfits
   end
 
   def set_game_turn
@@ -75,4 +76,10 @@ class TurnChanger
     end
     @game.current_player.duration.update_all(state: 'play')
   end
+
+  def revert_band_of_misfits
+    misfits_card_id = Card.by_name 'band_of_misfits'
+    @game.current_player.player_cards.where(band_of_misfits: true).where.not(state: 'duration').update_all(card_id: misfits_card_id, band_of_misfits: false)
+  end
+
 end
