@@ -9,16 +9,21 @@ module Websockets::Game::TurnActions
 
   def play_all_coin(data)
     if can_play?
+      data['action'] = 'play_all_coin_json'
       execute_in_thread {
-        @game.current_player.find_coin_in_hand.each do | coin_card |
-          _play_card({ 'card_id' => coin_card.card.id })
+        @game.current_player.find_coin_in_hand.each do |coin|
+          data['card_id'] = coin.card.id
+          _play_card(data)
         end
       }
     end
   end
 
   def play_card(data)
-      execute_in_thread { _play_card(data) } if can_play?
+    if can_play?
+      data[:action] = 'play_card_json'
+      execute_in_thread { _play_card(data) }
+    end
   end
 
   def buy_card(data)
@@ -30,7 +35,7 @@ module Websockets::Game::TurnActions
           gainer.buy_card
           ActiveRecord::Base.connection.clear_query_cache
           @game.reload
-          send_card_action_data('buy')
+          send_card_action_data('buy_card_json')
         end
       }
 
@@ -66,14 +71,14 @@ module Websockets::Game::TurnActions
         player.play_card
         ActiveRecord::Base.connection.clear_query_cache
         @game.reload
-        send_card_action_data('play')
+        send_card_action_data(data['action'])
       end
     }
   end
 
   def send_card_action_data(action)
     @game.players.each do |player|
-      WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
+      WebsocketDataSender.send_game_data player, @game, send(action, @game, player)
     end
   end
 

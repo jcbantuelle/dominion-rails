@@ -34,7 +34,7 @@ $ ->
     response = JSON.parse event.data
     if response.action == 'refresh'
       game.refresh(response)
-    else if _.contains(['end_turn', 'play_card', 'buy_card'], response.action)
+    else if _.contains(['end_turn', 'play_all_coin', 'play_card', 'buy_card'], response.action)
       game.refresh_board(response)
     else if response.action == 'log_message'
       game.log_message(response)

@@ -16,7 +16,14 @@ module Json::Game
 
   def end_game_json(game, player)
     {
-      action: 'end_game',
+      action: 'end_game'
+    }.merge(game_content(game, player)).to_json
+  end
+
+  def play_all_coin_json(game, player)
+    {
+      action: 'play_all_coin',
+      spend_all_coin: true
     }.merge(game_content(game, player)).to_json
   end
 
@@ -80,9 +87,12 @@ module Json::Game
       deck_count: game_player.deck.count,
       discard_count: game_player.discard.count,
       hand: grouped_cards(game_player.hand),
-      amount_of_coin_in_hand: game_player.amount_of_coin_in_hand,
       my_turn: same_player?(game.current_player.player, player)
-    }
+    }.merge(amount_of_coin_in_hand(game_player))
+  end
+
+  def amount_of_coin_in_hand(game_player)
+    game_player.coin_in_hand? ? { amount_of_coin_in_hand: game_player.amount_of_coin_in_hand } : {}
   end
 
   def card_area(game)
