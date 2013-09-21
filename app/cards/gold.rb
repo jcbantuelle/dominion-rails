@@ -14,8 +14,12 @@ module Gold
     [:treasure]
   end
 
+  def coin
+    3
+  end
+
   def play(game, clone=false)
-    game.current_turn.add_coins(3)
+    game.current_turn.add_coins(coin)
   end
 
 end
