@@ -91,6 +91,10 @@ class GamePlayer < ActiveRecord::Base
     hand.select{ |c| c.coin_card? }
   end
 
+  def amount_of_coin_in_hand
+    find_coin_in_hand.inject(0){ |sum, player_card| sum + player_card.card.coin }
+  end
+
   def empty_deck?
     player_cards.deck.empty?
   end

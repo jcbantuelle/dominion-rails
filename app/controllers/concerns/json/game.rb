@@ -80,6 +80,7 @@ module Json::Game
       deck_count: game_player.deck.count,
       discard_count: game_player.discard.count,
       hand: grouped_cards(game_player.hand),
+      amount_of_coin_in_hand: game_player.amount_of_coin_in_hand,
       my_turn: same_player?(game.current_player.player, player)
     }
   end
