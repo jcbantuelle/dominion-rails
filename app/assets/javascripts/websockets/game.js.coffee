@@ -31,58 +31,26 @@ $ ->
     response = JSON.parse event.data
     if response.action == 'refresh'
       game.refresh(response)
-    else if response.action == 'end_turn'
-      game.end_turn(response)
-    else if response.action == 'play_card'
-      game.play_card(response)
-    else if response.action == 'buy_card'
-      game.play_card(response)
+    else if _.contains(['end_turn', 'play_card', 'buy_card'], response.action)
+      game.refresh_board(response)
     else if response.action == 'log_message'
       game.log_message(response)
     else if response.action == 'end_game'
       game.end_game(response)
     else if response.action == 'chat'
       game.chat(response)
-    else if response.action == 'choose_cards'
-      game.choose_options(response)
-    else if response.action == 'choose_text'
+    else if _.contains(['choose_cards', 'choose_text'], response.action)
       game.choose_options(response)
     else if response.action == 'order_cards'
       game.choose_card_order(response)
 
   # Refresh Game
   window.game.refresh = (response) ->
-    game.refresh_kingdom_cards(response)
-    game.refresh_common_cards(response)
-    game.refresh_turn_status(response)
-    game.refresh_game_info(response)
-    game.refresh_turn_actions(response)
-    game.refresh_hand(response)
+    game.refresh_board(response)
     game.refresh_end_game(response)
-    game.refresh_tooltips()
 
-  # End Turn
-  window.game.end_turn = (response) ->
-    game.refresh_kingdom_cards(response)
-    game.refresh_common_cards(response)
-    game.refresh_turn_status(response)
-    game.refresh_game_info(response)
-    game.refresh_turn_actions(response)
-    game.refresh_hand(response)
-    game.refresh_tooltips()
-
-  # Play Card
-  window.game.play_card = (response) ->
-    game.refresh_kingdom_cards(response)
-    game.refresh_common_cards(response)
-    game.refresh_turn_status(response)
-    game.refresh_game_info(response)
-    game.refresh_turn_actions(response)
-    game.refresh_hand(response)
-    game.refresh_tooltips()
-
-  # Buy Card
-  window.game.buy_card = (response) ->
+  # Refresh Board
+  window.game.refresh_board = (response) ->
     game.refresh_kingdom_cards(response)
     game.refresh_common_cards(response)
     game.refresh_turn_status(response)
