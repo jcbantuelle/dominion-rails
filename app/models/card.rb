@@ -117,6 +117,7 @@ class Card < ActiveRecord::Base
     count.times do |i|
       play_card(game, card.card_id, i > 0)
       ActiveRecord::Base.connection.clear_query_cache
+      game.reload
       TurnActionHandler.refresh_game_area(game, game_player.player)
     end
   end
