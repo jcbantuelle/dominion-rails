@@ -21,7 +21,7 @@ module Websockets::Game::TurnActions
 
   def play_card(data)
     if can_play?
-      data[:action] = 'play_card_json'
+      data['action'] = 'play_card_json'
       execute_in_thread { _play_card(data) }
     end
   end
