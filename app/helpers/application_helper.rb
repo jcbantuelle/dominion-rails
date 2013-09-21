@@ -52,6 +52,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'choose' : 'chooses'
     when 'look'
       same_player?(game_player, player) ? 'look' : 'looks'
+    when 'discard'
+      same_player?(game_player, player) ? 'discard' : 'discards'
     end
   end
 
