@@ -60,6 +60,11 @@ class GamePlayer < ActiveRecord::Base
     turns
   end
 
+  def put_card_on_deck(card)
+    deck.update_all ['card_order = card_order + 1']
+    card.update state: 'deck', card_order: 1
+  end
+
   def add_victory_tokens(amount)
     update_attribute :victory_tokens, victory_tokens + amount
   end
