@@ -56,7 +56,7 @@ module Json::Game
   end
 
   def choose_card_order_json(game, action, cards, text)
-    turn = game.turn
+    turn = game.current_turn
     {
       cards: cards.map{ |card| card.json(game, turn) },
       action: 'order_cards',
