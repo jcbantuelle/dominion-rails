@@ -92,7 +92,7 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def amount_of_coin_in_hand
-    find_coin_in_hand.inject(0){ |sum, player_card| sum + player_card.card.coin(game) }
+    find_coin_in_hand.map{ |coin_card| coin_card.card.coin(game) }.inject(0, :+)
   end
 
   def coin_in_hand?
