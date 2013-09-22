@@ -18,12 +18,12 @@ module Harem
     2
   end
 
-  def coin
+  def coin(game)
     2
   end
 
   def play(game, clone=false)
-    game.current_turn.add_coins(coin)
+    game.current_turn.add_coins(coin(game))
   end
 
   def results(deck)
