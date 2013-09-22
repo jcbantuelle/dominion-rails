@@ -30,7 +30,7 @@ module Mercenary
           @log_updater.custom_message(game.current_player, 'nothing to trash', 'have')
         elsif hand.count == 1
           action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, "Trash #{hand.first.card.card_html}?".html_safe, 1, 1, 'trash_one')
-          TurnActionHandler.process_player_response(game, game_player, action, self)
+          TurnActionHandler.process_player_response(game, game.current_player, action, self)
         else
           action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Trash 2 cards?', 1, 1, 'trash_two')
           TurnActionHandler.process_player_response(game, game.current_player, action, self)
@@ -47,16 +47,18 @@ module Mercenary
     elsif action.action == 'trash_one'
       CardTrasher.new(game_player, game_player.hand).trash('hand')
     elsif action.action == 'trash_two'
-      game.current_turn.add_mercenary
-      if game_player.hand.count == 2
-        CardTrasher.new(game_player, game_player.hand).trash('hand')
-      else
-        action = TurnActionHandler.send_choose_cards_prompt(game, game_player, game_player.hand, 'Choose 2 cards to trash:', 2, 2, 'trash')
-        TurnActionHandler.process_player_response(game, game_player, action, self)
+      if action.response == 'yes'
+        game.current_turn.add_mercenary
+        if game_player.hand.count == 2
+          CardTrasher.new(game_player, game_player.hand).trash('hand')
+        else
+          action = TurnActionHandler.send_choose_cards_prompt(game, game_player, game_player.hand, 'Choose 2 cards to trash:', 2, 2, 'trash')
+          TurnActionHandler.process_player_response(game, game_player, action, self)
+        end
+        game.current_turn.add_coins(2)
+        CardDrawer.new(game_player).draw(2)
+        LogUpdater.new(game).get_from_card(game_player, '+$2')
       end
-      game.current_turn.add_coins(2)
-      CardDrawer.new(game_player).draw(2)
-      LogUpdater.new(game).get_from_card(game_player, '+$2')
     elsif action.action == 'trash'
       trashed_cards = PlayerCard.where(id: action.response.split)
       CardTrasher.new(game_player, trashed_cards).trash('hand')
