@@ -23,7 +23,7 @@ class PlayerCard < ActiveRecord::Base
   end
 
   def action?
-    type_class.include? 'action'
+    type_class.match /\baction/
   end
 
   def duration?
