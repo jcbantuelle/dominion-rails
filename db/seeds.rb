@@ -67,5 +67,5 @@ cards = %w(crossroads nomad_camp silk_road cache highway)
 create_cards(cards, true, false, false, 'hinterlands')
 
 # Dark Ages
-cards = %w(poor_house vagrant sage bandit_camp rats death_cart marauder beggar squire forager hermit market_square storeroom urchin armory feodum fortress ironmonger procession scavenger band_of_misfits wandering_minstrel catacombs)
+cards = %w(poor_house vagrant sage bandit_camp rats death_cart marauder beggar squire forager hermit market_square storeroom urchin armory feodum fortress ironmonger procession scavenger band_of_misfits wandering_minstrel catacombs count)
 create_cards(cards, true, false, false, 'dark_ages')
