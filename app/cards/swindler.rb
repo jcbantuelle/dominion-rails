@@ -41,7 +41,7 @@ module Swindler
     trashed_card = @revealed.first
     equal_cost_cards = game.cards_equal_to(trashed_card.calculated_cost(game, game.current_turn))
     if equal_cost_cards.count == 0
-      LogUpdater.new(game).custom_message(player, 'nothing because there are no same cost cards available', 'gains')
+      LogUpdater.new(game).custom_message(game_player, 'nothing because there are no same cost cards available', 'gain')
     elsif equal_cost_cards.count == 1
       CardGainer.new(game, game_player, equal_cost_cards.first.name).gain_card('discard')
     else
