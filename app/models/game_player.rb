@@ -87,6 +87,18 @@ class GamePlayer < ActiveRecord::Base
     in_play.select{ |c| c.card_id == card.id }
   end
 
+  def find_coin_in_hand
+    hand.select{ |c| c.coin_card? }
+  end
+
+  def amount_of_coin_in_hand
+    find_coin_in_hand.map{ |coin_card| coin_card.card.coin(game) }.inject(0, :+)
+  end
+
+  def coin_in_hand?
+    find_coin_in_hand.count > 0
+  end
+
   def empty_deck?
     player_cards.deck.empty?
   end

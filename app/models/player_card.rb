@@ -50,6 +50,10 @@ class PlayerCard < ActiveRecord::Base
     card.respond_to? :value
   end
 
+  def coin_card?
+    card.respond_to? :coin
+  end
+
   def value
     point_card? ? card.value(game_player.player_cards) : 0
   end

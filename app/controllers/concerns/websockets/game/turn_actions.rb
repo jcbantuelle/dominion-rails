@@ -7,17 +7,26 @@ module Websockets::Game::TurnActions
     end
   end
 
+  def play_all_coin(data)
+    if can_play?
+      data['action'] = 'play_all_coin_json'
+      ApplicationController.games[@game.id][:thread] = Thread.new {
+        @game.current_player.find_coin_in_hand.each do |coin|
+          data['card_id'] = coin.card.id
+           ActiveRecord::Base.connection_pool.with_connection do
+            _play_card(data)
+          end
+        end
+      }
+    end
+  end
+
   def play_card(data)
     if can_play?
+      data['action'] = 'play_card_json'
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
-          player = CardPlayer.new @game, data['card_id']
-          if player.valid_play?
-            player.play_card
-            ActiveRecord::Base.connection.clear_query_cache
-            @game.reload
-            send_card_action_data('play')
-          end
+          _play_card(data)
         end
       }
     end
@@ -33,7 +42,7 @@ module Websockets::Game::TurnActions
             gainer.buy_card
             ActiveRecord::Base.connection.clear_query_cache
             @game.reload
-            send_card_action_data('buy')
+            send_card_action_data('buy_card_json')
           end
         end
       }
@@ -51,9 +60,19 @@ module Websockets::Game::TurnActions
     @game.current_player.player_id == current_player.id
   end
 
+  def _play_card(data)
+    player = CardPlayer.new @game, data['card_id']
+    if player.valid_play?
+      player.play_card
+      ActiveRecord::Base.connection.clear_query_cache
+      @game.reload
+      send_card_action_data(data['action'])
+    end
+  end
+
   def send_card_action_data(action)
     @game.players.each do |player|
-      WebsocketDataSender.send_game_data player, @game, send("#{action}_card_json", @game, player)
+      WebsocketDataSender.send_game_data player, @game, send(action, @game, player)
     end
   end
 
