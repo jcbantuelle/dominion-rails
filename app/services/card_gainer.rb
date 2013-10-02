@@ -86,8 +86,9 @@ class CardGainer
   end
 
   def process_hoard
+    hoard_count = @game.current_player.find_cards_in_play('hoard').count
     card_gainer = CardGainer.new @game, @game.current_player, 'gold'
-    @game.current_turn.hoards.times do
+    hoard_count.times do
       card_gainer.gain_card('discard')
     end
   end
@@ -98,8 +99,9 @@ class CardGainer
   end
 
   def process_talisman
+    talisman_count = @game.current_player.find_cards_in_play('talisman').count
     card_gainer = CardGainer.new @game, @game.current_player, @top_card.name
-    @game.current_turn.talismans.times do
+    talisman_count.times do
       card_gainer.gain_card('discard')
     end
   end
