@@ -14,8 +14,12 @@ module Platinum
     [:treasure]
   end
 
+  def coin(game)
+    5
+  end
+
   def play(game, clone=false)
-    game.current_turn.add_coins(5)
+    game.current_turn.add_coins(coin(game))
   end
 
 end

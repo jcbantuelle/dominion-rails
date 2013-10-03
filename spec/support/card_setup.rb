@@ -1,3 +1,5 @@
+DEFAULT_IN_HAND = 5
+
 shared_context 'setup' do
   before(:each) do
     @card = Card.create name: card_name

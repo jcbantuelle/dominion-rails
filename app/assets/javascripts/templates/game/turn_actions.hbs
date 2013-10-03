@@ -1,3 +1,8 @@
 {{#if my_turn}}
+  {{#if amount_of_coin_in_hand}}
+    {{#unless spend_all_coin}}
+      <button id="play-all-coin" class="btn btn-mini btn-warning">+${{amount_of_coin_in_hand}}</button>
+    {{/unless}}
+  {{/if}}
   <button id="end-turn" class="btn btn-danger btn-mini">End Turn</button>
 {{/if}}
