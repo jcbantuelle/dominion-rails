@@ -56,6 +56,8 @@ module ApplicationHelper
       same_player?(game_player, player) ? 'discard' : 'discards'
     when 'keep'
       same_player?(game_player, player) ? 'keep' : 'keeps'
+    when 'play'
+      same_player?(game_player, player) ? 'play' : 'plays'
     end
   end
 

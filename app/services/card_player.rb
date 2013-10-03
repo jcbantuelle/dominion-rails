@@ -2,13 +2,14 @@ class CardPlayer
 
   ATTACK_REACTION_CARDS = %w(secret_chamber beggar)
 
-  def initialize(game, card_id, free_action=false, clone=false, player_card_id=nil)
+  def initialize(game, card_id, free_action=false, clone=false, player_card_id=nil, announce=true)
     @game = game
     @game.current_turn(true)
     @card = Card.find card_id
     @player_card_id = player_card_id
     @free_action = free_action
     @clone = clone
+    @announce = announce
   end
 
   def play_card
@@ -47,7 +48,7 @@ class CardPlayer
   def play
     treasure_phase if @card.treasure_card?
     play_action if @card.action_card? && !@free_action
-    @card.play_log(@game.current_player, @game)
+    @card.play_log(@game.current_player, @game) if @announce
     @card.play(@game, @clone)
   end
 

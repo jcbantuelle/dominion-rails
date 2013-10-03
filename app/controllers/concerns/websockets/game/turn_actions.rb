@@ -9,24 +9,51 @@ module Websockets::Game::TurnActions
 
   def play_all_coin(data)
     if can_play?
-      data['action'] = 'play_all_coin_json'
+      data['announce'] = false
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
-          @game.current_player.find_coin_in_hand.each do |coin|
-            data['card_id'] = coin.card.id
-            play(data)
-          end
+          played_coins = play_coin_from_hand(data)
+
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
+          send_card_action_data('play_all_coin_json')
+
+          played_coin_message(played_coins)
         end
       }
     end
   end
 
+  def play_coin_from_hand(data)
+    played_coins = {}
+    @game.current_player.find_coin_in_hand.each do |coin|
+      played_coins[coin.name] ||= {
+          html: coin.card.card_html,
+          count: 0
+      }
+      played_coins[coin.name][:count] += 1
+      data['card_id'] = coin.card.id
+      play(data)
+    end
+    played_coins
+  end
+
+  def played_coin_message(played_coins)
+    message = played_coins.map{ |name, attributes|
+      "#{attributes[:count]} #{attributes[:html]}".html_safe
+    }.join(', ')
+    LogUpdater.new(@game).custom_message(@game.current_player, message.html_safe, 'play', false)
+  end
+
   def play_card(data)
     if can_play?
-      data['action'] = 'play_card_json'
+      data['announce'] = true
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
           play(data)
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
+          send_card_action_data('play_card_json')
         end
       }
     end
@@ -61,12 +88,9 @@ module Websockets::Game::TurnActions
   end
 
   def play(data)
-    player = CardPlayer.new @game, data['card_id']
+    player = CardPlayer.new @game, data['card_id'], false, false, nil, data['announce']
     if player.valid_play?
       player.play_card
-      ActiveRecord::Base.connection.clear_query_cache
-      @game.reload
-      send_card_action_data(data['action'])
     end
   end
 

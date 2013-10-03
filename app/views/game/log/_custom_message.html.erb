@@ -1,4 +1,4 @@
-&nbsp;&nbsp;
+<%= '&nbsp;&nbsp;'.html_safe if indent %>
 <%= player_name(target_player, player) unless target_player.nil? %>
 <%= conjugate(target_player, player, action) unless action.nil? %>
 <%= message %>

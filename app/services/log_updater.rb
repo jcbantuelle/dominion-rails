@@ -108,11 +108,12 @@ class LogUpdater
     send_message('return_to_supply', locals)
   end
 
-  def custom_message(player, message, action=nil)
+  def custom_message(player, message, action=nil, indent=true)
     locals = {
       target_player: player,
       message: message,
-      action: action
+      action: action,
+      indent: indent
     }
     send_message('custom_message', locals)
   end
