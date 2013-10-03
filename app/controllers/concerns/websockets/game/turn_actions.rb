@@ -11,10 +11,10 @@ module Websockets::Game::TurnActions
     if can_play?
       data['action'] = 'play_all_coin_json'
       ApplicationController.games[@game.id][:thread] = Thread.new {
-        @game.current_player.find_coin_in_hand.each do |coin|
-          data['card_id'] = coin.card.id
-           ActiveRecord::Base.connection_pool.with_connection do
-            _play_card(data)
+        ActiveRecord::Base.connection_pool.with_connection do
+          @game.current_player.find_coin_in_hand.each do |coin|
+            data['card_id'] = coin.card.id
+            play(data)
           end
         end
       }
@@ -26,7 +26,7 @@ module Websockets::Game::TurnActions
       data['action'] = 'play_card_json'
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
-          _play_card(data)
+          play(data)
         end
       }
     end
@@ -60,7 +60,7 @@ module Websockets::Game::TurnActions
     @game.current_player.player_id == current_player.id
   end
 
-  def _play_card(data)
+  def play(data)
     player = CardPlayer.new @game, data['card_id']
     if player.valid_play?
       player.play_card
