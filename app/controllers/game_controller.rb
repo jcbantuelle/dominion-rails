@@ -29,7 +29,7 @@ class GameController < ApplicationController
 
   def chat(data)
     ApplicationController.games[@game.id].each do |player_id, socket|
-      socket.send_data chat_json(current_player, data['message'])
+      socket.send_data(chat_json(current_player, data['message'])) unless player_id == :thread
     end
   end
 
