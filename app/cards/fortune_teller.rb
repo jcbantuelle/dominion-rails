@@ -22,6 +22,7 @@ module FortuneTeller
   def attack(game, players)
     players.each do |player|
       @revealed = []
+      @valid_card = nil
       reveal_cards(game, player)
       @log_updater.reveal(player, @revealed, 'deck')
       discard_revealed(game, player)
@@ -41,7 +42,7 @@ module FortuneTeller
 
   def discard_revealed(game, player)
     player.discard_revealed
-    @log_updater.put(player, [@valid_card], 'deck')
+    @log_updater.put(player, [@valid_card], 'deck') unless @valid_card.nil?
   end
 
   def reveal_finished?(game, player)
