@@ -24,15 +24,39 @@ class GameCard < ActiveRecord::Base
   end
 
   def treasure_card?
-    card.treasure_card?
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      top_card.treasure_card?
+    else
+      card.treasure_card?
+    end
+  end
+
+  def victory_card?
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      top_card.victory_card?
+    else
+      card.victory_card?
+    end
   end
 
   def attack_card?
-    card.attack_card?
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      top_card.attack_card?
+    else
+      card.attack_card?
+    end
   end
 
   def action_card?
-    card.action_card?
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      top_card.action_card?
+    else
+      card.action_card?
+    end
   end
 
   def belongs_to_set?(set)
@@ -44,7 +68,12 @@ class GameCard < ActiveRecord::Base
   end
 
   def type_class
-    card.type_class
+    if name == 'ruins' || name == 'knights'
+      top_card = mixed_game_cards.first
+      top_card.type_class
+    else
+      card.type_class
+    end
   end
 
   def name

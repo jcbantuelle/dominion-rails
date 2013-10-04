@@ -24,6 +24,18 @@ class MixedGameCard < ActiveRecord::Base
     card.treasure_card?
   end
 
+  def victory_card?
+    card.victory_card?
+  end
+
+  def attack_card?
+    card.attack_card?
+  end
+
+  def action_card?
+    card.action_card?
+  end
+
   def belongs_to_set?(set)
     card.belongs_to_set?(set)
   end
