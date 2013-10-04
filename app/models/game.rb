@@ -80,7 +80,13 @@ class Game < ActiveRecord::Base
   end
 
   def cards_costing_less_than(coin, potion=0)
-    game_cards.select{ |card| card.costs_less_than?(coin, potion) && card.available? && card.supply? }
+    game_cards.select{ |card| card.available? && card.supply? && card.costs_less_than?(coin, potion) }
+  end
+
+  def trash_cards_costing_between(high, low, potion=0)
+    game_trashes.select{ |card|
+      card.costs_less_than?(high+1, potion) && !card.costs_less_than?(low, potion)
+    }
   end
 
   def cards_equal_to(cost)
