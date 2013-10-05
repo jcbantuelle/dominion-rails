@@ -82,8 +82,12 @@ class GameCard < ActiveRecord::Base
 
   def calculated_cost(game_record, turn)
     if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first.card
-      top_card.calculated_cost(game_record, turn)
+      top_card = mixed_game_cards.first
+      if top_card.nil?
+        {coin: 0, potion: 0}
+      else
+        top_card.card.calculated_cost(game_record, turn)
+      end
     else
       card.calculated_cost(game_record, turn)
     end

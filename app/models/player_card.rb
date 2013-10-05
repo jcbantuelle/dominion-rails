@@ -38,6 +38,10 @@ class PlayerCard < ActiveRecord::Base
     type_class.include? 'curse'
   end
 
+  def knight?
+    type_class.include? 'knight'
+  end
+
   def ruins?
     type_class.include? 'ruins'
   end

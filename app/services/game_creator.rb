@@ -33,6 +33,7 @@ class GameCreator
         starting_count = card.starting_count(@game)
         game_card = GameCard.create(game_id: @game.id, card_id: card.id, remaining: starting_count)
         add_ruins(game_card, starting_count) if card.name == 'ruins'
+        add_knights(game_card) if card.name == 'knights'
       end
     end
   end
@@ -96,6 +97,13 @@ class GameCreator
     end
     ruins.shuffle.take(starting_count).each do |ruin, index|
       MixedGameCard.create(game_card: ruins_card, card: ruin, card_order: index, card_type: 'ruins')
+    end
+  end
+
+  def add_knights(knights_card)
+    %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander).shuffle.each do |card_name, index|
+      knight = Card.by_name(card_name)
+      MixedGameCard.create(game_card: knights_card, card: knight, card_order: index, card_type: 'knights')
     end
   end
 
