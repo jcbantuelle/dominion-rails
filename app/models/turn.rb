@@ -72,6 +72,10 @@ class Turn < ActiveRecord::Base
     update_attribute :talismans, talismans + 1
   end
 
+  def add_rogue
+    update_attribute :rogues, rogues + 1
+  end
+
   def remove_tactician
     update_attribute :tacticians, tacticians - 1
   end
@@ -82,6 +86,10 @@ class Turn < ActiveRecord::Base
 
   def remove_mercenary
     update_attribute :mercenaries, mercenaries - 1
+  end
+
+  def remove_rogue
+    update_attribute :rogues, rogues - 1
   end
 
   def add_lighthouse

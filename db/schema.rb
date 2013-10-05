@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921123327) do
+ActiveRecord::Schema.define(version: 20131005000555) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 20130921123327) do
     t.integer "minions",         default: 0
     t.integer "bought_cards",    default: 0
     t.integer "mercenaries",     default: 0
+    t.integer "rogues",          default: 0
   end
 
   add_index "turns", ["game_id"], name: "index_turns_on_game_id", using: :btree
