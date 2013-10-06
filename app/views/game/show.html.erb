@@ -46,4 +46,13 @@
   <input id="message">
 </form>
 
+<div id='info-modal' class="modal hide">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Game Info</h3>
+  </div>
+  <div class="modal-body" id="extra-info">
+  </div>
+</div>
+
 <%= javascript_include_tag "websockets/game", "data-turbolinks-track" => true %>

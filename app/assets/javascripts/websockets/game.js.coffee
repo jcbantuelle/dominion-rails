@@ -60,6 +60,7 @@ $ ->
     game.refresh_game_info(response)
     game.refresh_turn_actions(response)
     game.refresh_hand(response)
+    game.refresh_extra_info(response)
     game.refresh_tooltips()
 
   # End Game
@@ -135,6 +136,9 @@ $ ->
 
   window.game.refresh_hand = (response)->
     $('#hand').html(HandlebarsTemplates['game/hand'](response.hand))
+
+  window.game.refresh_extra_info = (response)->
+    $('#extra-info').html(HandlebarsTemplates['game/info'](response))
 
   window.game.refresh_end_game = (response)->
     $('#finished-game').html(HandlebarsTemplates['game/end_game'](response))

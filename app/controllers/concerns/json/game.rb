@@ -75,7 +75,7 @@ module Json::Game
   private
 
   def game_content(game, player)
-    json = game_area(game, player).merge(card_area(game))
+    json = game_area(game, player).merge(card_area(game)).merge(info_area(game))
     json.merge!(end_game(game)) if game.finished?
     json
   end
@@ -89,6 +89,21 @@ module Json::Game
       hand: grouped_cards(game_player.hand),
       my_turn: same_player?(game.current_player.player, player)
     }.merge(amount_of_coin_in_hand(game_player))
+  end
+
+  def info_area(game)
+    trash_cards = game.game_trashes.collect{ |card| card.json(game, game.current_turn) }
+    player_info = game.game_players.map { |player|
+      {
+        player_name: player.username,
+        victory_tokens: player.victory_tokens
+      }
+    }
+
+    {
+      trash_cards: trash_cards,
+      player_info: player_info
+    }
   end
 
   def amount_of_coin_in_hand(game_player)
