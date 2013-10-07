@@ -53,7 +53,7 @@ module Remodel
   def process_action(game, game_player, action)
     if action.action == 'trash'
       card = PlayerCard.find action.response
-      @trashed_card_cost = card.calculated_cost(game, game.current_turn)[:coin]
+      @trashed_card_cost = card.calculated_cost(game, game.current_turn)
       CardTrasher.new(game.current_player, [card]).trash('hand')
     else
       card = GameCard.find(action.response)
