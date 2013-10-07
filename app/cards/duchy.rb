@@ -21,4 +21,21 @@ module Duchy
   def results(player)
     card_html
   end
+
+  def gain_event(game, player)
+    if game.has_duchess?
+      options = [
+        { text: 'Yes', value: 'yes' },
+        { text: 'No', value: 'no' }
+      ]
+      action = TurnActionHandler.send_choose_text_prompt(game, player, options, 'Gain a Duchess?'.html_safe, 1, 1)
+      TurnActionHandler.process_player_response(game, player, action, self)
+    end
+  end
+
+  def process_action(game, game_player, action)
+    if action.response == 'yes'
+      card_gainer = CardGainer.new(game, game_player, 'duchess').gain_card('discard')
+    end
+  end
 end
