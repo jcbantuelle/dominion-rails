@@ -28,36 +28,15 @@ module ApplicationHelper
     '&nbsp;&nbsp;'.html_safe if INDENTED_ACTIONS.include?(action)
   end
 
-  def conjugate_to_be(game_player, player)
-    same_player?(game_player, player) ? 'are' : 'is'
-  end
-
   def conjugate(game_player, player, action)
+    same_player = same_player?(game_player, player)
     case action
     when 'be'
-      same_player?(game_player, player) ? 'are' : 'is'
+      same_player ? 'are' : 'is'
     when 'have'
-      same_player?(game_player, player) ? 'have' : 'has'
-    when 'put'
-      same_player?(game_player, player) ? 'put' : 'puts'
-    when 'set'
-      same_player?(game_player, player) ? 'set' : 'sets'
-    when 'get'
-      same_player?(game_player, player) ? 'get' : 'gets'
-    when 'gain'
-      same_player?(game_player, player) ? 'gain' : 'gains'
-    when 'name'
-      same_player?(game_player, player) ? 'name' : 'names'
-    when 'choose'
-      same_player?(game_player, player) ? 'choose' : 'chooses'
-    when 'look'
-      same_player?(game_player, player) ? 'look' : 'looks'
-    when 'discard'
-      same_player?(game_player, player) ? 'discard' : 'discards'
-    when 'keep'
-      same_player?(game_player, player) ? 'keep' : 'keeps'
-    when 'play'
-      same_player?(game_player, player) ? 'play' : 'plays'
+      same_player ? 'have' : 'has'
+    else
+      same_player ? action : action.pluralize
     end
   end
 
