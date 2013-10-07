@@ -56,6 +56,10 @@ class Turn < ActiveRecord::Base
     update_attribute :minions, minions + 1
   end
 
+  def add_fools_gold
+    update_attribute :fools_gold, fools_gold + 1
+  end
+
   def add_mercenary
     update_attribute :mercenaries, mercenaries + 1
   end

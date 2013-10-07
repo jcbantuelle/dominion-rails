@@ -76,6 +76,10 @@ $player_margin: 25px;
   @include gradient($shelter, $reaction);
 }
 
+.treasure.reaction {
+  @include gradient($treasure, $reaction);
+}
+
 .action.shelter {
   @include gradient($action, $shelter);
 }
