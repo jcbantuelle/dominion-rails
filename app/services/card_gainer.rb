@@ -1,6 +1,7 @@
 class CardGainer
 
   BUY_REACTION_CARDS = %w(hovel)
+  GAIN_REACTION_CARDS = %w(fools_gold)
 
   def initialize(game, player, card_name)
     @game = game
@@ -16,7 +17,7 @@ class CardGainer
     @game.current_turn.buy_card @top_card.calculated_cost(@game, @game.current_turn)
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
-    buy_reactions
+    gain_reactions('buy')
   end
 
   def valid_buy?
@@ -27,6 +28,7 @@ class CardGainer
     if valid_gain?
       LogUpdater.new(@game).card_action(@player, @top_card, 'gain', destination)
       add_to_deck(destination)
+      gain_reactions('gain')
     end
   end
 
@@ -106,14 +108,21 @@ class CardGainer
     end
   end
 
-  def buy_reactions
-    reaction_cards = []
-    BUY_REACTION_CARDS.each do |reaction_card_name|
-      reaction_cards += @game.current_player.find_cards_in_hand(reaction_card_name)
-    end
-    reaction_cards.each do |reaction_card|
-      reaction_card.card.reaction(@game, @game.current_player, @top_card)
-      TurnActionHandler.wait_for_card(reaction_card.card)
+  def gain_reactions(event)
+    @game.turn_ordered_players.each do |game_player|
+      reaction_cards = []
+      if event == 'buy'
+        BUY_REACTION_CARDS.each do |reaction_card_name|
+          reaction_cards += game_player.find_cards_in_hand(reaction_card_name)
+        end
+      end
+      GAIN_REACTION_CARDS.each do |reaction_card_name|
+        reaction_cards += game_player.find_cards_in_hand(reaction_card_name)
+      end
+      reaction_cards.each do |reaction_card|
+        reaction_card.card.reaction(@game, game_player, @top_card)
+        TurnActionHandler.wait_for_card(reaction_card.card)
+      end
     end
   end
 

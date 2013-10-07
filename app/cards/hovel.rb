@@ -11,7 +11,7 @@ module Hovel
   end
 
   def reaction(game, game_player, card)
-    if card.card.victory_card?
+    if game_player.id == game.current_player.id && card.card.victory_card?
       @reaction_thread = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
           options = [
