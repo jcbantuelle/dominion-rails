@@ -6,6 +6,8 @@ class TurnActionHandler
     action = TurnAction.create game: game, game_player: game_player, action: action_type
     action.update sent_json: choose_cards_json(game, action, cards, maximum, minimum, message)
 
+    LogUpdater.new(game).waiting_on_player(game_player)
+
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
     action
   end
@@ -14,6 +16,8 @@ class TurnActionHandler
     action = TurnAction.create game: game, game_player: game_player, action: action_type
     action.update sent_json: choose_text_json(action, options, maximum, minimum, message)
 
+    LogUpdater.new(game).waiting_on_player(game_player)
+
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
     action
   end
@@ -21,6 +25,8 @@ class TurnActionHandler
   def self.send_order_cards_prompt(game, game_player, cards, message, action_type=nil)
     action = TurnAction.create game: game, game_player: game_player, action: action_type
     action.update sent_json: choose_card_order_json(game, action, cards, message)
+
+    LogUpdater.new(game).waiting_on_player(game_player)
 
     WebsocketDataSender.send_game_data(game_player.player, game, action.sent_json)
     action

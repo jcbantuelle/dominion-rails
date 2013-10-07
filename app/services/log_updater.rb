@@ -108,6 +108,13 @@ class LogUpdater
     send_message('return_to_supply', locals)
   end
 
+  def waiting_on_player(player)
+    locals = {
+      target_player: player
+    }
+    send_message('waiting_on_player', locals)
+  end
+
   def custom_message(player, message, action=nil, indent=true)
     locals = {
       target_player: player,
