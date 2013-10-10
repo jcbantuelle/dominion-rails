@@ -41,8 +41,9 @@ module Sage
   end
 
   def discard_revealed(game)
-    game.current_player.discard_revealed
-    @log_updater.put(game.current_player, [@valid_card], 'hand')
+    @log_updater.put(game.current_player, [@valid_card], 'hand', false)
+    revealed_cards = game.current_player.player_cards.revealed
+    CardDiscarder.new(game.current_player, revealed_cards).discard
   end
 
   def reveal_finished?(game, player)
