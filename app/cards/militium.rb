@@ -38,8 +38,7 @@ module Militium
 
   def process_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
-    discarded_cards.update_all state: 'discard'
-    LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+    CardDiscarder.new(game_player, discarded_cards).discard('hand')
     ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
