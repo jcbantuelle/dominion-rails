@@ -36,7 +36,7 @@ class TurnChanger
 
   def clean_up
     @game.current_player.in_play.each do |in_play_card|
-      in_play_card.card.discard_reaction(@game, @game.current_player) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
+      in_play_card.card.discard_reaction(@game, @game.current_player, :cleanup) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
     end
     @game.current_player.player_cards.where(state: %w[hand play]).update_all(state: 'discard')
     draw_count = @outpost ? 3 : 5

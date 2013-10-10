@@ -64,8 +64,8 @@ module Hermit
     end
   end
 
-  def discard_reaction(game, game_player)
-    if game.current_turn.bought_cards == 0
+  def discard_reaction(game, game_player, event)
+    if event == :cleanup && game.current_turn.bought_cards == 0
       hermit = game_player.find_card_in_play('hermit')
       CardTrasher.new(game_player, [hermit]).trash('play')
       give_card_to_player(game, game.current_player, 'madman', 'discard')
