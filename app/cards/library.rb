@@ -40,7 +40,8 @@ module Library
       set_aside_action(game) if @drawn_card.action?
       TurnActionHandler.wait_for_response(game)
     end
-    game.current_player.discard_revealed
+    revealed_cards = game.current_player.player_cards.revealed
+    CardDiscarder.new(game.current_player, revealed_cards).discard
     ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game.current_player.player)
   end
