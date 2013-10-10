@@ -42,8 +42,7 @@ module Mercenary
   def process_action(game, game_player, action)
     if action.action == 'discard'
       discarded_cards = PlayerCard.where(id: action.response.split)
-      discarded_cards.update_all state: 'discard'
-      LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+      CardDiscarder.new(game_player, discarded_cards).discard('hand')
     elsif action.action == 'trash_one'
       CardTrasher.new(game_player, game_player.hand).trash('hand')
     elsif action.action == 'trash_two'
