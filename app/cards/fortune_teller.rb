@@ -41,8 +41,9 @@ module FortuneTeller
   end
 
   def discard_revealed(game, player)
-    player.discard_revealed
-    @log_updater.put(player, [@valid_card], 'deck') unless @valid_card.nil?
+    revealed_cards = player.player_cards.revealed
+    @log_updater.put(player, [@valid_card], 'deck', false) unless @valid_card.nil?
+    CardDiscarder.new(player, revealed_cards).discard
   end
 
   def reveal_finished?(game, player)
