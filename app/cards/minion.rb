@@ -36,8 +36,7 @@ module Minion
     elsif action.response == 'discard'
       game.current_turn.add_minion
       hand = game_player.hand
-      hand.each(&:discard)
-      @log_updater.discard(game_player, hand)
+      CardDiscarder.new(game_player, hand).discard('hand')
       CardDrawer.new(game_player).draw(4)
     end
     ActiveRecord::Base.connection.clear_query_cache
@@ -50,8 +49,7 @@ module Minion
       players.each do |player|
         hand = player.hand
         if hand.count > 4
-          hand.each(&:discard)
-          @log_updater.discard(player, hand)
+          CardDiscarder.new(player, hand).discard('hand')
           CardDrawer.new(player).draw(4)
         end
       end
