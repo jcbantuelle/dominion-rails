@@ -39,8 +39,7 @@ module SecretChamber
 
   def process_discard_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
-    discarded_cards.update_all state: 'discard'
-    LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+    CardDiscarder.new(game_player, discarded_cards).discard('hand')
     game.current_turn.add_coins(discarded_cards.count)
     LogUpdater.new(game).get_from_card(game_player, "+$#{discarded_cards.count}")
   end
