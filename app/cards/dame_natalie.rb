@@ -30,6 +30,8 @@ module DameNatalie
         players.each do |player|
           reveal(game, player)
           trash_card(game, player)
+          revealed_cards = player.player_cards.revealed
+          CardDiscarder.new(player, revealed_cards).discard
           TurnActionHandler.wait_for_response(game)
         end
       end
@@ -39,7 +41,6 @@ module DameNatalie
   def reveal(game, player)
     @revealed = []
     reveal_cards(game, player)
-    player.discard_revealed
   end
 
   def process_revealed_card(card)
@@ -62,7 +63,7 @@ module DameNatalie
       }
       if available_cards.count == 1
         trashed_card = available_cards.first
-        CardTrasher.new(player, available_cards).trash(nil, true)
+        CardTrasher.new(player, available_cards).trash
         trash_self(game) if trashed_card.knight?
       elsif available_cards.count > 1
         action = TurnActionHandler.send_choose_cards_prompt(game, player, available_cards, 'Choose which card to trash:', 1, 1, 'trash')
@@ -74,7 +75,7 @@ module DameNatalie
   def process_action(game, game_player, action)
     if action.action == 'trash'
       card = PlayerCard.find action.response
-      CardTrasher.new(game_player, [card]).trash(nil, true)
+      CardTrasher.new(game_player, [card]).trash
       trash_self(game) if card.knight?
     elsif action.action == 'gain'
       card = GameCard.find action.response
