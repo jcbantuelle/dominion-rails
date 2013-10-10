@@ -60,9 +60,10 @@ module Saboteur
     @revealed = []
     @trashed = nil
     reveal_cards(game, player)
-    player.discard_revealed
-    @log_updater.reveal(player, @revealed, 'deck', @trashed.nil?)
-    CardTrasher.new(player, [@trashed]).trash(nil, true) if @trashed.present?
+    @log_updater.reveal(player, @revealed, 'deck')
+    revealed_cards = player.player_cards.revealed
+    CardDiscarder.new(player, revealed_cards).discard
+    CardTrasher.new(player, [@trashed]).trash if @trashed.present?
   end
 
   def process_revealed_card(card)
