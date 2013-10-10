@@ -23,8 +23,7 @@ module Beggar
   def process_action(game, game_player, action)
     if action.response == 'yes'
       beggar = game_player.find_card_in_hand('beggar')
-      beggar.discard
-      LogUpdater.new(game).discard(game_player, [beggar])
+      CardDiscarder.new(game_player, [beggar]).discard('hand')
       give_card_to_player(game, game.current_player, 'silver', 'discard')
       give_card_to_player(game, game.current_player, 'silver', 'deck')
       ActiveRecord::Base.connection.clear_query_cache
