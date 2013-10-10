@@ -84,7 +84,8 @@ module Rebuild
   end
 
   def discard_revealed(game)
-    game.current_player.discard_revealed
+    revealed_cards = game.current_player.player_cards.revealed
+    CardDiscarder.new(game.current_player, revealed_cards).discard
   end
 
   def reveal_finished?(game, player)
