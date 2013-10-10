@@ -54,8 +54,7 @@ module Count
       process_second_choice(game, game_player, action)
     elsif action.action == 'discard'
       discarded_cards = PlayerCard.where(id: action.response.split)
-      discarded_cards.update_all state: 'discard'
-      LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+      CardDiscarder.new(game_player, discarded_cards).discard('hand')
     elsif action.action == 'deck'
       returned_card = PlayerCard.find action.response
       put_card_on_deck(game, game_player, returned_card)
@@ -67,7 +66,7 @@ module Count
     when 'discard'
       hand = game_player.hand
       if hand.count <= 2
-        LogUpdater.new(game).discard(game_player, hand, 'hand')
+        CardDiscarder.new(game_player, hand).discard('hand')
       else
         action = TurnActionHandler.send_choose_cards_prompt(game, game_player, hand, "Choose 2 cards to discard:", 2, 2, 'discard')
         TurnActionHandler.process_player_response(game, game_player, action, self)
