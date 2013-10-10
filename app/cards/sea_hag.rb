@@ -28,8 +28,7 @@ module SeaHag
     player.shuffle_discard_into_deck if player.needs_reshuffle?
     unless player.empty_deck?
       card = player.player_cards.deck.first
-      card.update_attribute :state, 'discard'
-      @log_updater.discard(player, [card], 'deck')
+      CardDiscarder.new(player, [card]).discard('deck')
     end
   end
 
