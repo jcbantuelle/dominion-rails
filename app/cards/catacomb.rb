@@ -30,8 +30,8 @@ module Catacomb
       end
       LogUpdater.new(game).custom_message(game_player, 'the drawn cards', 'keep')
     elsif action.response == 'discard'
-      game_player.discard_revealed
-      LogUpdater.new(game).custom_message(game_player, 'the drawn cards', 'discard')
+      revealed_cards = game_player.player_cards.revealed
+      CardDiscarder.new(game_player, revealed_cards).discard
       CardDrawer.new(game_player).draw(3)
     end
   end
