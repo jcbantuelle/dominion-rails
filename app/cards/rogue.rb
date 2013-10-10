@@ -36,10 +36,13 @@ module Rogue
   def attack(game, players)
     @attack_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
-        players.each do |player|
-          reveal(game, player)
-          trash_card(game, player)
-          TurnActionHandler.wait_for_response(game)
+        if game.current_turn.rogues > 0
+          game.current_turn.remove_rogue
+          players.each do |player|
+            reveal(game, player)
+            trash_card(game, player)
+            TurnActionHandler.wait_for_response(game)
+          end
         end
       end
     }
@@ -48,7 +51,6 @@ module Rogue
   def reveal(game, player)
     @revealed = []
     reveal_cards(game, player)
-    player.discard_revealed
   end
 
   def process_revealed_card(card)
@@ -64,18 +66,20 @@ module Rogue
     if @revealed.count == 0
       @log_updater.custom_message(nil, 'But there are no cards in deck')
     else
-      @log_updater.reveal(player, @revealed, 'deck', false)
+      @log_updater.reveal(player, @revealed, 'deck')
       available_cards = @revealed.select{ |card|
         cost = card.calculated_cost(game, game.current_turn)[:coin]
         cost > 2 && cost < 7
       }
       if available_cards.count == 1
-        CardTrasher.new(player, available_cards).trash(nil, true)
+        CardTrasher.new(player, available_cards).trash
       elsif available_cards.count > 1
         action = TurnActionHandler.send_choose_cards_prompt(game, player, available_cards, 'Choose which card to trash:', 1, 1, 'trash')
         TurnActionHandler.process_player_response(game, player, action, self)
       end
     end
+    revealed_cards = player.player_cards.revealed
+    CardDiscarder.new(player, revealed_cards).discard
   end
 
   def process_action(game, game_player, action)
@@ -83,7 +87,7 @@ module Rogue
       gain_trash_on_deck(game, game_player, GameTrash.find(action.response))
     elsif action.action == 'trash'
       card = PlayerCard.find action.response
-      CardTrasher.new(game_player, [card]).trash(nil, true)
+      CardTrasher.new(game_player, [card]).trash
     end
   end
 
