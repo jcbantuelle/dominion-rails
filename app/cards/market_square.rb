@@ -36,9 +36,8 @@ module MarketSquare
     if action.response == 'yes'
       market_square = game_player.find_card_in_hand('market_square')
       unless market_square.nil?
-        market_square.discard
-        LogUpdater.new(game).discard(game_player, [market_square])
-        give_card_to_player(game, game.current_player, 'gold', 'discard')
+        CardDiscarder.new(game_player, [market_square]).discard('hand')
+        give_card_to_player(game, game_player, 'gold', 'discard')
         ActiveRecord::Base.connection.clear_query_cache
         TurnActionHandler.refresh_game_area(game, game_player.player)
       end
