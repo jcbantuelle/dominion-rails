@@ -40,8 +40,8 @@ module Adventurer
   end
 
   def discard_revealed(game)
-    revealed_cards = game.current_player.player_cards.revealed
     @log_updater.put(game.current_player, @treasures, 'hand', false)
+    revealed_cards = game.current_player.player_cards.revealed
     CardDiscarder.new(game.current_player, revealed_cards).discard
   end
 
