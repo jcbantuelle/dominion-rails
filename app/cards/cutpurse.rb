@@ -25,8 +25,7 @@ module Cutpurse
       if copper.nil?
         @log_updater.reveal(player, player.hand, 'hand')
       else
-        copper.discard
-        @log_updater.discard(player, [copper])
+        CardDiscarder.new(player, [copper]).discard('hand')
       end
     end
   end
