@@ -41,8 +41,7 @@ module Ironmonger
 
   def process_action(game, game_player, action)
     if action.response == 'yes'
-      game_player.discard_revealed
-      @log_updater.discard(game_player, @revealed)
+      CardDiscarder.new(game_player, @revealed).discard
     else
       @revealed.first.update state: 'deck'
       @log_updater.put(game_player, @revealed, 'deck', false)
