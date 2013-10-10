@@ -26,6 +26,8 @@ module Websockets::Game::TurnActions
 
   def play_coin_from_hand(data)
     played_coins = {}
+    ActiveRecord::Base.connection.clear_query_cache
+    @game.reload
     @game.current_player.find_coin_in_hand.each do |coin|
       played_coins[coin.name] ||= {
           html: coin.card.card_html,
@@ -50,6 +52,8 @@ module Websockets::Game::TurnActions
       data['announce'] = true
       ApplicationController.games[@game.id][:thread] = Thread.new {
         ActiveRecord::Base.connection_pool.with_connection do
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
           play(data)
           ActiveRecord::Base.connection.clear_query_cache
           @game.reload
