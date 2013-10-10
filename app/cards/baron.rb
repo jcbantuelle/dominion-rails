@@ -44,8 +44,7 @@ module Baron
   def process_action(game, game_player, action)
     if action.response == 'yes'
       estate = game_player.find_card_in_hand('estate')
-      estate.discard
-      @log_updater.discard(game_player, [estate])
+      CardDiscarder.new(game_player, [estate]).discard('hand')
       game.current_turn.add_coins(4)
       @log_updater.get_from_card(game_player, '+$4')
     else
