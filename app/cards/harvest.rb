@@ -27,7 +27,7 @@ module Harvest
   def reveal(game)
     @revealed = []
     reveal_cards(game, game.current_player)
-    @log_updater.reveal(game.current_player, @revealed, 'deck', true)
+    @log_updater.reveal(game.current_player, @revealed, 'deck')
     discard_revealed(game)
   end
 
@@ -37,7 +37,8 @@ module Harvest
   end
 
   def discard_revealed(game)
-    game.current_player.discard_revealed
+    revealed_cards = game.current_player.player_cards.revealed
+    CardDiscarder.new(game.current_player, revealed_cards).discard
   end
 
   def reveal_finished?(game, player)
