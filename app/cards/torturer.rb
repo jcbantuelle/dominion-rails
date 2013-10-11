@@ -53,8 +53,7 @@ module Torturer
     elsif action.response == 'discard'
       hand = game_player.hand
       if hand.count < 3
-        hand.update_all state: 'discard'
-        LogUpdater.new(game).discard(game_player, hand, 'hand')
+        CardDiscarder.new(game_player, hand).discard('hand')
       else
         action = TurnActionHandler.send_choose_cards_prompt(game, game_player, hand, "Choose 2 cards to discard:", 2, 2, 'discard')
         TurnActionHandler.process_player_response(game, game_player, action, self)
@@ -64,8 +63,7 @@ module Torturer
 
   def discard_cards(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
-    discarded_cards.update_all state: 'discard'
-    LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+    CardDiscarder.new(game_player, discarded_cards).discard('hand')
   end
 
 end
