@@ -17,10 +17,7 @@ module Tactician
   def play(game, clone=false)
     hand = game.current_player.hand
     if hand.count > 0
-      hand.each do |card|
-        card.discard
-      end
-      @log_updater.discard(game.current_player, hand)
+      CardDiscarder.new(game.current_player, hand).discard('hand')
       game.current_turn.add_tactician
     end
   end
