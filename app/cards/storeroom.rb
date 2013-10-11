@@ -28,9 +28,9 @@ module Storeroom
 
   def process_action(game, game_player, action)
     discarded_cards = PlayerCard.where(id: action.response.split)
-    discarded_cards.update_all state: 'discard'
     card_count = discarded_cards.count
-    LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+
+    CardDiscarder.new(game_player, discarded_cards).discard('hand')
     if action.action == 'card'
       CardDrawer.new(game_player).draw(card_count) unless card_count == 0
     elsif action.action == 'coin'
