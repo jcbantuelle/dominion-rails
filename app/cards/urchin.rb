@@ -40,8 +40,7 @@ module Urchin
   def process_action(game, game_player, action)
     if action.action == 'discard'
       discarded_cards = PlayerCard.where(id: action.response.split)
-      discarded_cards.update_all state: 'discard'
-      LogUpdater.new(game).discard(game_player, discarded_cards, 'hand')
+      CardDiscarder.new(game_player, discarded_cards).discard('hand')
     elsif action.action == 'trash'
       if action.response == 'yes'
         urchin = game_player.find_card_in_play('urchin')
