@@ -51,17 +51,13 @@ module Tribute
     @revealed = []
     player_to_left = game.player_to_left(game.current_player)
     reveal_cards(game, player_to_left)
-    @log_updater.reveal(player_to_left, @revealed, 'deck', true)
-    discard_revealed(game)
+    @log_updater.reveal(player_to_left, @revealed, 'deck')
+    CardDiscarder.new(player_to_left, @revealed).discard
   end
 
   def process_revealed_card(card)
     card.update_attribute :state, 'revealed'
     @revealed.count == 2
-  end
-
-  def discard_revealed(game)
-    game.current_player.discard_revealed
   end
 
   def reveal_finished?(game, player)
