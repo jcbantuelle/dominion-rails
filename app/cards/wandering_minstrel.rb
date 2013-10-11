@@ -31,8 +31,7 @@ module WanderingMinstrel
       card = PlayerCard.find card_id
       put_card_on_deck(game, game_player, card, false)
     end
-    game.current_player.discard_revealed
-    LogUpdater.new(game).custom_message(game_player, 'the rest', 'discard')
+    discard_revealed(game.current_player)
   end
 
   private
@@ -40,12 +39,10 @@ module WanderingMinstrel
   def replace_actions(game)
     actions = @revealed.select(&:action?)
     if actions.count == 0
-      game.current_player.discard_revealed
-      LogUpdater.new(game).custom_message(game.current_player, 'all revealed cards', 'discard')
+      discard_revealed(game.current_player)
     elsif actions.count == 1
       put_card_on_deck(game, game.current_player, actions.first, false)
-      game.current_player.discard_revealed
-      LogUpdater.new(game).custom_message(game.current_player, 'the rest', 'discard')
+      discard_revealed(game.current_player)
     elsif actions.count > 1
       action = TurnActionHandler.send_order_cards_prompt(game, game.current_player, actions, 'Choose order to put cards on deck (1st is top of deck)')
       TurnActionHandler.process_player_response(game, game.current_player, action, self)
@@ -56,6 +53,11 @@ module WanderingMinstrel
     @revealed = []
     reveal_cards(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
+  end
+
+  def discard_revealed(player)
+    revealed_cards = player.player_cards.revealed
+    CardDiscarder.new(player, revealed_cards).discard
   end
 
   def process_revealed_card(card)
