@@ -40,8 +40,9 @@ module Venture
   end
 
   def discard_revealed(game)
-    game.current_player.discard_revealed
-    @log_updater.put(game.current_player, [@treasure], 'play')
+    @log_updater.put(game.current_player, [@treasure], 'play', false)
+    revealed_cards = game.current_player.player_cards.revealed
+    CardDiscarder.new(game.current_player, revealed_cards).discard
   end
 
   def reveal_finished?(game, player)
