@@ -62,8 +62,8 @@ cards = %w(hunting_party fairgrounds menagerie harvest farming_village fortune_t
 create_cards(cards, true, false, false, 'cornucopia')
 #
 # Hinterlands
-cards = %w(crossroads duchess fools_gold develop oasis nomad_camp silk_road cache highway ill_gotten_gains)
-# oracle scheme tunnel jack_of_all_trades noble_brigand spice_merchant trader cartographer embassy haggler inn mandarin margrave stables border_village farmland
+cards = %w(crossroads duchess fools_gold develop oasis oracle nomad_camp silk_road cache highway ill_gotten_gains)
+# scheme tunnel jack_of_all_trades noble_brigand spice_merchant trader cartographer embassy haggler inn mandarin margrave stables border_village farmland
 create_cards(cards, true, false, false, 'hinterlands')
 
 # Dark Ages
