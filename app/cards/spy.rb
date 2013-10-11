@@ -56,8 +56,7 @@ module Spy
 
   def process_action(game, game_player, action)
     if action.response == 'yes'
-      game_player.discard_revealed
-      @log_updater.discard(game_player, @revealed)
+      CardDiscarder.new(game_player, @revealed).discard
     else
       @revealed.first.update state: 'deck'
       @log_updater.put(game_player, @revealed, 'deck', false)
@@ -69,7 +68,6 @@ module Spy
   def reveal(game, player)
     @revealed = []
     reveal_cards(game, player)
-    player.discard_revealed
   end
 
   def process_revealed_card(card)
