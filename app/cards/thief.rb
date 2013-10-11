@@ -44,7 +44,6 @@ module Thief
   def reveal(game, player)
     @revealed = []
     reveal_cards(game, player)
-    player.discard_revealed
   end
 
   def process_revealed_card(card)
@@ -59,16 +58,18 @@ module Thief
   def trash_treasure(game, player)
     treasures = @revealed.select(&:treasure?)
     if treasures.count == 0
-      @log_updater.reveal(player, @revealed, 'deck', true)
+      @log_updater.reveal(player, @revealed, 'deck')
     else
-      @log_updater.reveal(player, @revealed, 'deck', false)
+      @log_updater.reveal(player, @revealed, 'deck')
       if treasures.count == 1
-        @trashed += CardTrasher.new(player, treasures).trash(nil, true)
+        @trashed += CardTrasher.new(player, treasures).trash
       else
         action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, treasures, "Choose which of #{player.username}'s treasures to trash:", 1, 1, 'trash')
         TurnActionHandler.process_player_response(game, player, action, self)
       end
     end
+    revealed_cards = player.player_cards.revealed
+    CardDiscarder.new(player, revealed_cards).discard
   end
 
   def gain_trashed_treasures(game)
@@ -78,7 +79,7 @@ module Thief
 
   def process_trash_action(game, game_player, action)
     trashed_card = PlayerCard.find action.response
-    @trashed += CardTrasher.new(game_player, [trashed_card]).trash(nil, true)
+    @trashed += CardTrasher.new(game_player, [trashed_card]).trash
     ActiveRecord::Base.connection.clear_query_cache
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
