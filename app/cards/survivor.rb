@@ -31,8 +31,7 @@ module Survivor
   def process_action(game, game_player, action)
     if action.action == 'choose'
       if action.response == 'discard'
-        game_player.discard_revealed
-        @log_updater.discard(game_player, @revealed)
+        CardDiscarder.new(game_player, @revealed).discard
       elsif action.response == 'replace'
         action = TurnActionHandler.send_order_cards_prompt(game, game_player, @revealed, 'Choose order to put cards on deck (1st is top of deck)', 'replace')
         TurnActionHandler.process_player_response(game, game_player, action, self)
