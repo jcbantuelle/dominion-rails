@@ -124,4 +124,30 @@ class Game < ActiveRecord::Base
     game_trashes.select{ |trash| trash.of_type(type) }
   end
 
+  def card_names
+    cards = []
+    game_cards.map{ |game_card|
+      if game_card.mixed_game_cards.empty?
+        cards << {
+          text: game_card.card.card_html.html_safe,
+          value: game_card.name
+        }
+      else
+        if game_card.name == 'ruins'
+          mixed_cards = %w(abandoned_mine ruined_library ruined_market ruined_village survivors)
+        elsif game_card.name == 'knights'
+          mixed_cards = %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander)
+        end
+        mixed_cards.map{ |mixed_card|
+          card = Card.by_name(mixed_card)
+          cards << {
+            text: card.card_html.html_safe,
+            value: card.name
+          }
+        }
+      end
+    }
+    cards
+  end
+
 end
