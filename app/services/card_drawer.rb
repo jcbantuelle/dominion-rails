@@ -10,11 +10,13 @@ class CardDrawer
   def draw(count, update_log = true, card=nil)
     move_to_hand(count)
     LogUpdater.new(@player.game).draw(@drawn_cards, @player, card) if update_log
+    TurnActionHandler.refresh_game_area(@player.game, @player.player)
   end
 
   def draw_duration(count, card)
     move_to_hand(count)
     LogUpdater.new(@player.game).draw(@drawn_cards, @player, card)
+    TurnActionHandler.refresh_game_area(@player.game, @player.player)
   end
 
   private

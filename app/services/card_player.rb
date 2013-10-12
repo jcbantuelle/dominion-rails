@@ -43,6 +43,7 @@ class CardPlayer
     end
     card.update_attribute(:state, new_state)
     @game.current_turn.add_played_action if @card.action_card?
+    TurnActionHandler.refresh_game_area(@game, @game.current_player.player) if @announce
   end
 
   def play
