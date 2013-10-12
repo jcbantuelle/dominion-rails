@@ -33,14 +33,14 @@ module WishingWell
   end
 
   def name_card(game)
-    cards = game.game_cards
-    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, cards, 'Choose a card to name:', 1, 1)
+    options = game.card_names
+    action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose a card to name:', 1, 1)
     TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
   def process_action(game, game_player, action)
-    named_card = GameCard.find(action.response)
-    LogUpdater.new(game).custom_message(game_player, "#{named_card.card.card_html}".html_safe, 'name')
+    named_card = Card.by_name(action.response)
+    LogUpdater.new(game).custom_message(game_player, "#{named_card.card_html}".html_safe, 'name')
     reveal(game, game.current_player)
     @log_updater.reveal(game.current_player, @revealed, 'deck')
     revealed_card = @revealed.first
