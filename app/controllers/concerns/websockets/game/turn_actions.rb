@@ -71,9 +71,13 @@ module Websockets::Game::TurnActions
           gainer = CardGainer.new @game, @game.current_player, card.name
           if gainer.valid_buy?
             gainer.buy_card
-            ActiveRecord::Base.connection.clear_query_cache
-            @game.reload
-            send_card_action_data('buy_card_json')
+            if @game.current_turn.buys == 0
+              end_turn(nil)
+            else
+              ActiveRecord::Base.connection.clear_query_cache
+              @game.reload
+              send_card_action_data('buy_card_json')
+            end
           end
         end
       }
