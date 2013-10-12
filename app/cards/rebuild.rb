@@ -32,15 +32,15 @@ module Rebuild
   end
 
   def name_card(game)
-    cards = game.game_cards
-    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, cards, 'Choose a card to name:', 1, 1, 'name')
+    options = game.card_names
+    action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Choose a card to name:', 1, 1, 'name')
     TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
   def process_action(game, game_player, action)
     if action.action == 'name'
-      @named_card = GameCard.find(action.response)
-      LogUpdater.new(game).custom_message(game_player, "#{@named_card.card.card_html}".html_safe, 'name')
+      @named_card = Card.by_name(action.response)
+      LogUpdater.new(game).custom_message(game_player, "#{@named_card.card_html}".html_safe, 'name')
       reveal(game, game_player)
       rebuild_trashed_card(game, game_player) unless @trashed_card.nil?
     elsif action.action == 'gain'
