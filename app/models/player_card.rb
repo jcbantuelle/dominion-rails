@@ -5,6 +5,7 @@ class PlayerCard < ActiveRecord::Base
   scope :ordered, ->{ order 'card_order, card_id' }
   scope :deck, ->{ where state: 'deck' }
   scope :hand, ->{ where state: 'hand' }
+  scope :in_play_without_duration, ->{ where state: 'play' }
   scope :in_play, ->{ where state: %w(play duration) }
   scope :duration, ->{ where state: 'duration' }
   scope :discard, ->{ where state: 'discard' }

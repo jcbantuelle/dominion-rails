@@ -2,8 +2,14 @@ module Websockets::Game::TurnActions
 
   def end_turn(data)
     if can_play?
-      TurnEnder.new(@game).end_turn
-      send_end_turn_data
+      ApplicationController.games[@game.id][:thread] = Thread.new {
+        ActiveRecord::Base.connection_pool.with_connection do
+          TurnEnder.new(@game).end_turn
+          ActiveRecord::Base.connection.clear_query_cache
+          @game.reload
+          send_end_turn_data
+        end
+      }
     end
   end
 

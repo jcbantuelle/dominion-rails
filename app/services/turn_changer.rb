@@ -35,6 +35,7 @@ class TurnChanger
   end
 
   def clean_up
+    resolve_schemes if @game.current_turn.schemes > 0
     @game.current_player.in_play.each do |in_play_card|
       in_play_card.card.discard_reaction(@game, @game.current_player, :cleanup) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
     end
@@ -42,6 +43,21 @@ class TurnChanger
     draw_count = @outpost ? 3 : 5
     CardDrawer.new(@game.current_player).draw(draw_count, false)
     revert_band_of_misfits
+  end
+
+  def resolve_schemes
+    @game.current_turn.schemes.times do |i|
+      valid_cards = @game.current_player.in_play_without_duration.select(&:action?)
+      action = TurnActionHandler.send_choose_cards_prompt(@game, @game.current_player, valid_cards, "You may choose a card to put on deck:", 1)
+      TurnActionHandler.wait_for_response(@game)
+      action = TurnAction.find_uncached action.id
+      unless action.response.empty?
+        card = PlayerCard.find action.response
+        @game.current_player.put_card_on_deck card
+        LogUpdater.new(@game).put(@game.current_player, [card], 'deck', false)
+      end
+      action.destroy
+    end
   end
 
   def set_game_turn

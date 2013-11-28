@@ -52,6 +52,10 @@ class Turn < ActiveRecord::Base
     update_attribute :coppersmith, coppersmith + 1
   end
 
+  def add_scheme
+    update_attribute :schemes, schemes + 1
+  end
+
   def add_minion
     update_attribute :minions, minions + 1
   end
@@ -86,6 +90,10 @@ class Turn < ActiveRecord::Base
 
   def remove_minion
     update_attribute :minions, minions - 1
+  end
+
+  def remove_scheme
+    update_attribute :schemes, schemes - 1
   end
 
   def remove_mercenary
