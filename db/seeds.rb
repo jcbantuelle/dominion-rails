@@ -3,7 +3,7 @@
 
 def create_cards(cards, kingdom=false, treasure=false, victory=false, set=nil, supply=true)
   cards.each do |c|
-    Card.where({name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set, supply: supply}).first_or_create
+    Card.where({name: c, kingdom: kingdom, treasure: treasure, victory: victory, set: set, supply: supply, type: c.classify}).first_or_create
   end
 end
 

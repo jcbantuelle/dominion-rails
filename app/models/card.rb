@@ -4,16 +4,10 @@ class Card < ActiveRecord::Base
   scope :card_name, ->(card_name) { where(name: card_name) }
   scope :end_game_cards, ->{ where(name: %w[province colony])}
 
-  after_find :load_card_module
-
   attr_accessor :log_updater, :play_thread, :attack_thread, :reaction_thread
 
   def self.by_name(card_name)
     card_name(card_name).first
-  end
-
-  def load_card_module
-    extend name.classify.constantize
   end
 
   def playable?
