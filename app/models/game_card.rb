@@ -23,40 +23,32 @@ class GameCard < ActiveRecord::Base
     card.supply?
   end
 
+  def name
+    card.name
+  end
+
   def treasure_card?
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      top_card.treasure_card?
-    else
-      card.treasure_card?
-    end
+    top_card.treasure_card?
   end
 
   def victory_card?
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      top_card.victory_card?
-    else
-      card.victory_card?
-    end
+    top_card.victory_card?
   end
 
   def attack_card?
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      top_card.attack_card?
-    else
-      card.attack_card?
-    end
+    top_card.attack_card?
   end
 
   def action_card?
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      top_card.action_card?
-    else
-      card.action_card?
-    end
+    top_card.action_card?
+  end
+
+  def type_class
+    top_card.type_class
+  end
+
+  def top_card
+    name == 'ruins' || name == 'knights' ? mixed_game_cards.first : card
   end
 
   def belongs_to_set?(set)
@@ -67,29 +59,11 @@ class GameCard < ActiveRecord::Base
     remaining > 0
   end
 
-  def type_class
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      top_card.type_class
-    else
-      card.type_class
-    end
-  end
-
-  def name
-    card.name
-  end
-
   def calculated_cost(game_record, turn)
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      if top_card.nil?
-        {coin: 0, potion: 0}
-      else
-        top_card.card.calculated_cost(game_record, turn)
-      end
+    if top_card.nil?
+      {coin: 0, potion: 0}
     else
-      card.calculated_cost(game_record, turn)
+      top_card.card.calculated_cost(game_record, turn)
     end
   end
 
@@ -108,40 +82,27 @@ class GameCard < ActiveRecord::Base
   end
 
   def json(game_record, turn)
-    if name == 'ruins' || name == 'knights'
-      top_card = mixed_game_cards.first
-      if top_card.nil?
-        card_cost = {
-          coin: 0,
-          potion: 0
-        }
-        card_name = 'placeholder'
-        card_type_class = ''
-      else
-        card_cost = top_card.calculated_cost(game_record, turn)
-        card_name = top_card.name
-        card_type_class = top_card.type_class
-      end
-      {
-        id: id,
-        name: card_name,
-        type_class: card_type_class,
-        coin_cost: card_cost[:coin],
-        potion_cost: card_cost[:potion],
-        remaining: remaining,
-        title: name.titleize
+    if top_card.nil?
+      card_cost = {
+        coin: 0,
+        potion: 0
       }
+      card_name = 'placeholder'
+      card_type_class = ''
     else
-      card_cost = calculated_cost(game_record, turn)
-      {
-        id: id,
-        name: name,
-        type_class: type_class,
-        coin_cost: card_cost[:coin],
-        potion_cost: card_cost[:potion],
-        remaining: remaining,
-        title: name.titleize
-      }
+      card_cost = top_card.calculated_cost(game_record, turn)
+      card_name = top_card.name
+      card_type_class = top_card.type_class
     end
+
+    {
+      id: id,
+      name: card_name,
+      type_class: card_type_class,
+      coin_cost: card_cost[:coin],
+      potion_cost: card_cost[:potion],
+      remaining: remaining,
+      title: name.titleize
+    }
   end
 end
