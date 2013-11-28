@@ -47,6 +47,7 @@ class Forager < Card
   end
 
   def gain_coins(game, game_player)
+    game.reload
     trashed_treasures = game.trash_by_type('treasure')
     unique_treasure_count = trashed_treasures.collect(&:name).uniq.count
     game.current_turn.add_coins(unique_treasure_count)
