@@ -106,15 +106,15 @@ class Card < ActiveRecord::Base
 
   def play_card_multiple_times(game, game_player, card, count)
     count.times do |i|
-      play_card(game, card.card_id, i > 0)
+      play_card(game, card.card_id, i > 0, card.id)
       ActiveRecord::Base.connection.clear_query_cache
       game.reload
       TurnActionHandler.refresh_game_area(game, game_player.player)
     end
   end
 
-  def play_card(game, card_id, clone)
-    card = CardPlayer.new(game, card_id, true, clone).play_card
+  def play_card(game, card_id, clone, player_card_id=nil)
+    card = CardPlayer.new(game, card_id, true, clone, player_card_id).play_card
     TurnActionHandler.wait_for_card(card)
   end
 

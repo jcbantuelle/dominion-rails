@@ -36,7 +36,7 @@ class CardPlayer
 
   def move_from_hand_to_play
     new_state = @card.duration_card? ? 'duration' : 'play'
-    if @player_card.nil?
+    if @player_card_id.nil?
       card = @game.current_player.hand.where(card_id: @card.id).first
     else
       card = PlayerCard.find(@player_card_id)
