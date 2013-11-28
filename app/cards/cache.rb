@@ -18,7 +18,7 @@ class Cache < Card
     game.current_turn.add_coins(3)
   end
 
-  def gain_event(game, player)
+  def gain_event(game, player, event)
     card_gainer = CardGainer.new game, player, 'copper'
     2.times do
       card_gainer.gain_card('discard')

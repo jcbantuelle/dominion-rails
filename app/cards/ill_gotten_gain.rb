@@ -35,7 +35,7 @@ class IllGottenGain < Card
     end
   end
 
-  def gain_event(game, player)
+  def gain_event(game, player, event)
     game.game_players.each do |game_player|
       CardGainer.new(game, game_player, 'curse').gain_card('discard') unless game_player.id == player.id
     end

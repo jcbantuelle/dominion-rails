@@ -22,7 +22,7 @@ class Duchy < Card
     card_html
   end
 
-  def gain_event(game, player)
+  def gain_event(game, player, event)
     if game.has_duchess?
       options = [
         { text: 'Yes', value: 'yes' },

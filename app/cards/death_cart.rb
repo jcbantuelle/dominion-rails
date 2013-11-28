@@ -51,7 +51,7 @@ class DeathCart < Card
     end
   end
 
-  def gain_event(game, player)
+  def gain_event(game, player, event)
     2.times do
       CardGainer.new(game, player, 'ruins').gain_card('discard')
     end
