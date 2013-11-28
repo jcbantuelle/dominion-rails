@@ -128,6 +128,7 @@ class CardPlayer
 
   def has_moat?(player)
     immune = false
+    moat = player.find_card_in_hand('moat')
     if moat
       action = send_moat_prompt(player)
       if action.response == 'yes'
@@ -138,10 +139,6 @@ class CardPlayer
       action.destroy
     end
     immune
-  end
-
-  def moat(player)
-    player.find_card_in_hand('moat')
   end
 
   def send_moat_prompt(player)
