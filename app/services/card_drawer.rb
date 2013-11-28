@@ -16,7 +16,6 @@ class CardDrawer
   def draw_duration(count, card)
     move_to_hand(count)
     LogUpdater.new(@player.game).draw(@drawn_cards, @player, card)
-    TurnActionHandler.refresh_game_area(@player.game, @player.player) if update_log
   end
 
   private
