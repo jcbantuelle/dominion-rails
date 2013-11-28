@@ -1,4 +1,4 @@
-module Scavenger
+class Scavenger < Card
 
   def starting_count(game)
     10

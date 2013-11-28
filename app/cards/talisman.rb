@@ -1,4 +1,4 @@
-module Talisman
+class Talisman < Card
 
   def starting_count(game)
     10

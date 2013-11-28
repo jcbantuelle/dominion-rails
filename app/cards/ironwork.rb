@@ -1,4 +1,4 @@
-module Ironwork
+class Ironwork < Card
 
   def starting_count(game)
     10

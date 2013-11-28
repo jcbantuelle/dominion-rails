@@ -1,4 +1,4 @@
-module Courtyard
+class Courtyard < Card
 
   def starting_count(game)
     10

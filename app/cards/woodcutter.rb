@@ -1,4 +1,4 @@
-module Woodcutter
+class Woodcutter < Card
 
   def starting_count(game)
     10

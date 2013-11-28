@@ -1,4 +1,4 @@
-module SirDestry
+class SirDestry < Card
 
   def cost(game, turn)
     {

@@ -1,4 +1,4 @@
-module Coppersmith
+class Coppersmith < Card
 
   def starting_count(game)
     10

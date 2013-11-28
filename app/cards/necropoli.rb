@@ -1,4 +1,4 @@
-module Necropoli
+class Necropoli < Card
 
   def cost(game, turn)
     {

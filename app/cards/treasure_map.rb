@@ -1,4 +1,4 @@
-module TreasureMap
+class TreasureMap < Card
 
   def starting_count(game)
     10

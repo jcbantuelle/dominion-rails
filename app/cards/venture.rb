@@ -1,4 +1,4 @@
-module Venture
+class Venture < Card
 
   def starting_count(game)
     10

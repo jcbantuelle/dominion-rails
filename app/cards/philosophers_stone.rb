@@ -1,4 +1,4 @@
-module PhilosophersStone
+class PhilosophersStone < Card
 
   def starting_count(game)
     10

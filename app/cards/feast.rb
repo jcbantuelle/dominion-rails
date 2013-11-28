@@ -1,4 +1,4 @@
-module Feast
+class Feast < Card
 
   def starting_count(game)
     10

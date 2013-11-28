@@ -1,4 +1,4 @@
-module Storeroom
+class Storeroom < Card
 
   def starting_count(game)
     10

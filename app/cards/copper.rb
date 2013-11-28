@@ -1,4 +1,4 @@
-module Copper
+class Copper < Card
 
   def starting_count(game)
     60

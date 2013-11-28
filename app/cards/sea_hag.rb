@@ -1,4 +1,4 @@
-module SeaHag
+class SeaHag < Card
 
   def starting_count(game)
     10

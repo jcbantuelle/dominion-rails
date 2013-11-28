@@ -1,4 +1,4 @@
-module Cutpurse
+class Cutpurse < Card
 
   def starting_count(game)
     10

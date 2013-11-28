@@ -1,4 +1,4 @@
-module Pawn
+class Pawn < Card
 
   def starting_count(game)
     10

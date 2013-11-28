@@ -1,4 +1,4 @@
-module AbandonedMine
+class AbandonedMine < Card
 
   def cost(game, turn)
     {

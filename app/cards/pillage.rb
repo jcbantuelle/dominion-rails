@@ -1,4 +1,4 @@
-module Pillage
+class Pillage < Card
 
   def starting_count(game)
     10

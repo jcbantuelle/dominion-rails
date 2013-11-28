@@ -1,4 +1,4 @@
-module Count
+class Count < Card
 
   def starting_count(game)
     10

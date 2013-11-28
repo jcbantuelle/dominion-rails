@@ -1,4 +1,4 @@
-module Thief
+class Thief < Card
 
   def starting_count(game)
     10

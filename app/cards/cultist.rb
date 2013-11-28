@@ -1,4 +1,4 @@
-module Cultist
+class Cultist < Card
 
   def starting_count(game)
     10

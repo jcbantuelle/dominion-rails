@@ -1,4 +1,4 @@
-module Chapel
+class Chapel < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module PoorHouse
+class PoorHouse < Card
 
   def starting_count(game)
     10

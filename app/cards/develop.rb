@@ -1,4 +1,4 @@
-module Develop
+class Develop < Card
 
   def starting_count(game)
     10

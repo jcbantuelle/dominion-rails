@@ -1,4 +1,4 @@
-module Curse
+class Curse < Card
 
   def starting_count(game)
     case game.player_count

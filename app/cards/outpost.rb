@@ -1,4 +1,4 @@
-module Outpost
+class Outpost < Card
 
   def starting_count(game)
     10

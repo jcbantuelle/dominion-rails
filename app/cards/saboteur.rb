@@ -1,4 +1,4 @@
-module Saboteur
+class Saboteur < Card
 
   def starting_count(game)
     10

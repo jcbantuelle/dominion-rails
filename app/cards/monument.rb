@@ -1,4 +1,4 @@
-module Monument
+class Monument < Card
 
   def starting_count(game)
     10

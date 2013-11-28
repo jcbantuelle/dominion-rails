@@ -1,4 +1,4 @@
-module Militium
+class Militium < Card
 
   def starting_count(game)
     10

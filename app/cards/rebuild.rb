@@ -1,4 +1,4 @@
-module Rebuild
+class Rebuild < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module SilkRoad
+class SilkRoad < Card
 
   def starting_count(game)
     victory_card_count(game)

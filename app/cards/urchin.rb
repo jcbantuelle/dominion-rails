@@ -1,4 +1,4 @@
-module Urchin
+class Urchin < Card
 
   def starting_count(game)
     10

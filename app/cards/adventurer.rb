@@ -1,4 +1,4 @@
-module Adventurer
+class Adventurer < Card
 
   def starting_count(game)
     10

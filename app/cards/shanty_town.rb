@@ -1,4 +1,4 @@
-module ShantyTown
+class ShantyTown < Card
 
   def starting_count(game)
     10

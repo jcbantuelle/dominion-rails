@@ -1,4 +1,4 @@
-module Bridge
+class Bridge < Card
 
   def starting_count(game)
     10

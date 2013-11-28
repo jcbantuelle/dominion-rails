@@ -1,4 +1,4 @@
-module Cellar
+class Cellar < Card
 
   def starting_count(game)
     10

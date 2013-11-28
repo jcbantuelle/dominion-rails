@@ -1,4 +1,4 @@
-module DeathCart
+class DeathCart < Card
 
   def starting_count(game)
     10

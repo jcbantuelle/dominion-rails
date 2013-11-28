@@ -1,4 +1,4 @@
-module HuntingParty
+class HuntingParty < Card
 
   def starting_count(game)
     10

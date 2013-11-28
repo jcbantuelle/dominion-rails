@@ -1,4 +1,4 @@
-module Festival
+class Festival < Card
 
   def starting_count(game)
     10

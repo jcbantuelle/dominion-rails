@@ -1,4 +1,4 @@
-module Quarry
+class Quarry < Card
 
   def starting_count(game)
     10

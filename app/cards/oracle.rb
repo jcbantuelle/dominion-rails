@@ -1,4 +1,4 @@
-module Oracle
+class Oracle < Card
 
   def starting_count(game)
     10

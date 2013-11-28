@@ -1,4 +1,4 @@
-module Platinum
+class Platinum < Card
 
   def starting_count(game)
     12

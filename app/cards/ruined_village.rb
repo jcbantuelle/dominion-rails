@@ -1,4 +1,4 @@
-module RuinedVillage
+class RuinedVillage < Card
 
   def cost(game, turn)
     {

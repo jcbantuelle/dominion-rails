@@ -1,4 +1,4 @@
-module Noble
+class Noble < Card
 
   def starting_count(game)
     victory_card_count(game)

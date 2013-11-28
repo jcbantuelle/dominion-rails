@@ -1,4 +1,4 @@
-module Peddler
+class Peddler < Card
 
   def starting_count(game)
     10

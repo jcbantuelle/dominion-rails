@@ -1,4 +1,4 @@
-module Bank
+class Bank < Card
 
   def starting_count(game)
     10

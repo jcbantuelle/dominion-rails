@@ -1,4 +1,4 @@
-module Chancellor
+class Chancellor < Card
 
   def starting_count(game)
     10

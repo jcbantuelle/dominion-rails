@@ -1,4 +1,4 @@
-module MiningVillage
+class MiningVillage < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module WanderingMinstrel
+class WanderingMinstrel < Card
 
   def starting_count(game)
     10

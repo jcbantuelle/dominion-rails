@@ -1,4 +1,4 @@
-module Masquerade
+class Masquerade < Card
 
   def starting_count(game)
     10

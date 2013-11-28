@@ -1,4 +1,4 @@
-module WishingWell
+class WishingWell < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module FoolsGold
+class FoolsGold < Card
 
   def starting_count(game)
     10

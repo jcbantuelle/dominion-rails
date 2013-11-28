@@ -1,4 +1,4 @@
-module Witch
+class Witch < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module Catacomb
+class Catacomb < Card
 
   def starting_count(game)
     10

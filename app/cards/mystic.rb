@@ -1,4 +1,4 @@
-module Mystic
+class Mystic < Card
 
   def starting_count(game)
     10

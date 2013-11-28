@@ -1,4 +1,4 @@
-module ThroneRoom
+class ThroneRoom < Card
 
   def starting_count(game)
     10

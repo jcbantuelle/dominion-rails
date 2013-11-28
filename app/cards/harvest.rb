@@ -1,4 +1,4 @@
-module Harvest
+class Harvest < Card
 
   def starting_count(game)
     10

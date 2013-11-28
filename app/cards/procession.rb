@@ -1,4 +1,4 @@
-module Procession
+class Procession < Card
 
   def starting_count(game)
     10

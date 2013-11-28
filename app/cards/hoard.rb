@@ -1,4 +1,4 @@
-module Hoard
+class Hoard < Card
 
   def starting_count(game)
     10

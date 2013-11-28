@@ -1,4 +1,4 @@
-module Vineyard
+class Vineyard < Card
 
   def starting_count(game)
     victory_card_count(game)

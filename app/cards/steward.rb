@@ -1,4 +1,4 @@
-module Steward
+class Steward < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module Torturer
+class Torturer < Card
 
   def starting_count(game)
     10

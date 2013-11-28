@@ -1,4 +1,4 @@
-module Ruin
+class Ruin < Card
 
   def starting_count(game)
     case game.player_count

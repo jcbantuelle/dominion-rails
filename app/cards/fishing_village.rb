@@ -1,4 +1,4 @@
-module FishingVillage
+class FishingVillage < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module Wharf
+class Wharf < Card
 
   def starting_count(game)
     10

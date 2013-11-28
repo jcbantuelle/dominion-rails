@@ -1,4 +1,4 @@
-module JunkDealer
+class JunkDealer < Card
 
   def starting_count(game)
     10

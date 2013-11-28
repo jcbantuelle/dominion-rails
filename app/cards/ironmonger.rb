@@ -1,4 +1,4 @@
-module Ironmonger
+class Ironmonger < Card
 
   def starting_count(game)
     10

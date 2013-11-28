@@ -1,4 +1,4 @@
-module Forager
+class Forager < Card
 
   def starting_count(game)
     10

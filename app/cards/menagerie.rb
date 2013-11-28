@@ -1,4 +1,4 @@
-module Menagerie
+class Menagerie < Card
 
   def starting_count(game)
     10

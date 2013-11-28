@@ -1,4 +1,4 @@
-module Altar
+class Altar < Card
 
   def starting_count(game)
     10

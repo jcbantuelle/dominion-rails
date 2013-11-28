@@ -1,4 +1,4 @@
-module Caravan
+class Caravan < Card
 
   def starting_count(game)
     10

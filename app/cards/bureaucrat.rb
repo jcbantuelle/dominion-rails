@@ -1,4 +1,4 @@
-module Bureaucrat
+class Bureaucrat < Card
 
   def starting_count(game)
     10

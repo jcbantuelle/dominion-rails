@@ -1,4 +1,4 @@
-module SirVander
+class SirVander < Card
 
   def cost(game, turn)
     {

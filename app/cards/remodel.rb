@@ -1,4 +1,4 @@
-module Remodel
+class Remodel < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module Colony
+class Colony < Card
 
   def starting_count(game)
     victory_card_count(game)

@@ -1,4 +1,4 @@
-module Armory
+class Armory < Card
 
   def starting_count(game)
     10

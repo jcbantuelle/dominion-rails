@@ -1,4 +1,4 @@
-module CouncilRoom
+class CouncilRoom < Card
 
   def starting_count(game)
     10

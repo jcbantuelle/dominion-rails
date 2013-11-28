@@ -1,4 +1,4 @@
-module Potion
+class Potion < Card
 
   def starting_count(game)
     16

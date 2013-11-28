@@ -1,4 +1,4 @@
-module Marauder
+class Marauder < Card
 
   def starting_count(game)
     10

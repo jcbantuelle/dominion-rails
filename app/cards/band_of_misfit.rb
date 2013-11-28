@@ -1,4 +1,4 @@
-module BandOfMisfit
+class BandOfMisfit < Card
 
   def starting_count(game)
     10

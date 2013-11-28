@@ -1,4 +1,4 @@
-module Rat
+class Rat < Card
 
   def starting_count(game)
     20

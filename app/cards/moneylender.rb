@@ -1,4 +1,4 @@
-module Moneylender
+class Moneylender < Card
 
   def starting_count(game)
     10

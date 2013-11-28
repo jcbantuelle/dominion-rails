@@ -1,4 +1,4 @@
-module Estate
+class Estate < Card
 
   def starting_count(game)
     victory_card_count(game)

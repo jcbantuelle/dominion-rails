@@ -1,4 +1,4 @@
-module Gold
+class Gold < Card
 
   def starting_count(game)
     30

@@ -1,4 +1,4 @@
-module Silver
+class Silver < Card
 
   def starting_count(game)
     40

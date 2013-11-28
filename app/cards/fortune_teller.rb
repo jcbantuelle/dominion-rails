@@ -1,4 +1,4 @@
-module FortuneTeller
+class FortuneTeller < Card
 
   def starting_count(game)
     10

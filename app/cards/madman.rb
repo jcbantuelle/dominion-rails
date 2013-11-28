@@ -1,4 +1,4 @@
-module Madman
+class Madman < Card
 
   def starting_count(game)
     10

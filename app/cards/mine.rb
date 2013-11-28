@@ -1,4 +1,4 @@
-module Mine
+class Mine < Card
 
   def starting_count(game)
     10

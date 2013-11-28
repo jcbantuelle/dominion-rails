@@ -1,4 +1,4 @@
-module MarketSquare
+class MarketSquare < Card
 
   def starting_count(game)
     10

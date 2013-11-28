@@ -1,4 +1,4 @@
-module OvergrownEstate
+class OvergrownEstate < Card
 
   def cost(game, turn)
     {

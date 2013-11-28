@@ -1,4 +1,4 @@
-module Hovel
+class Hovel < Card
 
   def cost(game, turn)
     {

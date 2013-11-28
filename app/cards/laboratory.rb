@@ -1,4 +1,4 @@
-module Laboratory
+class Laboratory < Card
 
   def starting_count(game)
     10

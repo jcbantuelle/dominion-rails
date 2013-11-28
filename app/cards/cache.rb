@@ -1,4 +1,4 @@
-module Cache
+class Cache < Card
 
   def starting_count(game)
     10

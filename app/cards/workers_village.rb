@@ -1,4 +1,4 @@
-module WorkersVillage
+class WorkersVillage < Card
 
   def starting_count(game)
     10

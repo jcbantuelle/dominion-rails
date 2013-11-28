@@ -1,4 +1,4 @@
-module MerchantShip
+class MerchantShip < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module DameNatalie
+class DameNatalie < Card
 
   def cost(game, turn)
     {

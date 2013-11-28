@@ -1,4 +1,4 @@
-module Survivor
+class Survivor < Card
 
   def cost(game, turn)
     {

@@ -1,4 +1,4 @@
-module Workshop
+class Workshop < Card
 
   def starting_count(game)
     10

@@ -1,4 +1,4 @@
-module Tribute
+class Tribute < Card
 
   def starting_count(game)
     10

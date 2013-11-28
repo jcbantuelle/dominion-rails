@@ -1,4 +1,4 @@
-module Duchy
+class Duchy < Card
 
   def starting_count(game)
     victory_card_count(game)

@@ -1,4 +1,4 @@
-module Mercenary
+class Mercenary < Card
 
   def starting_count(game)
     10

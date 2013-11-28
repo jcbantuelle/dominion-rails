@@ -1,4 +1,4 @@
-module Spoil
+class Spoil < Card
 
   def starting_count(game)
     15

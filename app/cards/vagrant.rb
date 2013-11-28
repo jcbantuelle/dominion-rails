@@ -1,4 +1,4 @@
-module Vagrant
+class Vagrant < Card
 
   def starting_count(game)
     10

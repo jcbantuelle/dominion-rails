@@ -1,4 +1,4 @@
-module Highway
+class Highway < Card
 
   def starting_count(game)
     10

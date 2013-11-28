@@ -1,4 +1,4 @@
-module Counterfeit
+class Counterfeit < Card
 
   def starting_count(game)
     10

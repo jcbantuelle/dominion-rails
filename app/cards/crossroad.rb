@@ -1,4 +1,4 @@
-module Crossroad
+class Crossroad < Card
 
   def starting_count(game)
     10

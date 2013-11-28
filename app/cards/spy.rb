@@ -1,4 +1,4 @@
-module Spy
+class Spy < Card
 
   def starting_count(game)
     10

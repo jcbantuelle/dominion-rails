@@ -1,4 +1,4 @@
-module RuinedMarket
+class RuinedMarket < Card
 
   def cost(game, turn)
     {

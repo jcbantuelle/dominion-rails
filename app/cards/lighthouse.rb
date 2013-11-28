@@ -1,4 +1,4 @@
-module Lighthouse
+class Lighthouse < Card
 
   def starting_count(game)
     10
