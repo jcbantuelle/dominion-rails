@@ -51,10 +51,16 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    top_score = ranked_players.first.score
-    fewest_turns = ranked_players.first.turn_count
     winners = ranked_players.select{ |player| player.score == top_score && player.turn_count == fewest_turns }
     winners.map(&:username).join(' & ')
+  end
+
+  def top_score
+    ranked_players.first.score
+  end
+
+  def fewest_turns
+    ranked_players.first.turn_count
   end
 
   def ranked_players
@@ -133,12 +139,7 @@ class Game < ActiveRecord::Base
           value: game_card.name
         }
       else
-        if game_card.name == 'ruins'
-          mixed_cards = %w(abandoned_mine ruined_library ruined_market ruined_village survivors)
-        elsif game_card.name == 'knights'
-          mixed_cards = %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander)
-        end
-        mixed_cards.map{ |mixed_card|
+        mixed_cards(game_card).map{ |mixed_card|
           card = Card.by_name(mixed_card)
           cards << {
             text: card.card_html.html_safe,
@@ -148,6 +149,14 @@ class Game < ActiveRecord::Base
       end
     }
     cards
+  end
+
+  def mixed_cards(game_card)
+    if game_card.name == 'ruins'
+      mixed_cards = %w(abandoned_mine ruined_library ruined_market ruined_village survivors)
+    elsif game_card.name == 'knights'
+      mixed_cards = %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander)
+    end
   end
 
 end
