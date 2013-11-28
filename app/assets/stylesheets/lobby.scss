@@ -88,6 +88,10 @@ $player_margin: 25px;
   @include gradient($shelter, $victory);
 }
 
+.victory.reaction {
+  @include gradient($victory, $reaction);
+}
+
 #lobby-chat {
   height: 300px;
   overflow: auto;
