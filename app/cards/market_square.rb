@@ -1,4 +1,4 @@
-class MarketSquare < Card
+class MarketSquare < MarketCard
 
   def starting_count(game)
     10

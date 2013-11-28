@@ -1,4 +1,4 @@
-class GrandMarket < Card
+class GrandMarket < MarketCard
 
   def starting_count(game)
     10

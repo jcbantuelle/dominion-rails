@@ -85,13 +85,6 @@ class Card < ActiveRecord::Base
     game.game_cards.by_card_id(card.id).first
   end
 
-  def market(game)
-    card_drawer = CardDrawer.new(game.current_player)
-    card_drawer.draw(1)
-    game.current_turn.add_actions(1)
-    game.current_turn.add_buys(1)
-  end
-
   def reveal_cards(game, player)
     player.deck.each do |card|
       @revealed << card
