@@ -22,8 +22,7 @@ module Caravan
   end
 
   def duration(game)
-    card_drawer = CardDrawer.new(game.current_player)
-    card_drawer.draw_duration(1, self)
+    CardDrawer.new(game.current_player).draw_duration(1, self)
   end
 
 end
