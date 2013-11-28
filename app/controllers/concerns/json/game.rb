@@ -114,19 +114,31 @@ module Json::Game
     cards = game.game_cards
     turn = game.current_turn
 
-    kingdom_cards = sort_cards(game, turn, cards.select(&:kingdom?)).collect{ |card| card.json(game, turn) }
-
-    victory_cards = cards.select(&:victory?)
-    treasure_cards = cards.select(&:treasure?)
-    miscellaneous_cards = cards.select{ |card| %w(curse ruins madman mercenary).include?(card.card.name) }
-
-    common_cards = sort_cards(game, turn, victory_cards) + sort_cards(game, turn, treasure_cards) + sort_cards(game, turn, miscellaneous_cards)
-    common_cards = common_cards.collect{ |card| card.json(game, turn) }
-
     {
-      kingdom_cards: kingdom_cards,
-      common_cards: common_cards
+      kingdom_cards: kingdom_cards(game, turn, cards),
+      common_cards: common_cards(game, turn, cards)
     }
+  end
+
+  def kingdom_cards(game, turn, cards)
+    sort_cards(game, turn, cards.select(&:kingdom?)).collect{ |card| card.json(game, turn) }
+  end
+
+  def common_cards(game, turn, cards)
+    sorted_cards = sort_cards(game, turn, victory_cards(cards)) + sort_cards(game, turn, treasure_cards(cards)) + sort_cards(game, turn, miscellaneous_cards(cards))
+    sorted_cards.collect{ |card| card.json(game, turn) }
+  end
+
+  def victory_cards(cards)
+    cards.select(&:victory?)
+  end
+
+  def treasure_cards(cards)
+    cards.select(&:treasure?)
+  end
+
+  def miscellaneous_cards(cards)
+    cards.select{ |card| %w(curse ruins madman mercenary).include?(card.card.name) }
   end
 
   def end_game(game)
