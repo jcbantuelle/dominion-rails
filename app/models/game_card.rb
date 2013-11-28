@@ -1,4 +1,7 @@
 class GameCard < ActiveRecord::Base
+
+  include CardMethods
+
   belongs_to :game
   belongs_to :card
   has_many :mixed_game_cards, ->{ ordered }, dependent: :destroy
@@ -63,18 +66,8 @@ class GameCard < ActiveRecord::Base
     if top_card.nil?
       {coin: 0, potion: 0}
     else
-      top_card.card.calculated_cost(game_record, turn)
+      top_card.calculated_cost(game_record, turn)
     end
-  end
-
-  def costs_less_than?(coin, potion)
-    card_cost = calculated_cost(game, game.current_turn)
-    (card_cost[:potion].nil? || card_cost[:potion] <= potion) && card_cost[:coin] < coin
-  end
-
-  def costs_same_as?(cost)
-    card_cost = calculated_cost(game, game.current_turn)
-    card_cost[:potion] == cost[:potion] && card_cost[:coin] == cost[:coin]
   end
 
   def add_to_pile(count)

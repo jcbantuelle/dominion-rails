@@ -1,4 +1,7 @@
 class GameTrash < ActiveRecord::Base
+
+  include CardMethods
+
   belongs_to :game
   belongs_to :card
 
@@ -21,11 +24,6 @@ class GameTrash < ActiveRecord::Base
       type_class: type_class,
       title: name.titleize
     }
-  end
-
-  def costs_less_than?(coin, potion)
-    card_cost = calculated_cost(game, game.current_turn)
-    (card_cost[:potion].nil? || card_cost[:potion] <= potion) && card_cost[:coin] < coin
   end
 
   def calculated_cost(game_record, turn)
