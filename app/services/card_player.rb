@@ -55,14 +55,21 @@ class CardPlayer
 
   def attack
     if @card.attack_card?
-      urchins_in_play = @game.current_player.find_cards_in_play('urchin')
-      if urchins_in_play.count > 1 || (urchins_in_play.count == 1 && @card.name != 'urchin')
-        urchins_in_play.slice(0..urchins_in_play.length-2).each do |urchin|
-          urchin.card.reaction(@game, @game.current_player)
-        end
-      end
+      process_urchins
       @card.attack(@game, attacked_players)
     end
+  end
+
+  def process_urchins
+    if urchins_in_play.count > 1 || (urchins_in_play.count == 1 && @card.name != 'urchin')
+      urchins_in_play.slice(0..urchins_in_play.length-2).each do |urchin|
+        urchin.card.reaction(@game, @game.current_player)
+      end
+    end
+  end
+
+  def urchins_in_play
+    @urchins_in_play ||= @game.current_player.find_cards_in_play('urchin')
   end
 
   def attacked_players
@@ -121,16 +128,8 @@ class CardPlayer
 
   def has_moat?(player)
     immune = false
-    moat = player.find_card_in_hand('moat')
     if moat
-      TurnActionHandler.wait_for_card(@card)
-      options = [
-        { text: 'Yes', value: 'yes' },
-        { text: 'No', value: 'no' }
-      ]
-      action = TurnActionHandler.send_choose_text_prompt(@game, player, options, "Reveal #{moat.card.card_html}?".html_safe, 1, 1)
-      TurnActionHandler.wait_for_response(@game)
-      action = TurnAction.find_uncached action.id
+      action = send_moat_prompt(player)
       if action.response == 'yes'
         immune = true
         LogUpdater.new(@game).reveal(player, [moat], 'hand')
@@ -139,6 +138,21 @@ class CardPlayer
       action.destroy
     end
     immune
+  end
+
+  def moat(player)
+    player.find_card_in_hand('moat')
+  end
+
+  def send_moat_prompt(player)
+    TurnActionHandler.wait_for_card(@card)
+    options = [
+      { text: 'Yes', value: 'yes' },
+      { text: 'No', value: 'no' }
+    ]
+    action = TurnActionHandler.send_choose_text_prompt(@game, player, options, "Reveal #{moat.card.card_html}?".html_safe, 1, 1)
+    TurnActionHandler.wait_for_response(@game)
+    TurnAction.find_uncached action.id
   end
 
 end
