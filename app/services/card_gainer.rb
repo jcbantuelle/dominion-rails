@@ -35,6 +35,7 @@ class CardGainer
   private
 
   def add_to_deck(destination, event)
+    trader_reaction
     @game_card.update_attribute :remaining, @game_card.remaining - 1
     @top_card.destroy if @top_card.name != @game_card.name
 
@@ -123,6 +124,34 @@ class CardGainer
         reaction_card.card.reaction(@game, game_player, @top_card)
         TurnActionHandler.wait_for_card(reaction_card.card)
       end
+    end
+  end
+
+  def trader_reaction
+    trader = @player.find_card_in_hand('trader')
+    if trader
+      action = send_trader_prompt(trader)
+      process_trader_response(trader, action)
+      action.destroy
+    end
+  end
+
+  def send_trader_prompt(trader)
+    options = [
+      { text: 'Yes', value: 'yes' },
+      { text: 'No', value: 'no' }
+    ]
+    action = TurnActionHandler.send_choose_text_prompt(@game, @player, options, "Reveal #{trader.card.card_html}?".html_safe, 1, 1)
+    TurnActionHandler.wait_for_response(@game)
+    TurnAction.find_uncached action.id
+  end
+
+  def process_trader_response(trader, action)
+    if action.response == 'yes'
+      @game_card = GameCard.find(GameCard.by_game_id_and_card_name(@game.id, 'silver').first.id)
+      @top_card = @game_card
+      LogUpdater.new(@game).reveal(@player, [trader], 'hand')
+      LogUpdater.new(@game).custom_message(@player, "a #{@game_card.card.card_html} instead".html_safe, 'gain')
     end
   end
 
