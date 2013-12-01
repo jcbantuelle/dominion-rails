@@ -16,7 +16,7 @@ class Haggler < Card
 
   def play(game, clone=false)
     game.current_turn.add_coins(2)
-    game.current_turn.add_haggler
+    game.current_turn.add_haggler unless clone
     @log_updater.get_from_card(game.current_player, '+$2')
   end
 
