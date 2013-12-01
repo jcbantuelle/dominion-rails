@@ -25,7 +25,7 @@ class SpiceMerchant < Card
   def trash_treasure(game)
     treasures = game.current_player.hand.select(&:treasure?)
     if treasures.count == 0
-      @log_updater.custom_message(nil, 'But there are no treasures to trash')
+      @log_updater.custom_message(nil, 'But does not trash a treasures')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, treasures, 'You may trash a treasure:', 1, 0, 'trash')
       TurnActionHandler.process_player_response(game, game.current_player, action, self)
