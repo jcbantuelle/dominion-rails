@@ -42,6 +42,12 @@ class GamePlayer < ActiveRecord::Base
     end
   end
 
+  def shuffle_deck
+    deck.shuffle.each_with_index do |card, index|
+      card.update(card_order: index+1)
+    end
+  end
+
   def discard_revealed
     player_cards.revealed.update_all state: 'discard'
   end
