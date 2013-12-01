@@ -30,14 +30,13 @@ class IllGottenGain < Card
   end
 
   def process_action(game, game_player, action)
-    if action.response == 'yes'
-      CardGainer.new(game, game_player, 'copper').gain_card('hand')
-    end
+    CardGainer.new(game, game_player, 'copper').gain_card('hand') if action.response == 'yes'
   end
 
   def gain_event(game, player, event)
-    game.game_players.each do |game_player|
-      CardGainer.new(game, game_player, 'curse').gain_card('discard') unless game_player.id == player.id
+    other_players = game.turn_ordered_players.reject{ |p| p.id == player.id }
+    other_players.each do |other_player|
+      give_card_to_player(game, other_player, 'curse', 'discard')
     end
   end
 
