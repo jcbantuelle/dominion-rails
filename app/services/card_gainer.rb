@@ -17,6 +17,7 @@ class CardGainer
     @game.current_turn.buy_card @top_card.calculated_cost(@game, @game.current_turn)
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
+    process_haggler if @game.current_turn.hagglers > 0
     gain_reactions('buy')
   end
 
@@ -107,6 +108,37 @@ class CardGainer
     talisman_count.times do
       card_gainer.gain_card('discard')
     end
+  end
+
+  def process_haggler
+    haggler_count = @game.current_player.find_cards_in_play('haggler').count
+    haggler = Card.by_name('haggler')
+
+    card_cost = @top_card.calculated_cost(@game, @game.current_turn)
+    available_cards = @game.cards_costing_less_than(card_cost[:coin], card_cost[:potion]).reject(&:victory_card?)
+
+    haggler_count.times do
+      if available_cards.count == 0
+        LogUpdater.new(@game).custom_message(nil, "But there are no available cards to gain from #{haggler.card_html}".html_safe)
+      elsif available_cards.count == 1
+        CardGainer.new(@game, @game.current_player, available_cards.first.name).gain_card('discard')
+      else
+        action = send_haggler_prompt(haggler, available_cards)
+        process_haggler_response(action)
+        action.destroy
+      end
+    end
+  end
+
+  def send_haggler_prompt(haggler, available_cards)
+    action = TurnActionHandler.send_choose_cards_prompt(@game, @game.current_player, available_cards, "Choose a card to gain from #{haggler.card_html}:", 1, 1)
+    TurnActionHandler.wait_for_response(@game)
+    TurnAction.find_uncached action.id
+  end
+
+  def process_haggler_response(action)
+    gained_card = GameCard.find(action.response)
+    CardGainer.new(@game, @game.current_player, gained_card.name).gain_card('discard')
   end
 
   def gain_reactions(event)

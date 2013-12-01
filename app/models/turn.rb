@@ -52,6 +52,10 @@ class Turn < ActiveRecord::Base
     update_attribute :coppersmith, coppersmith + 1
   end
 
+  def add_haggler
+    update_attribute :hagglers, hagglers + 1
+  end
+
   def add_scheme
     update_attribute :schemes, schemes + 1
   end
