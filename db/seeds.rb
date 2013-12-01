@@ -73,3 +73,7 @@ create_cards(cards, true, false, false, 'dark_ages')
 # Knights
 cards = %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander)
 create_cards(cards)
+
+# Guilds
+# cards = %w(candlestick_maker stonemason doctor masterpiece advisor herald plaza taxman baker butcher journeyman merchant_guild soothsayer)
+# create_cards(cards, true, false, false, 'guilds')
