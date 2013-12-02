@@ -45,8 +45,8 @@ cards = %w(cutpurse bazaar sea_hag treasure_map fishing_village caravan merchant
 create_cards(cards, true, false, false, 'seaside')
 #
 # Alchemy
-cards = %w(transmute vineyard apothecary herbalist familiar philosophers_stone scrying_pool)
-# university alchemist golem apprentice possession
+cards = %w(transmute vineyard apothecary herbalist scrying_pool university familiar philosophers_stone)
+# alchemist golem apprentice possession
 create_cards(cards, true, false, false, 'alchemy')
 #
 # Prosperity
