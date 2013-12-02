@@ -101,12 +101,24 @@ class GamePlayer < ActiveRecord::Base
     hand.select{ |c| c.coin_card? }
   end
 
-  def amount_of_coin_in_hand
+  def coin_in_hand
     find_coin_in_hand.map{ |coin_card| coin_card.card.coin(game) }.inject(0, :+)
   end
 
-  def coin_in_hand?
-    find_coin_in_hand.count > 0
+  def find_potion_in_hand
+    find_cards_in_hand('potion')
+  end
+
+  def potion_in_hand
+    find_potion_in_hand.count
+  end
+
+  def find_treasure_in_hand
+    find_coin_in_hand + find_potion_in_hand
+  end
+
+  def treasure_in_hand?
+    find_coin_in_hand.count > 0 || find_potion_in_hand.count > 0
   end
 
   def empty_deck?

@@ -34,7 +34,7 @@ module Websockets::Game::TurnActions
     played_coins = {}
     ActiveRecord::Base.connection.clear_query_cache
     @game.reload
-    @game.current_player.find_coin_in_hand.each do |coin|
+    @game.current_player.find_treasure_in_hand.each do |coin|
       played_coins[coin.name] ||= {
           html: coin.card.card_html,
           count: 0

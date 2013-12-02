@@ -87,8 +87,9 @@ module Json::Game
       deck_count: game_player.deck.count,
       discard_count: game_player.discard.count,
       hand: grouped_cards(game_player.hand),
-      my_turn: same_player?(game.current_player.player, player)
-    }.merge(amount_of_coin_in_hand(game_player))
+      my_turn: same_player?(game.current_player.player, player),
+      spend_all_coin: game.current_turn.buy_phase?
+    }.merge(treasure_in_hand(game_player))
   end
 
   def info_area(game)
@@ -106,8 +107,12 @@ module Json::Game
     }
   end
 
-  def amount_of_coin_in_hand(game_player)
-    game_player.coin_in_hand? ? { amount_of_coin_in_hand: game_player.amount_of_coin_in_hand } : {}
+  def treasure_in_hand(game_player)
+    coin_in_hand = game_player.coin_in_hand
+    potion_in_hand = game_player.potion_in_hand
+    treasures_to_play = "$#{coin_in_hand}"
+    treasures_to_play += " &oplus;" * potion_in_hand if potion_in_hand > 0
+    game_player.treasure_in_hand? ? { treasure_in_hand: treasures_to_play } : {}
   end
 
   def card_area(game)
