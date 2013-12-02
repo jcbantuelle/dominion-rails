@@ -20,7 +20,7 @@ class Herbalist < Card
     @log_updater.get_from_card(game.current_player, '+1 buy and +$1')
   end
 
-  def discard_reaction(game, game_player, event)
+  def discard_reaction(game, game_player, event, player_card)
     if event == :cleanup
       treasures = game_player.in_play.select(&:treasure?)
       if treasures.count == 0

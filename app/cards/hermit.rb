@@ -64,7 +64,7 @@ class Hermit < Card
     end
   end
 
-  def discard_reaction(game, game_player, event)
+  def discard_reaction(game, game_player, event, player_card)
     if event == :cleanup && game.current_turn.bought_cards == 0
       hermit = game_player.find_card_in_play('hermit')
       CardTrasher.new(game_player, [hermit]).trash('play')

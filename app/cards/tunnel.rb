@@ -22,7 +22,7 @@ class Tunnel < Card
     card_html
   end
 
-  def discard_reaction(game, game_player, event)
+  def discard_reaction(game, game_player, event, player_card)
     unless event == :cleanup
       options = [
         { text: 'Yes', value: 'yes' },

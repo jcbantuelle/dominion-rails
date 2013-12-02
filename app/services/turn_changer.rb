@@ -44,7 +44,7 @@ class TurnChanger
 
   def resolve_discard_reactions
     @game.current_player.in_play.each do |in_play_card|
-      in_play_card.card.discard_reaction(@game, @game.current_player, :cleanup) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
+      in_play_card.card.discard_reaction(@game, @game.current_player, :cleanup, in_play_card) if in_play_card.state != 'duration' && in_play_card.card.respond_to?(:discard_reaction)
     end
   end
 
