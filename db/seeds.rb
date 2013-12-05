@@ -50,8 +50,8 @@ cards = %w(transmute vineyard apothecary herbalist scrying_pool university alche
 create_cards(cards, true, false, false, 'alchemy')
 #
 # Promo
-cards = %w(walled_village)
-# black_market envoy governor stash
+cards = %w(envoy walled_village)
+# black_market governor stash
 create_cards(cards, true, false, false, 'promo')
 #
 # Prosperity
