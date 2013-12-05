@@ -15,6 +15,8 @@ class Apprentice < Card
   end
 
   def play(game, clone=false)
+    game.current_turn.add_actions(1)
+    @log_updater.get_from_card(game.current_player, '+1 action')
     @play_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
         @trashed_card_cost = nil
