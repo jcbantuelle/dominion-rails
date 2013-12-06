@@ -39,7 +39,8 @@ class Swindler < Card
 
   def choose_new_card(game, game_player)
     trashed_card = @revealed.first
-    equal_cost_cards = game.cards_equal_to(trashed_card.calculated_cost(game, game.current_turn))
+    trashed_card_cost = trashed_card.calculated_cost(game, game.current_turn)
+    equal_cost_cards = game.cards_equal_to(trashed_card_cost)
     if equal_cost_cards.count == 0
       LogUpdater.new(game).custom_message(game_player, 'nothing because there are no same cost cards available', 'gain')
     elsif equal_cost_cards.count == 1
