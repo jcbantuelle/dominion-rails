@@ -46,7 +46,7 @@ class Procession < Card
 
   def gain_card(game, game_player, card)
     card_cost = card.calculated_cost(game, game.current_turn)
-    available_cards = game.cards_equal_to({coin: card_cost[:coin]+1, potion: card_cost[:potion]})
+    available_cards = game.cards_equal_to({coin: card_cost[:coin]+1, potion: card_cost[:potion]}).select(&:action?)
     if available_cards.count == 0
       @log_updater.custom_message(nil, 'But there are no available cards to gain')
     elsif available_cards.count == 1
