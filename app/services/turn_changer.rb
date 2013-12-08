@@ -16,6 +16,7 @@ class TurnChanger
     set_game_turn
     create_turn
     update_log
+    resolve_horse_traders
     resolve_durations
   end
 
@@ -102,6 +103,17 @@ class TurnChanger
       LogUpdater.new(@game).outpost_turn
     else
       LogUpdater.new(@game).end_turn
+    end
+  end
+
+  def resolve_horse_traders
+    horse_traders = @game.current_player.horse_traders.to_a
+    unless horse_traders.empty?
+      @game.current_player.horse_traders.update_all(state: 'hand')
+      horse_traders.count.times do
+        CardDrawer.new(@game.current_player).draw(1, true, horse_traders.first.card)
+      end
+      LogUpdater.new(@game).put(@game.current_player, horse_traders, 'hand', false)
     end
   end
 

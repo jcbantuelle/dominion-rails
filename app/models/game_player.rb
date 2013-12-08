@@ -28,6 +28,10 @@ class GamePlayer < ActiveRecord::Base
     player_cards.duration
   end
 
+  def horse_traders
+    player_cards.horse_trader
+  end
+
   def in_play_without_duration
     player_cards.in_play_without_duration
   end
