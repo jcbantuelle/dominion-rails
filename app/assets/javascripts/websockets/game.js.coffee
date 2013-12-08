@@ -65,6 +65,7 @@ $ ->
 
   # End Game
   window.game.end_game = (response) ->
+    game.refresh_board(response)
     $('<div id="finished-game"></div>').insertBefore('#action-area');
     $('#hand, #action-area').remove()
     game.refresh_end_game(response)
