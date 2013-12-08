@@ -31,7 +31,7 @@ class Beggar < Card
     end
   end
 
-  def reaction(game, game_player)
+  def reaction(game, game_player, card)
     @reaction_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
         options = [

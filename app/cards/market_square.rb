@@ -19,7 +19,7 @@ class MarketSquare < MarketCard
     @log_updater.get_from_card(game.current_player, '+1 action and +1 buy')
   end
 
-  def reaction(game, game_player)
+  def reaction(game, game_player, card)
     @reaction_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
         options = [

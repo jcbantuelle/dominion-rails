@@ -63,7 +63,7 @@ class CardPlayer
   def process_urchins
     if urchins_in_play.count > 1 || (urchins_in_play.count == 1 && @card.name != 'urchin')
       urchins_in_play.slice(0..urchins_in_play.length-2).each do |urchin|
-        urchin.card.reaction(@game, @game.current_player)
+        urchin.card.reaction(@game, @game.current_player, urchin)
       end
     end
   end
@@ -86,7 +86,7 @@ class CardPlayer
           reaction_cards += player.find_cards_in_hand(reaction_card_name)
         end
         reaction_cards.each do |reaction_card|
-          reaction_card.card.reaction(@game, player)
+          reaction_card.card.reaction(@game, player, reaction_card)
           TurnActionHandler.wait_for_card(reaction_card.card)
         end
       end

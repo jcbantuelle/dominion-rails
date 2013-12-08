@@ -52,7 +52,7 @@ class Urchin < Card
     TurnActionHandler.refresh_game_area(game, game_player.player)
   end
 
-  def reaction(game, game_player)
+  def reaction(game, game_player, card)
     @reaction_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
         options = [
