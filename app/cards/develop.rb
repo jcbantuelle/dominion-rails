@@ -17,15 +17,16 @@ class Develop < Card
   def play(game, clone=false)
     @play_thread = Thread.new {
       ActiveRecord::Base.connection_pool.with_connection do
+        choose_gain_order(game)
         trash_card(game)
         unless @trashed_card_cost.nil?
           cost = {
-            coin: @trashed_card_cost[:coin]+1,
+            coin: @trashed_card_cost[:coin] + @gain_modifier,
             potion: @trashed_card_cost[:potion]
           }
           gain_card(game, cost)
           cost = {
-            coin: @trashed_card_cost[:coin]-1,
+            coin: @trashed_card_cost[:coin] - @gain_modifier,
             potion: @trashed_card_cost[:potion]
           }
           gain_card(game, cost)
@@ -34,6 +35,15 @@ class Develop < Card
         TurnActionHandler.refresh_game_area(game, game.current_player.player)
       end
     }
+  end
+
+  def choose_gain_order(game)
+    options = [
+      { text: 'Costing 1 More', value: 'more' },
+      { text: 'Costing 1 Less', value: 'less' }
+    ]
+    action = TurnActionHandler.send_choose_text_prompt(game, game.current_player, options, 'Which would you like to gain first?', 1, 1, 'order')
+    TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
   def trash_card(game)
@@ -68,7 +78,9 @@ class Develop < Card
       CardTrasher.new(game.current_player, [card]).trash('hand')
     elsif action.action == 'gain'
       card = GameCard.find(action.response)
-      CardGainer.new(game, game_player, card.name).gain_card('discard')
+      CardGainer.new(game, game_player, card.name).gain_card('deck')
+    elsif action.action == 'order'
+      @gain_modifier = action.response == 'more' ? 1 : -1
     end
   end
 end
