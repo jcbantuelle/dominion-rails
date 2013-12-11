@@ -34,6 +34,7 @@ class GameCreator
         game_card = GameCard.create(game_id: @game.id, card_id: card.id, remaining: starting_count)
         add_ruins(game_card, starting_count) if card.name == 'ruins'
         add_knights(game_card) if card.name == 'knights'
+        add_bane_card if card.name == 'young_witch'
       end
     end
   end
@@ -54,7 +55,9 @@ class GameCreator
   end
 
   def kingdom_cards
-    Card.card_type(:kingdom).shuffle.take(10)
+    kingdom_cards = Card.card_type(:kingdom).shuffle
+    @remaining_kingdom_cards = kingdom_cards.drop(10)
+    kingdom_cards.take(10)
   end
 
   def victory_cards
@@ -104,6 +107,18 @@ class GameCreator
     %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander).shuffle.each_with_index do |card_name, index|
       knight = Card.by_name(card_name)
       MixedGameCard.create(game_card: knights_card, card: knight, card_order: index, card_type: 'knights')
+    end
+  end
+
+  def add_bane_card
+    @remaining_kingdom_cards.each do |card|
+      card_cost = card.calculated_cost(@game, @game.current_turn)
+      if [2,3].include?(card_cost[:coin]) && card_cost[:potion].nil?
+        starting_count = card.starting_count(@game)
+        game_card = GameCard.create(game_id: @game.id, card_id: card.id, remaining: starting_count)
+        @game.update_attribute :bane_card, card.name
+        break
+      end
     end
   end
 

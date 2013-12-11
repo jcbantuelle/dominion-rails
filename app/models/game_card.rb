@@ -95,7 +95,8 @@ class GameCard < ActiveRecord::Base
       coin_cost: card_cost[:coin],
       potion_cost: card_cost[:potion],
       remaining: remaining,
-      title: name.titleize
+      title: name.titleize,
+      bane: card_name == game_record.bane_card
     }
   end
 end
