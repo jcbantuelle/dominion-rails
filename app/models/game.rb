@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   has_many :game_players, ->{ ordered }, dependent: :destroy
   has_many :game_cards, ->{ includes(:card, :mixed_game_cards) }, dependent: :destroy
   has_many :game_trashes, ->{ includes(:card) }, dependent: :destroy
+  has_many :game_prizes, ->{ includes(:card) }, dependent: :destroy
   has_many :players, foreign_key: 'current_game'
   has_many :turns, ->{ ordered }, dependent: :destroy
   has_many :turn_actions, dependent: :destroy

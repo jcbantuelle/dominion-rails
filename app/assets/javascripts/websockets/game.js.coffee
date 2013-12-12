@@ -160,3 +160,8 @@ $ ->
       position: 'bottom center',
       offset: [80,0]
     })
+
+    $('.prize-card').tooltip({
+      position: 'bottom center'
+      offset: [-100, -350]
+    })

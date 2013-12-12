@@ -12,7 +12,7 @@ cards = %w(copper silver gold potion platinum)
 create_cards(cards, false, true, false)
 
 # Outside Supply
-cards = %w(hovel necropolis overgrown_estate madman mercenary)
+cards = %w(hovel necropolis overgrown_estate madman mercenary bag_of_gold diadem followers princess trusty_steed)
 create_cards(cards, false, false, false, nil, false)
 
 # Spoils
@@ -60,9 +60,7 @@ cards = %w(monument workers_village venture bank grand_market quarry city peddle
 create_cards(cards, true, false, false, 'prosperity')
 #
 # Cornucopia
-cards = %w(hamlet fortune_teller menagerie farming_village horse_traders remake young_witch harvest horn_of_plenty hunting_party jester fairgrounds)
-# tournament
-# bag_of_gold diadem followers princess trusty_steed
+cards = %w(hamlet fortune_teller menagerie farming_village horse_traders remake tournament young_witch harvest horn_of_plenty hunting_party jester fairgrounds)
 create_cards(cards, true, false, false, 'cornucopia')
 #
 # Hinterlands

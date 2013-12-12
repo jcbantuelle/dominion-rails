@@ -1,3 +1,14 @@
+{{#if prize_cards}}
+  Prizes:
+  {{#each prize_cards}}
+    <span class="{{type_class}} prize-card">{{title}}</span>
+    <div class="card-tooltip">
+      <img src="/images/cards/{{name}}.jpg", width="176" height="273" />
+    </div>
+  {{/each}}
+  <br />
+  <br />
+{{/if}}
 Trash:
 {{#each trash_cards}}
   <span class="{{type_class}}">{{title}}</span>

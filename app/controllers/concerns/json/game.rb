@@ -94,6 +94,7 @@ module Json::Game
 
   def info_area(game)
     trash_cards = game.game_trashes.collect{ |card| card.json(game, game.current_turn) }
+    prize_cards = game.game_prizes.collect{ |card| card.json(game, game.current_turn) }
     player_info = game.game_players.map { |player|
       {
         player_name: player.username,
@@ -103,6 +104,7 @@ module Json::Game
 
     {
       trash_cards: trash_cards,
+      prize_cards: prize_cards,
       player_info: player_info
     }
   end

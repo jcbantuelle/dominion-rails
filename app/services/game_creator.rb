@@ -35,6 +35,7 @@ class GameCreator
         add_ruins(game_card, starting_count) if card.name == 'ruins'
         add_knights(game_card) if card.name == 'knights'
         add_bane_card if card.name == 'young_witch'
+        add_prizes if card.name == 'tournament'
       end
     end
   end
@@ -107,6 +108,13 @@ class GameCreator
     %w(dame_anna dame_josephine dame_molly dame_natalie dame_sylvia sir_martin sir_bailey sir_destry sir_michael sir_vander).shuffle.each_with_index do |card_name, index|
       knight = Card.by_name(card_name)
       MixedGameCard.create(game_card: knights_card, card: knight, card_order: index, card_type: 'knights')
+    end
+  end
+
+  def add_prizes
+    %w(bag_of_gold diadem followers princess trusty_steed).each do |card_name|
+      prize = Card.by_name(card_name)
+      GamePrize.create(game: @game, card: prize)
     end
   end
 
