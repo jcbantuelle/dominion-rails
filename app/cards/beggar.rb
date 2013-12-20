@@ -24,8 +24,8 @@ class Beggar < Card
     if action.response == 'yes'
       beggar = game_player.find_card_in_hand('beggar')
       CardDiscarder.new(game_player, [beggar]).discard('hand')
-      give_card_to_player(game, game.current_player, 'silver', 'discard')
-      give_card_to_player(game, game.current_player, 'silver', 'deck')
+      give_card_to_player(game, game_player, 'silver', 'discard')
+      give_card_to_player(game, game_player, 'silver', 'deck')
       ActiveRecord::Base.connection.clear_query_cache
       TurnActionHandler.refresh_game_area(game, game_player.player)
     end
