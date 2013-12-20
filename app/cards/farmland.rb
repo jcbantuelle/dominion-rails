@@ -48,7 +48,7 @@ class Farmland < Card
     if available_cards.count == 0
       LogUpdater.new(game).custom_message(nil, 'But there are no available cards to gain')
     elsif available_cards.count == 1
-      CardGainer.new(game, game_player, available_cards.first.name).gain_card('discard')
+      CardGainer.new(game, game.current_player, available_cards.first.name).gain_card('discard')
     else
       action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, available_cards, 'Choose a card to gain:', 1, 1, 'gain')
       TurnActionHandler.process_player_response(game, game.current_player, action, self)
