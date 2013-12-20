@@ -62,7 +62,7 @@ class NobleBrigand < Card
     treasures = @revealed.select{ |c| %w(silver gold).include?(c.name) }
     LogUpdater.new(game).reveal(player, @revealed, 'deck')
     if treasures.count == 0
-      give_card_to_player(game, player, 'copper', 'discard')
+      give_card_to_player(game, player, 'copper', 'discard') if @revealed.select(&:treasure?).count == 0
     elsif treasures.count == 1
       @trashed += CardTrasher.new(player, treasures).trash
     else
