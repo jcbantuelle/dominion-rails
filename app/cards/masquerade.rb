@@ -41,7 +41,7 @@ class Masquerade < Card
   end
 
   def trash_card(game)
-    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose up to 1 card to trash:', 0, 1, 'trash')
+    action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, game.current_player.hand, 'Choose up to 1 card to trash:', 1, 0, 'trash')
     TurnActionHandler.process_player_response(game, game.current_player, action, self)
   end
 
