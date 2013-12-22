@@ -9,9 +9,9 @@ class CardCostCalculater
   def cost
     calculated_coin = base_coin - coin_discount
     calculated_coin = 0 if calculated_coin < 0
+    potion_cost = base_cost[:potion].nil? ? 0 : base_cost[:potion]
 
-    cost_values = [[:coin, calculated_coin]]
-    cost_values << [:potion, base_cost[:potion]] unless base_cost[:potion].nil?
+    cost_values = [[:coin, calculated_coin], [:potion, potion_cost]]
 
     Hash[cost_values]
   end
