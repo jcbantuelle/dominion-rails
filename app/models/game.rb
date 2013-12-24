@@ -115,6 +115,10 @@ class Game < ActiveRecord::Base
     game_players[next_player - 1]
   end
 
+  def add_trade_route_token
+    update_attribute :trade_route_tokens, trade_route_tokens + 1
+  end
+
   def self.find_uncached(game_id)
     uncached do
       find(game_id) if exists?(game_id)

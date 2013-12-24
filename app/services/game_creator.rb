@@ -36,7 +36,19 @@ class GameCreator
         add_knights(game_card) if card.name == 'knights'
         add_bane_card if card.name == 'young_witch'
         add_prizes if card.name == 'tournament'
+        flag_trade_route if card.name == 'trade_route'
       end
+    end
+    add_trade_route_tokens if @game.has_trade_route?
+  end
+
+  def flag_trade_route
+    @game.update_attribute :has_trade_route, true
+  end
+
+  def add_trade_route_tokens
+    @game.game_cards(true).each do |card|
+      card.update_attribute(:has_trade_route_token, true) if card.victory_card? && card.name != 'knights'
     end
   end
 

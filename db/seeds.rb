@@ -55,8 +55,8 @@ cards = %w(envoy walled_village governor)
 create_cards(cards, true, false, false, 'promo')
 #
 # Prosperity
-cards = %w(loan monument workers_village venture bank grand_market quarry city peddler hoard talisman kings_court)
-# trade_route watchtower bishop contraband counting_house mint mountebank rabble royal_seal vault goons expand forge
+cards = %w(loan trade_route monument workers_village venture bank grand_market quarry city peddler hoard talisman kings_court)
+# watchtower bishop contraband counting_house mint mountebank rabble royal_seal vault goons expand forge
 create_cards(cards, true, false, false, 'prosperity')
 #
 # Cornucopia

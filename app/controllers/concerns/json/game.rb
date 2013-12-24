@@ -105,6 +105,8 @@ module Json::Game
     {
       trash_cards: trash_cards,
       prize_cards: prize_cards,
+      has_trade_route: game.has_trade_route,
+      trade_route_tokens: game.trade_route_tokens,
       player_info: player_info
     }
   end

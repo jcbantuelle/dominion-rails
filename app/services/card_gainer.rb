@@ -38,6 +38,10 @@ class CardGainer
   def add_to_deck(destination, event)
     trader_reaction
     @game_card.update_attribute :remaining, @game_card.remaining - 1
+    if @game_card.has_trade_route_token
+      @game.add_trade_route_token
+      @game_card.remove_trade_route_token
+    end
     @top_card.destroy if @top_card.name != @game_card.name
 
     destination = @top_card.card.gain_destination(@game, @player) if @top_card.card.respond_to?(:gain_destination)

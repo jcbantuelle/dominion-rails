@@ -62,6 +62,10 @@ class GameCard < ActiveRecord::Base
     remaining > 0
   end
 
+  def remove_trade_route_token
+    update_attribute :has_trade_route_token, false
+  end
+
   def calculated_cost(game_record, turn)
     if top_card.nil?
       {coin: 0, potion: 0}
@@ -96,7 +100,8 @@ class GameCard < ActiveRecord::Base
       potion_cost: card_cost[:potion],
       remaining: remaining,
       title: name.titleize,
-      bane: card_name == game_record.bane_card
+      bane: card_name == game_record.bane_card,
+      has_trade_route_token: has_trade_route_token
     }
   end
 end

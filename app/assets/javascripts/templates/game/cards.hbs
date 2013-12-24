@@ -17,7 +17,13 @@
       <span class="remaining">({{remaining}})</span>
     </div>
     <div class="card-name">
-      {{#if bane}}<span class="bane">&diams;</span>&nbsp;{{/if}}<span>{{title}}</span>
+      {{#if bane}}
+        <span class="bane">&diams;</span>&nbsp;
+      {{/if}}
+      <span>{{title}}</span>
+      {{#if has_trade_route_token}}
+        <span class="trade-token">$</span>&nbsp;
+      {{/if}}
     </div>
   </div>
 {{/each}}
