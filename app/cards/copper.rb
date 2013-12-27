@@ -21,7 +21,7 @@ class Copper < Card
   def play(game, clone=false)
     game.current_turn.add_coins(coin(game))
     coppersmith = coppersmith(game)
-    @log_updater.get_from_card(game.current_player, "+$#{coppersmith} from Coppersmith") if coppersmith > 0
+    LogUpdater.new(game).get_from_card(game.current_player, "+$#{coppersmith(game)} from Coppersmith") if coppersmith(game) > 0
   end
 
   def coppersmith(game)
