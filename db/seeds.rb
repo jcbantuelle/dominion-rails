@@ -32,15 +32,15 @@ cards = %w(curse)
 create_cards(cards)
 
 # Base set
-cards = %w(village woodcutter gardens smithy council_room festival laboratory market witch adventurer moneylender chapel cellar bureaucrat militia thief throne_room moat chancellor library workshop feast mine remodel spy)
+cards = %w(cellar chapel moat chancellor village woodcutter workshop bureaucrat feast gardens militia moneylender remodel smithy spy thief throne_room council_room festival laboratory library market mine witch adventurer)
 create_cards(cards, true, false, false, 'base')
 
 # Intrigue
-cards = %w(great_hall duke harem coppersmith conspirator shanty_town bridge courtyard pawn secret_chamber masquerade steward swindler wishing_well baron ironworks mining_village scout nobles minion saboteur torturer trading_post upgrade tribute)
+cards = %w(courtyard pawn secret_chamber great_hall masquerade shanty_town steward swindler wishing_well baron bridge conspirator coppersmith ironworks mining_village scout duke minion saboteur torturer trading_post tribute upgrade harem nobles)
 create_cards(cards, true, false, false, 'intrigue')
 
 # Seaside
-cards = %w(cutpurse bazaar sea_hag treasure_map fishing_village caravan merchant_ship wharf tactician lighthouse outpost)
+cards = %w(lighthouse fishing_village caravan cutpurse sea_hag treasure_map bazaar merchant_ship outpost tactician wharf)
 # embargo haven native_village pearl_diver ambassador lookout smugglers warehouse island navigator pirate_ship salvager explorer ghost_ship treasury
 create_cards(cards, true, false, false, 'seaside')
 #
@@ -55,7 +55,7 @@ cards = %w(envoy walled_village governor)
 create_cards(cards, true, false, false, 'promo')
 #
 # Prosperity
-cards = %w(loan trade_route bishop counting_house mint mountebank monument workers_village venture bank grand_market quarry city peddler hoard talisman kings_court)
+cards = %w(loan trade_route bishop monument quarry talisman workers_village city counting_house mint mountebank venture grand_market hoard bank kings_court peddler)
 # watchtower contraband rabble royal_seal vault goons expand forge
 create_cards(cards, true, false, false, 'prosperity')
 #
