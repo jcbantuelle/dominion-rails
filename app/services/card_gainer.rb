@@ -86,7 +86,12 @@ class CardGainer
   end
 
   def allowed_to_buy?
-    !@top_card.card.respond_to?(:allowed?) || @top_card.card.allowed?(@game)
+    (!@top_card.card.respond_to?(:allowed?) || @top_card.card.allowed?(@game)) && !contraband?
+  end
+
+  def contraband?
+    contraband = @game.current_turn.contraband
+    !contraband.nil? && contraband.split.include?(@game_card.id.to_s)
   end
 
   def valid_hoard_gain?

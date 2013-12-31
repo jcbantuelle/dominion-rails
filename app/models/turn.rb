@@ -128,6 +128,11 @@ class Turn < ActiveRecord::Base
     update_attribute :action_discount, action_discount + amount
   end
 
+  def add_contraband(card_id)
+    new_contraband = contraband.nil? ? card_id : "#{contraband} #{card_id}"
+    update_attribute :contraband, new_contraband
+  end
+
   def buy_card(cost)
     buy_phase
     turn_attributes = {
