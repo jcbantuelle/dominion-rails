@@ -18,6 +18,7 @@ class CardGainer
     process_hoard if @game.current_turn.hoards > 0 && valid_hoard_gain?
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
     process_haggler if @game.current_turn.hagglers > 0
+    process_goons if @game.current_turn.goons > 0
     gain_reactions('buy')
   end
 
@@ -157,6 +158,11 @@ class CardGainer
     action = send_royal_seal_prompt
     process_royal_seal_response(action)
     action.destroy
+  end
+
+  def process_goons
+    @player.add_victory_tokens(@game.current_turn.goons)
+    LogUpdater.new(@game).custom_message(@player, "+#{@game.current_turn.goons} &nabla;".html_safe, 'gain')
   end
 
   def send_royal_seal_prompt
