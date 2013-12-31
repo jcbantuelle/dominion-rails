@@ -1,7 +1,7 @@
 class CardGainer
 
   BUY_REACTION_CARDS = %w(hovel)
-  GAIN_REACTION_CARDS = %w(fools_gold)
+  GAIN_REACTION_CARDS = %w(fools_gold watchtower)
 
   def initialize(game, player, card_name)
     @game = game
@@ -53,7 +53,7 @@ class CardGainer
     }
 
     prepare_top_of_deck if destination == 'deck'
-    PlayerCard.create @new_card_attributes
+    @gained_card = PlayerCard.create @new_card_attributes
 
     @top_card.card.gain_event(@game, @player, event) if @top_card.card.respond_to?(:gain_event)
   end
@@ -157,8 +157,9 @@ class CardGainer
         reaction_cards += game_player.find_cards_in_hand(reaction_card_name)
       end
       reaction_cards.each do |reaction_card|
-        reaction_card.card.reaction(@game, game_player, @top_card)
+        reaction_card.card.reaction(@game, game_player, @gained_card)
         TurnActionHandler.wait_for_card(reaction_card.card)
+        ActiveRecord::Base.connection.clear_query_cache
       end
     end
   end
