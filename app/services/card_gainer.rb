@@ -36,6 +36,7 @@ class CardGainer
   private
 
   def add_to_deck(destination, event)
+    @destination = destination
     trader_reaction
     @game_card.update_attribute :remaining, @game_card.remaining - 1
     if @game_card.has_trade_route_token
@@ -44,15 +45,17 @@ class CardGainer
     end
     @top_card.destroy if @top_card.name != @game_card.name
 
-    destination = @top_card.card.gain_destination(@game, @player) if @top_card.card.respond_to?(:gain_destination)
+    @destination = @top_card.card.gain_destination(@game, @player) if @top_card.card.respond_to?(:gain_destination)
+
+    process_royal_seal if @game.current_turn.royal_seal
 
     @new_card_attributes = {
       game_player_id: @player.id,
       card_id: @top_card.card_id,
-      state: destination
+      state: @destination
     }
 
-    prepare_top_of_deck if destination == 'deck'
+    prepare_top_of_deck if @destination == 'deck'
     @gained_card = PlayerCard.create @new_card_attributes
 
     @top_card.card.gain_event(@game, @player, event) if @top_card.card.respond_to?(:gain_event)
@@ -148,6 +151,29 @@ class CardGainer
   def process_haggler_response(action)
     gained_card = GameCard.find(action.response)
     CardGainer.new(@game, @game.current_player, gained_card.name).gain_card('discard')
+  end
+
+  def process_royal_seal
+    action = send_royal_seal_prompt
+    process_royal_seal_response(action)
+    action.destroy
+  end
+
+  def send_royal_seal_prompt
+    options = [
+      { text: 'Yes', value: 'yes' },
+      { text: 'No', value: 'no' }
+    ]
+    action = TurnActionHandler.send_choose_text_prompt(@game, @game.current_player, options, "Put #{@top_card.card.card_html} on top of deck?".html_safe, 1, 1)
+    TurnActionHandler.wait_for_response(@game)
+    TurnAction.find_uncached action.id
+  end
+
+  def process_royal_seal_response(action)
+    if action.response == 'yes'
+      @destination = 'deck'
+      LogUpdater.new(@game).put(@game.current_player, [@top_card], 'deck', false)
+    end
   end
 
   def gain_reactions(event)

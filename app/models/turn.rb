@@ -112,6 +112,10 @@ class Turn < ActiveRecord::Base
     update_attribute :lighthouse, true
   end
 
+  def add_royal_seal
+    update_attribute :royal_seal, true
+  end
+
   def add_crossroad
     update_attribute :crossroads, crossroads + 1
   end
