@@ -32,6 +32,10 @@ class GamePlayer < ActiveRecord::Base
     player_cards.horse_trader
   end
 
+  def havens
+    player_cards.haven
+  end
+
   def in_play_without_duration
     player_cards.in_play_without_duration
   end

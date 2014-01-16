@@ -1,0 +1,11 @@
+&nbsp;&nbsp;
+<%= player_name(target_player, player) %>
+<%= player_action(target_player, player, 'return') %>
+<%=
+  if same_player?(target_player, player)
+    show_cards(cards)
+  else
+    "#{cards.count} card(s)"
+  end
+%>
+to hand

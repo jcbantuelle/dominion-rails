@@ -65,6 +65,22 @@ class LogUpdater
     send_message('put_cards', locals)
   end
 
+  def set_aside(player, cards)
+    locals = {
+      target_player: player,
+      cards: cards
+    }
+    send_message('set_aside', locals)
+  end
+
+  def return_to_hand(player, cards)
+    locals = {
+      target_player: player,
+      cards: cards
+    }
+    send_message('return_to_hand', locals)
+  end
+
   def shuffle(player, cards)
     locals = {
       target_player: player,

@@ -40,8 +40,8 @@ cards = %w(courtyard pawn secret_chamber great_hall masquerade shanty_town stewa
 create_cards(cards, true, false, false, 'intrigue')
 
 # Seaside
-cards = %w(embargo lighthouse fishing_village caravan cutpurse sea_hag treasure_map bazaar merchant_ship outpost tactician wharf)
-# haven native_village pearl_diver ambassador lookout smugglers warehouse island navigator pirate_ship salvager explorer ghost_ship treasury
+cards = %w(embargo haven lighthouse fishing_village caravan cutpurse sea_hag treasure_map bazaar merchant_ship outpost tactician wharf)
+# native_village pearl_diver ambassador lookout smugglers warehouse island navigator pirate_ship salvager explorer ghost_ship treasury
 create_cards(cards, true, false, false, 'seaside')
 #
 # Alchemy
