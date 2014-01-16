@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131231211445) do
+ActiveRecord::Schema.define(version: 20140116000547) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20131231211445) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "has_trade_route_token", default: false
+    t.integer  "embargos",              default: 0
   end
 
   add_index "game_cards", ["card_id"], name: "index_game_cards_on_card_id", using: :btree
@@ -162,7 +163,7 @@ ActiveRecord::Schema.define(version: 20131231211445) do
     t.integer "fools_gold",      default: 0
     t.integer "schemes",         default: 0
     t.integer "hagglers",        default: 0
-    t.integer "contraband",      default: 0
+    t.integer "contraband"
     t.boolean "royal_seal",      default: false
     t.integer "goons",           default: 0
   end

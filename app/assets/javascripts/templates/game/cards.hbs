@@ -24,6 +24,11 @@
       {{#if has_trade_route_token}}
         <span class="trade-token">$</span>&nbsp;
       {{/if}}
+      {{#if embargos}}
+        {{#times embargos}}
+          <span class="embargo-token">x</span>
+        {{/times}}
+      {{/if}}
     </div>
   </div>
 {{/each}}

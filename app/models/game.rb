@@ -31,6 +31,10 @@ class Game < ActiveRecord::Base
     game_cards.where('cards.name IN (?)', %w(curse ruins)).references(:card)
   end
 
+  def supply_cards
+    game_cards.select(&:supply?)
+  end
+
   def accepted?
     game_players.all?(&:accepted?)
   end

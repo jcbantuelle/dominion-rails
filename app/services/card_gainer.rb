@@ -19,6 +19,7 @@ class CardGainer
     process_talisman if @game.current_turn.talismans > 0 && valid_talisman_gain?
     process_haggler if @game.current_turn.hagglers > 0
     process_goons if @game.current_turn.goons > 0
+    process_embargo if @game_card.embargos > 0
     gain_reactions('buy')
   end
 
@@ -226,6 +227,12 @@ class CardGainer
       @top_card = @game_card
       LogUpdater.new(@game).reveal(@player, [trader], 'hand')
       LogUpdater.new(@game).custom_message(@player, "a #{@game_card.card.card_html} instead".html_safe, 'gain')
+    end
+  end
+
+  def process_embargo
+    @game_card.embargos.times do
+      @game_card.card.give_card_to_player(@game, @player, 'curse', 'discard')
     end
   end
 

@@ -62,6 +62,10 @@ class GameCard < ActiveRecord::Base
     remaining > 0
   end
 
+  def add_embargo
+    update_attribute :embargos, embargos + 1
+  end
+
   def remove_trade_route_token
     update_attribute :has_trade_route_token, false
   end
@@ -101,7 +105,8 @@ class GameCard < ActiveRecord::Base
       remaining: remaining,
       title: name.titleize,
       bane: card_name == game_record.bane_card,
-      has_trade_route_token: has_trade_route_token
+      has_trade_route_token: has_trade_route_token,
+      embargos: embargos
     }
   end
 end
