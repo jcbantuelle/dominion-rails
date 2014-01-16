@@ -9,6 +9,7 @@ class PlayerCard < ActiveRecord::Base
   scope :in_play, ->{ where state: %w(play duration) }
   scope :horse_trader, ->{ where state: 'horse_trader' }
   scope :haven, ->{ where state: 'haven' }
+  scope :native_village, ->{ where state: 'native_village' }
   scope :duration, ->{ where state: 'duration' }
   scope :discard, ->{ where state: 'discard' }
   scope :revealed, ->{ where state: 'revealed' }

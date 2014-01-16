@@ -20,6 +20,14 @@ Trash:
 {{/each}}
 <br />
 <br />
+{{#if has_native_village}}
+  Native Village:
+  {{#each native_village_cards}}
+    <span class="{{type_class}}">{{title}}</span>
+  {{/each}}
+  <br />
+  <br />
+{{/if}}
 {{#each player_info}}
   <strong>{{player_name}}</strong><br />
   Victory Tokens: {{victory_tokens}}

@@ -36,6 +36,10 @@ class GamePlayer < ActiveRecord::Base
     player_cards.haven
   end
 
+  def native_village
+    player_cards.native_village
+  end
+
   def in_play_without_duration
     player_cards.in_play_without_duration
   end

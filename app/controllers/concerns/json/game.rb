@@ -75,7 +75,8 @@ module Json::Game
   private
 
   def game_content(game, player)
-    json = game_area(game, player).merge(card_area(game)).merge(info_area(game))
+    game_player = game.game_player(player.id)
+    json = game_area(game, player).merge(card_area(game)).merge(info_area(game, game_player))
     json.merge!(end_game(game)) if game.finished?
     json
   end
@@ -92,9 +93,10 @@ module Json::Game
     }.merge(treasure_in_hand(game_player))
   end
 
-  def info_area(game)
+  def info_area(game, game_player)
     trash_cards = game.game_trashes.collect{ |card| card.json(game, game.current_turn) }
     prize_cards = game.game_prizes.collect{ |card| card.json(game, game.current_turn) }
+    native_village_cards = game_player.native_village.collect{ |card| card.json(game, game.current_turn) }
     player_info = game.game_players.map { |player|
       {
         player_name: player.username,
@@ -106,6 +108,9 @@ module Json::Game
       trash_cards: trash_cards,
       prize_cards: prize_cards,
       has_trade_route: game.has_trade_route,
+      trade_route_tokens: game.trade_route_tokens,
+      has_native_village: game_player.native_village.count > 0 ? 1 : 0,
+      native_village_cards: native_village_cards,
       trade_route_tokens: game.trade_route_tokens,
       player_info: player_info
     }
