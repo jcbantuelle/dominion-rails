@@ -27,6 +27,8 @@ class Swindler < Card
           if @revealed.empty?
             LogUpdater.new(game).custom_message(player, 'nothing to trash', 'have')
           else
+            trashed_card_cost = @revealed.first.calculated_cost(game, game.current_turn)
+            @equal_cost_cards = game.cards_equal_to(trashed_card_cost)
             CardTrasher.new(player, @revealed).trash('deck')
             choose_new_card(game, player)
           end
@@ -38,15 +40,12 @@ class Swindler < Card
   end
 
   def choose_new_card(game, game_player)
-    trashed_card = @revealed.first
-    trashed_card_cost = trashed_card.calculated_cost(game, game.current_turn)
-    equal_cost_cards = game.cards_equal_to(trashed_card_cost)
-    if equal_cost_cards.count == 0
+    if @equal_cost_cards.count == 0
       LogUpdater.new(game).custom_message(game_player, 'nothing because there are no same cost cards available', 'gain')
-    elsif equal_cost_cards.count == 1
-      CardGainer.new(game, game_player, equal_cost_cards.first.name).gain_card('discard')
+    elsif @equal_cost_cards.count == 1
+      CardGainer.new(game, game_player, @equal_cost_cards.first.name).gain_card('discard')
     else
-      action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, equal_cost_cards, "Choose a card for #{game_player.username} to gain:", 1, 1)
+      action = TurnActionHandler.send_choose_cards_prompt(game, game.current_player, @equal_cost_cards, "Choose a card for #{game_player.username} to gain:", 1, 1)
       TurnActionHandler.process_player_response(game, game_player, action, self)
     end
   end
