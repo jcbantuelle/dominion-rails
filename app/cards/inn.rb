@@ -33,6 +33,7 @@ class Inn < Card
       unless action.response.empty?
         shuffled_cards = PlayerCard.where(id: action.response)
         shuffled_cards.update_all(state: 'deck')
+        ActiveRecord::Base.connection.clear_query_cache
         game_player.shuffle_deck
       end
     end
